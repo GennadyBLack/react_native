@@ -25,16 +25,16 @@ export default function Feed() {
   return (
     <View>
       <Text>Feed List </Text>
-      <FlatList
-        data={data}
-        renderItem={({ item }) => <FeedItem feed={item} key={item.id} />}
-      />
       <Button
         title="+"
         onPress={() => {
           add();
         }}
       ></Button>
+      <FlatList
+        data={data}
+        renderItem={({ item }) => <FeedItem feed={item} key={item.id} />}
+      />
     </View>
   );
 }

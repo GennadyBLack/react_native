@@ -1,9 +1,8 @@
 // In App.js in a new project
 
+import { DefaultTheme, Provider as PaperProvider } from "react-native-paper";
 import React, { useState } from "react";
-
 import AppLoading from "expo-app-loading";
-
 import Routes from "./src/components/Routes";
 import store from "./src/store/index";
 import StoreContext from "./src/contexts/store";
@@ -19,6 +18,17 @@ const initialApp = async () => {
 function App() {
   let [isReady, setReady] = useState(false);
 
+  const theme = {
+    ...DefaultTheme,
+    roundness: 2,
+    mode: "adaptive",
+    colors: {
+      ...DefaultTheme.colors,
+      primary: "#3498db",
+      accent: "#f1c40f",
+    },
+  };
+
   if (!isReady) {
     return (
       <AppLoading
@@ -31,7 +41,9 @@ function App() {
 
   return (
     <StoreContext.Provider value={rootStore}>
-      <Routes />
+      <PaperProvider theme={theme}>
+        <Routes />
+      </PaperProvider>
     </StoreContext.Provider>
   );
 }

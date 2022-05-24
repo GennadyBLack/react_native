@@ -1,5 +1,7 @@
 import React from "react";
-import { View, Text, Button, StyleSheet } from "react-native";
+import { View, Text, StyleSheet } from "react-native";
+import { Button } from "react-native-paper";
+
 import { observer } from "mobx-react-lite";
 import useStore from "../hooks/useStore";
 
@@ -12,6 +14,13 @@ function Profile() {
     <View style={styles.cont}>
       <Text>Profile</Text>
       <Text>{auth.user.username}</Text>
+      <Button
+        icon="camera"
+        mode="contained"
+        onPress={() => console.log("Pressed")}
+      >
+        Press me
+      </Button>
     </View>
   );
 }
