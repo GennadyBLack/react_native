@@ -1,20 +1,39 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+// In App.js in a new project
 
-export default function App() {
+import React, { useState } from "react";
+
+import AppLoading from "expo-app-loading";
+
+import Routes from "./src/components/Routes";
+import store from "./src/store/index";
+import StoreContext from "./src/contexts/store";
+const rootStore = new store();
+
+const initialApp = async () => {
+  await new Promise((resolve) => {
+    let res = rootStore.auth.fetchMe();
+    resolve(res, "SuperRes");
+  });
+};
+
+function App() {
+  let [isReady, setReady] = useState(false);
+
+  if (!isReady) {
+    return (
+      <AppLoading
+        startAsync={initialApp}
+        onFinish={() => setReady({ isReady: true })}
+        onError={console.warn}
+      />
+    );
+  }
+
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <StoreContext.Provider value={rootStore}>
+      <Routes />
+    </StoreContext.Provider>
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+export default App;
