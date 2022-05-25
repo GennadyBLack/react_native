@@ -1,7 +1,7 @@
 import Axios from "axios";
 import { getToken } from "../helpers/storage";
 
-const apiUrl = process.env.baseUrl || "https://api.tour-to-kazan.ru/api/";
+const apiUrl = process.env.baseUrl || "http://localhost:8081/api";
 let token = null;
 getToken().then((res) => (token = res));
 console.log(token, "tokentokentokentoken");

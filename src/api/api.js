@@ -15,10 +15,12 @@
 
 import me from "./me";
 import auth from "./auth";
+import feed from "./feed";
 
 const apis = {
-  me: me,
-  auth: auth,
+  me,
+  auth,
+  feed,
 };
 
 // register();

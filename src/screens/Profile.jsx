@@ -21,6 +21,9 @@ function Profile() {
       >
         Press me
       </Button>
+      <Button mode="contained" onPress={() => auth.logout()}>
+        logout
+      </Button>
     </View>
   );
 }

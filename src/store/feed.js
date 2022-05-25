@@ -1,21 +1,18 @@
 import { makeAutoObservable } from "mobx";
 import { setToken } from "../helpers/storage";
 
-export default class Auth {
-  user = null;
-  logged = false;
+export default class Feed {
+  feeds = null;
+  currentFeed = null;
+  id = null;
   loading = false;
   error = null;
 
-  fetchMe = async () => {
+  getAll = async () => {
     try {
-      if (this.user?.id) {
-        return;
-      }
       this.loading = true;
-      await this?.root?.api?.me?.me({}).then((res) => {
-        this.user = res?.data?.data;
-        this.logged = true;
+      await this?.root?.api?.feed.getAll({}).then((res) => {
+        this.feeds = res?.data;
         this.loading = false;
       });
     } catch (error) {
@@ -24,16 +21,13 @@ export default class Auth {
       this.loading = false;
     }
   };
-  login = async (data) => {
+
+  create = async (data) => {
+    console.log("fere", this.root.api);
     try {
       this.loading = true;
-
-      let res = await this.root.api.auth.login(data);
-
-      if (res?.data?.token) {
-        await setToken(res?.data?.token);
-        await this.fetchMe();
-      }
+      let res = await this.root.api.feed.create(data);
+      currentFeed = res?.data;
       this.loading = false;
     } catch (error) {
       this.root.setError(error);
@@ -41,14 +35,20 @@ export default class Auth {
     }
   };
 
-  register = async (data) => {
+  delete = async (id) => {
     try {
       this.loading = true;
-      let res = await this.root.api.auth.register(data);
-      if (res?.token) {
-        await setToken(res?.data?.token);
-        await this.fetchMe();
-      }
+      let res = await this.root.api.feed.del({ id: id });
+      this.loading = false;
+    } catch (error) {
+      this.root.setError(error);
+      this.loading = false;
+    }
+  };
+  update = async (data) => {
+    try {
+      this.loading = true;
+      let res = await this.root.api.feed.update({ id: id, data: data });
       this.loading = false;
     } catch (error) {
       this.root.setError(error);
@@ -67,6 +67,6 @@ export default class Auth {
   constructor(root) {
     makeAutoObservable(this);
     this.root = root;
-    this.api = this.root.api.me;
+    this.api = this.root.api.feed;
   }
 }

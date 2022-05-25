@@ -3,14 +3,15 @@
 import React, { useEffect } from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-
 import Login from "../screens/Login";
 import Main from "../screens/Main";
 import Profile from "../screens/Profile";
+import Register from "../screens/Register";
 import Feed from "../screens/Feed";
 import { observer } from "mobx-react-lite";
 import useStore from "../hooks/useStore";
 import { Text } from "react-native";
+// import Chat from "../screens/Chat";
 export default observer(Routes);
 
 const { Screen, Navigator } = createBottomTabNavigator();
@@ -32,7 +33,15 @@ function Routes() {
         Login: "login",
         Profile: "profile",
         Main: "main",
-        Feed: "feed",
+        Feed: {
+          // path: "feed",
+          screens: {
+            FeedMain: "feed/index",
+            FeedCreate: "feed/create",
+          },
+        },
+        Register: "register",
+        Chat: "chat",
       },
     },
   };
@@ -59,9 +68,19 @@ function Routes() {
               component={Feed}
               options={{ headerShown: false }}
             />
+            {/* <Screen
+              name="Chat"
+              component={Chat}
+              options={{ headerShown: false }}
+            /> */}
           </>
         ) : (
           <>
+            <Screen
+              name="Feed"
+              component={Feed}
+              options={{ headerShown: false }}
+            />
             <Screen
               name="Home"
               component={Main}
@@ -70,6 +89,11 @@ function Routes() {
             <Screen
               name="Login"
               component={Login}
+              options={{ headerShown: false }}
+            />
+            <Screen
+              name="Register"
+              component={Register}
               options={{ headerShown: false }}
             />
           </>
