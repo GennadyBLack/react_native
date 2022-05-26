@@ -11,7 +11,8 @@ import Feed from "../screens/Feed";
 import { observer } from "mobx-react-lite";
 import useStore from "../hooks/useStore";
 import { Text } from "react-native";
-// import Chat from "../screens/Chat";
+
+import EW from "./error/BoundaryWrapper";
 export default observer(Routes);
 
 const { Screen, Navigator } = createBottomTabNavigator();
@@ -36,8 +37,9 @@ function Routes() {
         Feed: {
           // path: "feed",
           screens: {
-            FeedMain: "feed/index",
-            FeedCreate: "feed/create",
+            FeedMain: "feed",
+            FeedCreate: "feed_create",
+            FeedCurrent: "feed/:id",
           },
         },
         Register: "register",

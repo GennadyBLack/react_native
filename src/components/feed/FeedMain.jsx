@@ -1,47 +1,55 @@
-import React, { useState } from "react";
-import { View, Text, FlatList, Button } from "react-native";
+import React, { useState, useEffect } from "react";
+
+import {
+  Text,
+  FlatList,
+  Button,
+  ScrollView,
+  TouchableOpacity,
+} from "react-native";
+
 import FeedItem from "../FeedItem";
-export default function FeedMain({ navigation }) {
-  let newF = {
-    id: Math.random(),
-    title: "hi there",
-    desc: "test text",
-    author: { name: "me", id: 1 },
-  };
-  let init = [
-    {
-      id: 2,
-      title: "hi therde",
-      desc: "test tedxt",
-      author: { name: "mde", id: 2 },
-    },
-    {
-      id: 3,
-      title: "hi FDFDF",
-      desc: "test FDF",
-      author: { name: "mde", id: 2 },
-    },
-  ];
 
-  let [data, setData] = useState(init);
+import useStore from "../../hooks/useStore";
+import Spiner from "../Spiner";
+import { observer } from "mobx-react-lite";
 
-  let add = () => {
-    setData([...data, newF]);
-  };
+export default observer(FeedMain);
+
+function FeedMain({ navigation }) {
+  const [feed] = useStore("feed");
+
+  useEffect(() => {
+    feed.getAll();
+  }, []);
 
   return (
-    <View>
-      <Text>Feed Main </Text>
-      <Button
-        title="Create"
-        onPress={() => {
-          navigation.navigate("FeedCreate");
-        }}
-      ></Button>
-      <FlatList
-        data={data}
-        renderItem={({ item }) => <FeedItem feed={item} key={item.id} />}
-      />
-    </View>
+    <>
+      {feed.loading ? (
+        <Spiner />
+      ) : (
+        <ScrollView>
+          <Text>Feed Main </Text>
+          <Button
+            title="Create"
+            onPress={() => {
+              navigation.navigate("feed_create");
+            }}
+          ></Button>
+          <FlatList
+            data={feed.feeds}
+            renderItem={({ item }) => (
+              <TouchableOpacity
+                onPress={() => {
+                  navigation.navigate("feed_current", { id: item?.id });
+                }}
+              >
+                <FeedItem feed={item} key={item.id} />
+              </TouchableOpacity>
+            )}
+          />
+        </ScrollView>
+      )}
+    </>
   );
 }

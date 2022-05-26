@@ -22,6 +22,20 @@ export default class Feed {
     }
   };
 
+  get = async (id) => {
+    try {
+      this.loading = true;
+      await this?.root?.api?.feed.get(id).then((res) => {
+        this.currentFeed = res?.data;
+        this.loading = false;
+      });
+    } catch (error) {
+      console.log(error, "error me");
+      this.root.setError(error);
+      this.loading = false;
+    }
+  };
+
   create = async (data) => {
     console.log("fere", this.root.api);
     try {
@@ -56,14 +70,6 @@ export default class Feed {
     }
   };
 
-  get isAuth() {
-    return this.logged;
-  }
-
-  logout() {
-    this.user = null;
-    localStorage.setItem("token", null);
-  }
   constructor(root) {
     makeAutoObservable(this);
     this.root = root;
