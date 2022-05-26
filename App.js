@@ -1,14 +1,13 @@
 // In App.js in a new project
 
 import { DefaultTheme, Provider as PaperProvider } from "react-native-paper";
-import "./src/styles/main.css";
+// import "./src/styles/main.css";
 import React, { useState } from "react";
 import AppLoading from "expo-app-loading";
 import Routes from "./src/components/Routes";
 import store from "./src/store/index";
 import StoreContext from "./src/contexts/store";
 const rootStore = new store();
-import Spiner from "./src/components/Spiner";
 
 const initialApp = async () => {
   await new Promise((resolve) => {

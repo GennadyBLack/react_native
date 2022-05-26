@@ -4,6 +4,7 @@ import FeedCreate from "../components/feed/FeedCreate";
 import React from "react";
 import FeedEdit from "../components/feed/FeedEdit";
 import FeedCurrent from "../components/feed/FeedCurrent";
+
 const { Navigator, Screen } = createNativeStackNavigator();
 
 export default function Feed() {

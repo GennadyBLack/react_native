@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 
 import {
   Text,
@@ -11,7 +11,8 @@ import {
 import FeedItem from "../FeedItem";
 
 import useStore from "../../hooks/useStore";
-import Spiner from "../Spiner";
+// import Spiner from "../Spiner";
+
 import { observer } from "mobx-react-lite";
 
 export default observer(FeedMain);
@@ -25,10 +26,8 @@ function FeedMain({ navigation }) {
 
   return (
     <>
-      {feed.loading ? (
-        <Spiner />
-      ) : (
-        <ScrollView>
+      {feed?.loading ? null : (
+        <>
           <Text>Feed Main </Text>
           <Button
             title="Create"
@@ -37,18 +36,10 @@ function FeedMain({ navigation }) {
             }}
           ></Button>
           <FlatList
-            data={feed.feeds}
-            renderItem={({ item }) => (
-              <TouchableOpacity
-                onPress={() => {
-                  navigation.navigate("feed_current", { id: item?.id });
-                }}
-              >
-                <FeedItem feed={item} key={item.id} />
-              </TouchableOpacity>
-            )}
+            data={feed?.feeds}
+            renderItem={({ item }) => <FeedItem feed={item} key={item.id} />}
           />
-        </ScrollView>
+        </>
       )}
     </>
   );

@@ -1,4 +1,4 @@
-import { makeAutoObservable } from "mobx";
+import { makeAutoObservable, runInAction } from "mobx";
 import { setToken } from "../helpers/storage";
 
 export default class Auth {
@@ -9,14 +9,16 @@ export default class Auth {
 
   fetchMe = async () => {
     try {
-      if (this.user?.id) {
+      if (this?.user?.id) {
         return;
       }
       this.loading = true;
       await this?.root?.api?.me?.me({}).then((res) => {
-        this.user = res?.data?.data;
-        this.logged = true;
-        this.loading = false;
+        runInAction(() => {
+          this.user = res?.data?.data;
+          this.logged = true;
+          this.loading = false;
+        });
       });
     } catch (error) {
       console.log(error, "error me");
@@ -28,12 +30,16 @@ export default class Auth {
     try {
       this.loading = true;
 
-      let res = await this.root.api.auth.login(data);
+      await this.root.api.auth.login(data).then(async (res) =>
+        runInAction(async () => {
+          console.log(res, "res?.data?.token");
+          if (res?.data?.token) {
+            await setToken(res?.data?.token);
+            await this.fetchMe();
+          }
+        })
+      );
 
-      if (res?.data?.token) {
-        await setToken(res?.data?.token);
-        await this.fetchMe();
-      }
       this.loading = false;
     } catch (error) {
       this.root.setError(error);

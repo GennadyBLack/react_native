@@ -1,6 +1,11 @@
-import { makeAutoObservable } from "mobx";
+import { makeAutoObservable, runInAction } from "mobx";
 import { setToken } from "../helpers/storage";
 
+// import { configure } from "mobx";
+
+// configure({
+//   enforceActions: "never",
+// });
 export default class Feed {
   feeds = null;
   currentFeed = null;
@@ -13,9 +18,11 @@ export default class Feed {
     try {
       this.loading = true;
       await this?.root?.api?.feed.getAll({}).then((res) => {
-        this.feeds = res?.data?.data;
-        this.pagination = res?.data?.paginator;
-        this.loading = false;
+        runInAction(() => {
+          this.feeds = res?.data?.data;
+          this.pagination = res?.data?.paginator;
+          this.loading = false;
+        });
       });
     } catch (error) {
       console.log(error, "error me");
