@@ -7,12 +7,14 @@ export default class Feed {
   id = null;
   loading = false;
   error = null;
+  pagination = null;
 
   getAll = async () => {
     try {
       this.loading = true;
       await this?.root?.api?.feed.getAll({}).then((res) => {
-        this.feeds = res?.data;
+        this.feeds = res?.data?.data;
+        this.pagination = res?.data?.paginator;
         this.loading = false;
       });
     } catch (error) {

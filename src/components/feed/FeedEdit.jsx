@@ -1,11 +1,11 @@
 import React, { useEffect } from "react";
-import { View, Text, Button } from "react-native";
+import { View, Text } from "react-native";
 import { observer } from "mobx-react-lite";
 import useStore from "../../hooks/useStore";
 
-export default observer(FeedCurrent);
+export default observer(FeedEdit);
 
-function FeedCurrent({ route, navigation }) {
+function FeedEdit({ route }) {
   const [feed] = useStore("feed");
   useEffect(() => {
     feed.get(route?.params?.id);
@@ -15,12 +15,6 @@ function FeedCurrent({ route, navigation }) {
     <View>
       <Text>{feed?.currentFeed?.title}</Text>
       <Text>{feed?.currentFeed?.desc}</Text>
-      <Button
-        title="edit"
-        onPress={() =>
-          navigation.navigate("feed_edit", { id: feed?.currentFeed?.id })
-        }
-      />
     </View>
   );
 }
