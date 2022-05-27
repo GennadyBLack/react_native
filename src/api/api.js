@@ -16,11 +16,13 @@
 import me from "./me";
 import auth from "./auth";
 import feed from "./feed";
+import tools from "./tools";
 
 const apis = {
   me,
   auth,
   feed,
+  tools,
 };
 
 // register();
