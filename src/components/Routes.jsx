@@ -40,6 +40,7 @@ function Routes() {
             FeedCreate: "feed_create",
             FeedCurrent: "feed/:id",
             FeedEdit: "feed/:id/edit",
+            Upload: "feed/upload",
           },
         },
         Register: "register",

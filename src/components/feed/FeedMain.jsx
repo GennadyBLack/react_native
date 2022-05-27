@@ -39,6 +39,12 @@ function FeedMain({ navigation }) {
             data={feed?.feeds}
             renderItem={({ item }) => <FeedItem feed={item} key={item.id} />}
           />
+          <Button
+            title="UPLOAD"
+            onPress={() => {
+              navigation.navigate("upload");
+            }}
+          ></Button>
         </>
       )}
     </>
