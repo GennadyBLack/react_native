@@ -37,7 +37,15 @@ function FeedMain({ navigation }) {
           ></Button>
           <FlatList
             data={feed?.feeds}
-            renderItem={({ item }) => <FeedItem feed={item} key={item.id} />}
+            renderItem={({ item }) => (
+              <TouchableOpacity
+                onLongPress={() =>
+                  navigation.navigate("feed_edit", { id: item.id })
+                }
+              >
+                <FeedItem feed={item} key={item.id} />
+              </TouchableOpacity>
+            )}
           />
           <Button
             title="UPLOAD"

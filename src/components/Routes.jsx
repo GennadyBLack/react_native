@@ -34,7 +34,7 @@ function Routes() {
         Profile: "profile",
         Main: "main",
         Feed: {
-          // path: "feed",
+          path: "feed",
           screens: {
             FeedMain: "feed",
             FeedCreate: "feed_create",
