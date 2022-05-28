@@ -1,14 +1,13 @@
 import Axios from "axios";
 import { getToken } from "../helpers/storage";
-
-const apiUrl = process.env.baseUrl || "http://localhost:8081/api";
+// ifconfig -a
+const apiUrl = process.env.BASE_URL || "http://localhost:8081/api";
 let token = null;
 getToken().then((res) => (token = res));
 console.log(token, "tokentokentokentoken");
 
 const axiosParams = {
   baseURL: `${apiUrl}`,
-
   headers: {
     "Content-Type": "application/json",
     Accept: "application/json",
@@ -20,7 +19,6 @@ const axiosInstance = Axios.create(axiosParams);
 
 axiosInstance.interceptors.request.use(async (config) => {
   await getToken().then((res) => (token = res));
-
   config.headers = {
     ...config.headers,
     Authorization: token ? `Bearer ${token}` : null,

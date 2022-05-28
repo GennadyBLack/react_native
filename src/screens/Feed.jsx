@@ -4,6 +4,7 @@ import FeedCreate from "../components/feed/FeedCreate";
 import React from "react";
 import FeedEdit from "../components/feed/FeedEdit";
 import FeedCurrent from "../components/feed/FeedCurrent";
+import ImagePickerExample from "./Upload";
 
 const { Navigator, Screen } = createNativeStackNavigator();
 
@@ -28,6 +29,11 @@ export default function Feed() {
       <Screen
         name="feed_edit"
         component={FeedEdit}
+        options={{ headerShown: false }}
+      />
+      <Screen
+        name="upload"
+        component={ImagePickerExample}
         options={{ headerShown: false }}
       />
     </Navigator>

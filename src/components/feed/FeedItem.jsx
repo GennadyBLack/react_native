@@ -1,10 +1,10 @@
 import React from "react";
-import { View } from "react-native";
+import { View, StyleSheet } from "react-native";
 import { Card, Title, Paragraph } from "react-native-paper";
 
 export default function FeedItem({ feed }) {
   return (
-    <View>
+    <View style={styles.item}>
       <Card>
         {/* <Card.Title
           title="Card Title"
@@ -20,3 +20,9 @@ export default function FeedItem({ feed }) {
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  item: {
+    marginTop: 10,
+  },
+});

@@ -3,12 +3,14 @@ import React, { useEffect } from "react";
 import {
   Text,
   FlatList,
-  Button,
   ScrollView,
   TouchableOpacity,
+  StyleSheet,
+  View,
 } from "react-native";
+import { Button } from "react-native-paper";
 
-import FeedItem from "../FeedItem";
+import FeedItem from "./FeedItem";
 
 import useStore from "../../hooks/useStore";
 // import Spiner from "../Spiner";
@@ -25,22 +27,48 @@ function FeedMain({ navigation }) {
   }, []);
 
   return (
-    <>
-      {feed?.loading ? null : (
-        <>
-          <Text>Feed Main </Text>
-          <Button
-            title="Create"
-            onPress={() => {
-              navigation.navigate("feed_create");
-            }}
-          ></Button>
-          <FlatList
-            data={feed?.feeds}
-            renderItem={({ item }) => <FeedItem feed={item} key={item.id} />}
-          />
-        </>
-      )}
-    </>
+    <View style={styles.wrap}>
+      <>
+        {feed?.loading ? null : (
+          <>
+            <Text>Feed Main </Text>
+            <Button
+              title="Create"
+              onPress={() => {
+                navigation.navigate("feed_create");
+              }}
+            ></Button>
+            <FlatList
+              data={feed?.feeds}
+              renderItem={({ item }) => (
+                <TouchableOpacity
+                  onLongPress={() =>
+                    navigation.navigate("feed_edit", { id: item.id })
+                  }
+                >
+                  <FeedItem feed={item} key={item.id} />
+                </TouchableOpacity>
+              )}
+            />
+            <Button
+              icon="camera"
+              mode="contained"
+              onPress={() => {
+                navigation.navigate("upload");
+              }}
+            >
+              UPLOAD
+            </Button>
+          </>
+        )}
+      </>
+    </View>
   );
 }
+const styles = StyleSheet.create({
+  wrap: {
+    width: "90%",
+    margin: "5%",
+    paddingTop: 5,
+  },
+});
