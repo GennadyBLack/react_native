@@ -1,8 +1,9 @@
 import React, { useEffect } from "react";
-import { View, Text, Button } from "react-native";
+import { View, Text } from "react-native";
 import { observer } from "mobx-react-lite";
 import useStore from "../../hooks/useStore";
-import ImagePickerExample from "../../screens/Upload";
+import { Button } from "react-native-paper";
+import Upload from "../validation/Upload";
 
 export default observer(FeedEdit);
 
@@ -16,11 +17,16 @@ function FeedEdit({ route, navigation }) {
     <View>
       <Text>{feed?.currentFeed?.title}</Text>
       <Text>{feed?.currentFeed?.desc}</Text>
-      <ImagePickerExample />
       <Button
-        title="upload"
-        onPress={() => navigation.navigate("upload")}
-      ></Button>
+        icon="camera"
+        mode="contained"
+        onPress={() => {
+          navigation.navigate("upload");
+        }}
+      >
+        UPLOAD
+      </Button>
+      <Upload></Upload>
     </View>
   );
 }

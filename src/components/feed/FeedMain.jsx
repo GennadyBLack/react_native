@@ -3,12 +3,12 @@ import React, { useEffect } from "react";
 import {
   Text,
   FlatList,
-  Button,
   ScrollView,
   TouchableOpacity,
   StyleSheet,
   View,
 } from "react-native";
+import { Button } from "react-native-paper";
 
 import FeedItem from "./FeedItem";
 
@@ -51,11 +51,14 @@ function FeedMain({ navigation }) {
               )}
             />
             <Button
-              title="UPLOAD"
+              icon="camera"
+              mode="contained"
               onPress={() => {
                 navigation.navigate("upload");
               }}
-            ></Button>
+            >
+              UPLOAD
+            </Button>
           </>
         )}
       </>
