@@ -14,6 +14,7 @@ function Test({ navigation }) {
   return (
     <View>
       <Text>Register</Text>
+      {/*Form - компонент из которого в чилды типа инпута передаются пропсами эл-ты useForm типа control*/}
       <Form onSubmit={save}>
         <Input
           name="email"

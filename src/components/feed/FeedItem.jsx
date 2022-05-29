@@ -16,6 +16,7 @@ export default function FeedItem({ feed }) {
           <Paragraph>{feed?.desc}</Paragraph>
         </Card.Content>
         <Card.Cover source={{ uri: "https://picsum.photos/700" }} />
+        {/*<Card.Cover source={{ uri: feed?.path }} /> Not allowed to load local resource // https://stackoverflow.com/questions/39007243/cannot-open-local-file-chrome-not-allowed-to-load-local-resource*/}
       </Card>
     </View>
   );

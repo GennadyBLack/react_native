@@ -1,6 +1,6 @@
 import api from "../index";
 
 const tools = {
-  upload: async (id, data) => api.post(`upload/${id}`, data),
+  upload: async (data) => api.post(`/upload`, data),
 };
 export default tools;
