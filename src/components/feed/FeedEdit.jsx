@@ -15,11 +15,12 @@ function FeedEdit({ route, navigation }) {
   useEffect(() => {
     feed.get(route?.params?.id);
   }, []);
-  const submit = (e) => {
+  const submit = async (e) => {
     const pre = prepareEdit(e, feed?.currentFeed);
     console.log(pre);
-    feed.update(route?.params?.id, pre);
-    feed.getAll();
+    await feed.update(route?.params?.id, pre);
+    setIsEdit(false);
+    await feed.get(route?.params?.id);
 
     // if (Object.keys(pre).length) feed.update(route?.params?.id, pre);
   };
