@@ -51,7 +51,7 @@ export default class Auth {
     try {
       this.loading = true;
       let res = await this.root.api.auth.register(data);
-      if (res?.token) {
+      if (res?.data?.token) {
         await setToken(res?.data?.token);
         await this.fetchMe();
       }

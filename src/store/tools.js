@@ -9,7 +9,7 @@ export default class Tools {
     try {
       this.loading = true;
       console.log(this?.api?.upload, "his?.api?.upload in uplaod");
-      await this?.api?.upload(file);
+      this.image = (await this?.api?.upload(file)).data;
     } catch (error) {
       console.log(error, "error file");
       this.root.setError(error);

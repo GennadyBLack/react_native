@@ -3,6 +3,7 @@ import { View, Text, Button } from "react-native";
 import { observer } from "mobx-react-lite";
 import Form from "../components/validation/Form";
 import Input from "../components/validation/Input";
+import File from "../components/validation/File";
 import Upload from "../components/validation/Upload";
 
 export default observer(Test);
@@ -26,8 +27,8 @@ function Test({ navigation }) {
             max: { value: 3, message: "Больше 3" },
           }}
         />
+        <File name="file" />
       </Form>
-      <Upload />
     </View>
   );
 }

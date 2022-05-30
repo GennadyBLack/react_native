@@ -3,8 +3,8 @@ import { Button, Image, View, Platform, Text } from "react-native";
 import * as ImagePicker from "expo-image-picker";
 import useStore from "../../hooks/useStore";
 
-export default function Upload() {
-  const [image, setImage] = useState(null);
+export default function Upload({ value = null, error, onChange }) {
+  const [image, setImage] = useState(value);
   const [tools] = useStore("tools");
 
   useEffect(() => {
@@ -27,9 +27,14 @@ export default function Upload() {
       quality: 1,
     });
 
-    tools.uploadImage(result);
+    await tools.uploadImage(result);
 
     if (!result.cancelled) {
+      console.log(tools.image, tools?.image);
+      if (typeof onChange === "function") {
+        onChange(tools?.image);
+      }
+
       setImage(result.uri);
     }
   };
