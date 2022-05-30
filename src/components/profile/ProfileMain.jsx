@@ -2,22 +2,19 @@ import React, { useEffect, useState } from "react";
 import { View, Text, StyleSheet, Button } from "react-native";
 import { observer } from "mobx-react-lite";
 import useStore from "../../hooks/useStore";
-import { Card, Paragraph, Title } from "react-native-paper";
+import { Card, Title } from "react-native-paper";
 import Upload from "../validation/Upload";
 import Form from "../validation/Form";
 import prepareEdit from "../../helpers/editHelper";
 
-export default observer(FeedEdit);
+export default observer(ProfileMain);
 
-function FeedEdit({ route, navigation }) {
-  const [feed] = useStore("feed");
+function ProfileMain({ route, navigation }) {
+  const [{ user }] = useStore("auth");
   const [isEdit, setIsEdit] = useState(false);
-  useEffect(() => {
-    feed.get(route?.params?.id);
-  }, []);
+
   const submit = (e) => {
-    const pre = prepareEdit(e, feed?.currentFeed);
-    feed.getAll();
+    const pre = prepareEdit(e, user);
   };
   return (
     <View style={styles.wrap}>
@@ -25,28 +22,16 @@ function FeedEdit({ route, navigation }) {
         <Card.Content>
           {!isEdit && (
             <>
-              <Title>
-                {feed?.currentFeed?.title || "Название отсутствует"}
-              </Title>
-              <Paragraph>
+              <Title>{user?.username || "Name отсутствует"}</Title>
+              {/* <Paragraph>
                 {feed?.currentFeed?.desc || "Описание отсутствует"}
-              </Paragraph>
+              </Paragraph> */}
             </>
           )}
           {isEdit && (
-            <Form onSubmit={submit} defaultValues={feed?.currentFeed}>
+            <Form onSubmit={submit} defaultValues={user}>
               <Form.Input
-                name="title"
-                rules={{
-                  required: {
-                    value: true,
-                    message: "Это поле обязательно для заполнения чудик",
-                  },
-                  max: { value: 3, message: "Больше 3" },
-                }}
-              />
-              <Form.Input
-                name="desc"
+                name="username"
                 rules={{
                   required: {
                     value: true,
@@ -58,7 +43,7 @@ function FeedEdit({ route, navigation }) {
             </Form>
           )}
         </Card.Content>
-        <Card.Cover source={{ uri: "https://picsum.photos/700" }} />
+        <Card.Cover source={{ uri: user?.avatar }} />
         <Upload />
         <Button
           title="Редактировать"

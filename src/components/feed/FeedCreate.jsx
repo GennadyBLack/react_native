@@ -14,6 +14,7 @@ export default function FeedCreate({ navigation }) {
 
   let create = () => {
     feed.create(form);
+    feed.getAll();
   };
 
   return (

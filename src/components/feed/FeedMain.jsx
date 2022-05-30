@@ -27,7 +27,7 @@ function FeedMain({ navigation }) {
   }, []);
 
   return (
-    <View style={styles.wrap}>
+    <ScrollView style={styles.wrap}>
       <>
         {feed?.loading ? null : (
           <>
@@ -62,7 +62,7 @@ function FeedMain({ navigation }) {
           </>
         )}
       </>
-    </View>
+    </ScrollView>
   );
 }
 const styles = StyleSheet.create({
