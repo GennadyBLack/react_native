@@ -1,8 +1,12 @@
 import React from "react";
 import { useForm } from "react-hook-form";
+import Input from "./Input";
+import File from "./File";
+import Select from "./Select";
+import Upload from "./Upload";
 import { View, Button, StyleSheet } from "react-native";
 
-export default function Form({ defaultValues, children, onSubmit }) {
+function Form({ defaultValues, children, onSubmit }) {
   const methods = useForm({ defaultValues });
   const {
     handleSubmit,
@@ -27,6 +31,12 @@ export default function Form({ defaultValues, children, onSubmit }) {
     </View>
   );
 }
+Form.Input = Input;
+Form.Select = Select;
+Form.Upload = Upload;
+Form.File = File;
+
+export default Form;
 
 const styles = StyleSheet.create({
   form: {
