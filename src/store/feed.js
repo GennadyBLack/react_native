@@ -68,12 +68,13 @@ export default class Feed {
       this.loading = false;
     }
   };
-  update = async (data) => {
+  update = async (id, data) => {
     try {
       this.loading = true;
-      let res = await this.root.api.feed.update({ id: id, data: data });
+      await this.root.api.feed.update(id, { data });
       this.loading = false;
     } catch (error) {
+      console.error(error);
       this.root.setError(error);
       this.loading = false;
     }

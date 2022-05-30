@@ -17,7 +17,11 @@ function FeedEdit({ route, navigation }) {
   }, []);
   const submit = (e) => {
     const pre = prepareEdit(e, feed?.currentFeed);
+    console.log(pre);
+    feed.update(route?.params?.id, pre);
     feed.getAll();
+
+    // if (Object.keys(pre).length) feed.update(route?.params?.id, pre);
   };
   return (
     <View style={styles.wrap}>
