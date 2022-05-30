@@ -25,7 +25,13 @@ function FeedMain({ navigation }) {
   useEffect(() => {
     feed.getAll();
   }, []);
-
+  const renderItem = ({ item }) => (
+    <TouchableOpacity
+      onLongPress={() => navigation.navigate("feed_edit", { id: item.id })}
+    >
+      <FeedItem feed={item} key={item.id} />
+    </TouchableOpacity>
+  );
   return (
     <View style={styles.wrap}>
       <>
@@ -40,15 +46,8 @@ function FeedMain({ navigation }) {
             ></Button>
             <FlatList
               data={feed?.feeds}
-              renderItem={({ item }) => (
-                <TouchableOpacity
-                  onLongPress={() =>
-                    navigation.navigate("feed_edit", { id: item.id })
-                  }
-                >
-                  <FeedItem feed={item} key={item.id} />
-                </TouchableOpacity>
-              )}
+              renderItem={renderItem}
+              keyExtractor={(item) => item.id}
             />
             <Button
               icon="camera"
@@ -65,10 +64,12 @@ function FeedMain({ navigation }) {
     </View>
   );
 }
+//TODO:поправить скролл
 const styles = StyleSheet.create({
   wrap: {
     width: "90%",
     margin: "5%",
     paddingTop: 5,
+    height: "100%",
   },
 });

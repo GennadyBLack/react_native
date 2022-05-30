@@ -4,7 +4,7 @@ import { Card, Title, Paragraph } from "react-native-paper";
 
 export default function FeedItem({ feed }) {
   return (
-    <View style={styles.item}>
+    <View>
       <Card>
         {/* <Card.Title
           title="Card Title"
@@ -22,8 +22,8 @@ export default function FeedItem({ feed }) {
   );
 }
 
-const styles = StyleSheet.create({
-  item: {
-    marginTop: 10,
-  },
-});
+// const styles = StyleSheet.create({
+//   item: {
+//     marginTop: 10,
+//   },
+// });
