@@ -1,40 +1,13 @@
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import React from "react";
-import { View, Text, StyleSheet } from "react-native";
-import { Button } from "react-native-paper";
-import { observer } from "mobx-react-lite";
-import useStore from "../hooks/useStore";
+import ProfileMain from "../components/profile/ProfileMain";
 
-export default observer(Profile);
+const { Navigator, Screen } = createNativeStackNavigator();
 
-function Profile() {
-  let [auth] = useStore("auth");
-
+export default function Profile() {
   return (
-    <View style={styles.cont}>
-      <Text>Profile</Text>
-      <Text>{auth?.user?.username}</Text>
-      <Button
-        icon="camera"
-        mode="contained"
-        onPress={() => console.log("Pressed")}
-      >
-        Press me
-      </Button>
-      <Button mode="contained" onPress={() => auth?.logout()}>
-        logout
-      </Button>
-    </View>
+    <Navigator options={{ headerShown: false }} initialRouteName="profile">
+      <Screen name="profile" component={ProfileMain} />
+    </Navigator>
   );
 }
-
-const styles = StyleSheet.create({
-  cont: {
-    flex: 1,
-    flexDirection: "column",
-    width: "40%",
-    margin: "auto",
-  },
-  btn: {
-    backgroundColor: "red",
-  },
-});

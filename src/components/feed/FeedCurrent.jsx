@@ -13,8 +13,8 @@ function FeedCurrent({ route, navigation }) {
   console.log(feed?.currentFeed, "feed?.currentFeed");
   return (
     <View>
-      <Text>{feed?.currentFeed?.title}</Text>
-      <Text>{feed?.currentFeed?.desc}</Text>
+      <Text>{feed?.currentFeed?.title ?? "s"}</Text>
+      <Text>{feed?.currentFeed?.desc ?? "s"}</Text>
       <Button
         title="edit"
         onPress={() =>

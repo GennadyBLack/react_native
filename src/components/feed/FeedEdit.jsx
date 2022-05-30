@@ -28,7 +28,7 @@ function FeedEdit({ route, navigation }) {
     <View style={styles.wrap}>
       <Card>
         <Card.Content>
-          {!isEdit && (
+          {!isEdit ? (
             <>
               <Title>
                 {feed?.currentFeed?.title || "Название отсутствует"}
@@ -37,8 +37,8 @@ function FeedEdit({ route, navigation }) {
                 {feed?.currentFeed?.desc || "Описание отсутствует"}
               </Paragraph>
             </>
-          )}
-          {isEdit && (
+          ) : null}
+          {isEdit ? (
             <Form onSubmit={submit} defaultValues={feed?.currentFeed}>
               <Form.Input
                 name="title"
@@ -47,7 +47,7 @@ function FeedEdit({ route, navigation }) {
                     value: true,
                     message: "Это поле обязательно для заполнения чудик",
                   },
-                  max: { value: 3, message: "Больше 3" },
+                  min: { value: 3, message: "Больше 3" },
                 }}
               />
               <Form.Input
@@ -57,11 +57,11 @@ function FeedEdit({ route, navigation }) {
                     value: true,
                     message: "Это поле обязательно для заполнения чудик",
                   },
-                  max: { value: 3, message: "Больше 3" },
+                  max: { value: 250, message: "меньше 250" },
                 }}
               />
             </Form>
-          )}
+          ) : null}
         </Card.Content>
         <Card.Cover source={{ uri: "https://picsum.photos/700" }} />
         <Upload />

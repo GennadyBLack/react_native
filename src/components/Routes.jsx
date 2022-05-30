@@ -32,7 +32,12 @@ function Routes() {
       /* configuration for matching screens with paths */
       screens: {
         Login: "login",
-        Profile: "profile",
+        Profile: {
+          path: "profile",
+          screens: {
+            ProfileMain: "profile",
+          },
+        },
         Main: "main",
         Test: "test",
         Feed: {

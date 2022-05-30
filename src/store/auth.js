@@ -1,5 +1,5 @@
 import { makeAutoObservable, runInAction } from "mobx";
-import { setToken } from "../helpers/storage";
+import { setToken, getToken } from "../helpers/storage";
 
 export default class Auth {
   user = null;
@@ -9,7 +9,8 @@ export default class Auth {
 
   fetchMe = async () => {
     try {
-      if (this?.user?.id) {
+      let token = getToken();
+      if (this?.user?.id || !token) {
         return;
       }
       this.loading = true;
@@ -22,7 +23,7 @@ export default class Auth {
       });
     } catch (error) {
       console.log(error, "error me");
-      this.root.setError(error);
+      // this.root.setError(error);
       this.loading = false;
     }
   };

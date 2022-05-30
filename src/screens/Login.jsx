@@ -8,7 +8,6 @@ export default observer(Login);
 
 function Login({ navigation }) {
   let [auth] = useStore("auth");
-
   let [form, setForm] = useState({ password: "", email: "" });
 
   let setText = (e, field) => {
@@ -20,7 +19,7 @@ function Login({ navigation }) {
   };
   return (
     <View>
-      <Text>Login{auth?.user?.id}</Text>
+      <Text>Login {auth?.user?.id}</Text>
       <TextInput
         label="Email"
         value={form?.email}

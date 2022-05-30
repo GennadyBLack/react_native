@@ -10,25 +10,25 @@ import prepareEdit from "../../helpers/editHelper";
 export default observer(ProfileMain);
 
 function ProfileMain({ route, navigation }) {
-  const [{ user }] = useStore("auth");
+  const [auth] = useStore("auth");
   const [isEdit, setIsEdit] = useState(false);
 
   const submit = (e) => {
-    const pre = prepareEdit(e, user);
+    const pre = prepareEdit(e, auth?.user?.user);
   };
   return (
     <View style={styles.wrap}>
       <Card>
         <Card.Content>
-          {!isEdit && (
+          {!isEdit ? (
             <>
-              <Title>{user?.username || "Name отсутствует"}</Title>
+              <Title>{auth?.user?.user?.username || "Name отсутствует"}</Title>
               {/* <Paragraph>
                 {feed?.currentFeed?.desc || "Описание отсутствует"}
               </Paragraph> */}
             </>
-          )}
-          {isEdit && (
+          ) : null}
+          {isEdit ? (
             <Form onSubmit={submit} defaultValues={user}>
               <Form.Input
                 name="username"
@@ -41,9 +41,9 @@ function ProfileMain({ route, navigation }) {
                 }}
               />
             </Form>
-          )}
+          ) : null}
         </Card.Content>
-        <Card.Cover source={{ uri: user?.avatar }} />
+        <Card.Cover source={{ uri: auth?.user?.user?.avatar }} />
         <Upload />
         <Button
           title="Редактировать"

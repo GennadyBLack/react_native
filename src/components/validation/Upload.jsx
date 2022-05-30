@@ -42,9 +42,9 @@ export default function Upload({ value = null, error, onChange }) {
   return (
     <View>
       <Button title="Pick an image from camera roll" onPress={pickImage} />
-      {image && (
+      {image ? (
         <Image source={{ uri: image }} style={{ width: 200, height: 200 }} />
-      )}
+      ) : null}
     </View>
   );
 }

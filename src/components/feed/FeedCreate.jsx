@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { ScrollView, Text, Button } from "react-native";
+import { View, Text, Button } from "react-native";
 import { TextInput } from "react-native-paper";
 import useStore from "../../hooks/useStore";
 
@@ -18,7 +18,7 @@ export default function FeedCreate({ navigation }) {
   };
 
   return (
-    <ScrollView>
+    <View>
       <Text>Feed Create </Text>
       <TextInput
         label="Title"
@@ -36,6 +36,6 @@ export default function FeedCreate({ navigation }) {
         title="go Back"
         onPress={() => navigation.navigate("FeedMain")}
       ></Button>
-    </ScrollView>
+    </View>
   );
 }

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, Text, Button } from "react-native";
+import { View, Button } from "react-native";
 import { observer } from "mobx-react-lite";
 import useStore from "../hooks/useStore";
 import { TextInput } from "react-native-paper";
@@ -21,7 +21,6 @@ function Register({ navigation }) {
 
   return (
     <View>
-      <Text>Register</Text>
       <TextInput
         label="Name"
         value={form?.username}
