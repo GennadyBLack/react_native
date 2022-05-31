@@ -13,7 +13,7 @@ function compare(data, state) {
   state = toJS(state);
   Object.entries(data).forEach(([key, val]) => {
     //если вдруг такого поля в стейте нет, скипаем итерацию
-    if (!state.hasOwnProperty(key)) return; //если мы намеренно добавим потом св-во, то оно не сохранится
+    if (state && !state.hasOwnProperty(key)) return; //если мы намеренно добавим потом св-во, то оно не сохранится
     //если значение поле - объект, рекурсивно запускаем ф-ию
     //обязательно проверим на существование значения, иначе код будет ждать объект и если значение nul || undefined, то выбьет ошибку
     if (val && typeof val == "object") {

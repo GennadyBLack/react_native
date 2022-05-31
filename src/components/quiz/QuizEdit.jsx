@@ -17,13 +17,13 @@ function QuizEdit({ route, navigation }) {
     quiz.get(route?.params?.id);
   }, []);
   const submit = async (e) => {
-    const pre = prepareEdit(e, quiz?.currentquiz);
+    const pre = prepareEdit(e, quiz?.quiz);
     if (Object.keys(pre).length) {
       await quiz.update(route?.params?.id, pre);
       setIsEdit(false);
       await quiz.get(route?.params?.id);
     }
-
+    navigation.navigate("quiz_list");
     // if (Object.keys(pre).length) quiz.update(route?.params?.id, pre);
   };
   return (

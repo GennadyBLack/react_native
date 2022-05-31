@@ -65,7 +65,7 @@ export default class Quiz {
   update = async (id, data) => {
     try {
       this.loading = true;
-      await this.root.api.feed.update(id, { data });
+      await this.api.update(id, data);
       this.loading = false;
     } catch (error) {
       console.error(error);
