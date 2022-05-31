@@ -46,10 +46,7 @@ export default function Upload({ value = null, error, onChange, title }) {
       {image ? (
         <>
           <Text>{image}</Text>
-          <Image
-            source={require(`${image}`)}
-            style={{ width: 200, height: 200 }}
-          />
+          <Image source={{ uri: image }} style={{ width: 200, height: 200 }} />
         </>
       ) : null}
     </View>

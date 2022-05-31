@@ -2,6 +2,7 @@ import Todos from "./todo";
 import Auth from "./auth";
 import Feed from "./feed";
 import Tools from "./tools";
+import Quiz from "./quiz";
 import apis from "../api/api";
 
 export default class store {
@@ -17,5 +18,6 @@ export default class store {
     this.todos = new Todos(this);
     this.auth = new Auth(this);
     this.tools = new Tools(this);
+    this.quiz = new Quiz(this);
   }
 }
