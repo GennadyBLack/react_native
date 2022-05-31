@@ -3,10 +3,11 @@ import { Button, Image, View, Platform, Text } from "react-native";
 import * as ImagePicker from "expo-image-picker";
 import useStore from "../../hooks/useStore";
 
-export default function Upload({ value = null, error, onChange }) {
-  const [image, setImage] = useState(value);
+export default function Upload({ value = null, error, onChange, title }) {
+  const [image, setImage] = useState(() => (value ? value : null));
   const [tools] = useStore("tools");
 
+  console.log(value, "VAL IMAGE");
   useEffect(() => {
     (async () => {
       if (Platform.OS !== "web") {
@@ -41,9 +42,15 @@ export default function Upload({ value = null, error, onChange }) {
 
   return (
     <View>
-      <Button title="Pick an image from camera roll" onPress={pickImage} />
+      <Button title={title ? title : "upload image"} onPress={pickImage} />
       {image ? (
-        <Image source={{ uri: image }} style={{ width: 200, height: 200 }} />
+        <>
+          <Text>{image}</Text>
+          <Image
+            source={require(`${image}`)}
+            style={{ width: 200, height: 200 }}
+          />
+        </>
       ) : null}
     </View>
   );

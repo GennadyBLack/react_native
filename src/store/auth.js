@@ -62,6 +62,26 @@ export default class Auth {
       this.loading = false;
     }
   };
+  updateMe = async (data) => {
+    try {
+      let token = getToken();
+      if (this?.user?.id || !token) {
+        return;
+      }
+      this.loading = true;
+      await this?.root?.api?.me?.update({ data: data }).then((res) => {
+        runInAction(() => {
+          this.user = res?.data?.data;
+          this.logged = true;
+          this.loading = false;
+        });
+      });
+    } catch (error) {
+      console.log(error, "error me");
+      // this.root.setError(error);
+      this.loading = false;
+    }
+  };
 
   get isAuth() {
     return this.logged;

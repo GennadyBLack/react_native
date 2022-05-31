@@ -2,8 +2,7 @@ import React, { useEffect, useState } from "react";
 import { View, Text, StyleSheet, Button } from "react-native";
 import { observer } from "mobx-react-lite";
 import useStore from "../../hooks/useStore";
-import { Card, Title } from "react-native-paper";
-import Upload from "../validation/Upload";
+import { Card, Title, Paragraph } from "react-native-paper";
 import Form from "../validation/Form";
 import prepareEdit from "../../helpers/editHelper";
 
@@ -12,9 +11,11 @@ export default observer(ProfileMain);
 function ProfileMain({ route, navigation }) {
   const [auth] = useStore("auth");
   const [isEdit, setIsEdit] = useState(false);
+  const user = auth?.user?.user;
 
-  const submit = (e) => {
-    const pre = prepareEdit(e, auth?.user?.user);
+  const submit = async (e) => {
+    const pre = prepareEdit(e, user);
+    await auth?.updateMe(pre);
   };
   return (
     <View style={styles.wrap}>
@@ -22,10 +23,10 @@ function ProfileMain({ route, navigation }) {
         <Card.Content>
           {!isEdit ? (
             <>
-              <Title>{auth?.user?.user?.username || "Name отсутствует"}</Title>
-              {/* <Paragraph>
-                {feed?.currentFeed?.desc || "Описание отсутствует"}
-              </Paragraph> */}
+              <Title>{user?.username || "Name отсутствует"}</Title>
+              <Paragraph>
+                {user?.description || "Описание отсутствует"}
+              </Paragraph>
             </>
           ) : null}
           {isEdit ? (
@@ -40,15 +41,36 @@ function ProfileMain({ route, navigation }) {
                   max: { value: 3, message: "Больше 3" },
                 }}
               />
+              <Form.Input
+                name="email"
+                rules={{
+                  required: {
+                    value: true,
+                    message: "Это поле обязательно для заполнения чудик",
+                  },
+                }}
+              />
+              <Form.Input
+                name="description"
+                rules={{
+                  required: {
+                    value: true,
+                    message: "Это поле обязательно для заполнения чудик",
+                  },
+                }}
+              />
+              <Form.File name="avatar" title="Загрузить фото профиля" />
             </Form>
           ) : null}
         </Card.Content>
-        <Card.Cover source={{ uri: auth?.user?.user?.avatar }} />
-        <Upload />
-        <Button
-          title="Редактировать"
-          onPress={setIsEdit.bind(null, !isEdit)}
-        ></Button>
+        <Card.Cover source={{ uri: user?.avatar }} />
+
+        {!isEdit ? (
+          <Button
+            title="Редактировать"
+            onPress={setIsEdit.bind(null, !isEdit)}
+          ></Button>
+        ) : null}
       </Card>
     </View>
   );
