@@ -30,15 +30,13 @@ function QuizEdit({ route, navigation }) {
     <View style={styles.wrap}>
       {!isEdit ? (
         <>
-          <Title>{quiz?.currentquiz?.title || "Название отсутствует"}</Title>
-          <Paragraph>
-            {quiz?.currentquiz?.desc || "Описание отсутствует"}
-          </Paragraph>
+          <Title>{quiz?.quiz?.title || "Название отсутствует"}</Title>
+          <Paragraph>{quiz?.quiz?.desc || "Описание отсутствует"}</Paragraph>
         </>
       ) : null}
       {isEdit ? (
         <>
-          <Form onSubmit={submit} defaultValues={quiz?.currentquiz}>
+          <Form onSubmit={submit} defaultValues={quiz?.quiz}>
             <Form.Input
               name="title"
               rules={{
@@ -75,8 +73,9 @@ function QuizEdit({ route, navigation }) {
 }
 const styles = StyleSheet.create({
   wrap: {
-    width: "90%",
-    margin: "5%",
-    paddingTop: 5,
+    // width: "90%",
+    // margin: "5%",
+    // paddingTop: 5,
+    height: "100%",
   },
 });

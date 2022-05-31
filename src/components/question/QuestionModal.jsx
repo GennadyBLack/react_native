@@ -4,10 +4,8 @@ import Modal from "../Modal";
 
 export default function QuestionModal() {
   return (
-    <>
-      <Modal>
-        <QuestionForm />
-      </Modal>
-    </>
+    <Modal>
+      <QuestionForm />
+    </Modal>
   );
 }

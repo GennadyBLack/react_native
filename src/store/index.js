@@ -3,6 +3,7 @@ import Auth from "./auth";
 import Feed from "./feed";
 import Tools from "./tools";
 import Quiz from "./quiz";
+import Question from "./question";
 import apis from "../api/api";
 
 export default class store {
@@ -19,5 +20,6 @@ export default class store {
     this.auth = new Auth(this);
     this.tools = new Tools(this);
     this.quiz = new Quiz(this);
+    this.question = new Question(this);
   }
 }

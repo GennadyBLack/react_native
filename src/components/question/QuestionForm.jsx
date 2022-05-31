@@ -2,26 +2,27 @@ import React, { useEffect, useState } from "react";
 import { View, StyleSheet } from "react-native";
 import { observer } from "mobx-react-lite";
 import useStore from "../../hooks/useStore";
+import { useRoute } from "@react-navigation/native";
 import Form from "../validation/Form";
 import prepareEdit from "../../helpers/editHelper";
 
 export default observer(QuestionForm);
 
-function QuestionForm({ route, navigation, question }) {
-  const [quiz] = useStore("quiz");
-
+function QuestionForm({ navigation, hideModal }) {
+  const [question] = useStore("question");
+  const route = useRoute();
+  console.log(route);
   const submit = async (e) => {
-    const pre = prepareEdit(e, quiz?.currentquiz);
-    if (Object.keys(pre).length) {
-      await quiz.update(route?.params?.id, pre);
-    }
+    console.log(e);
+    await question.create(route?.params?.id, e);
+    hideModal();
   };
   return (
     <View style={styles.wrap}>
       <>
-        <Form onSubmit={submit} defaultValues={question}>
+        <Form onSubmit={submit}>
           <Form.Input
-            name="question"
+            name="title"
             rules={{
               required: {
                 value: true,

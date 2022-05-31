@@ -18,6 +18,7 @@ import auth from "./auth";
 import feed from "./feed";
 import tools from "./tools";
 import quiz from "./quiz";
+import question from "./question";
 
 const apis = {
   me,
@@ -25,6 +26,7 @@ const apis = {
   feed,
   tools,
   quiz,
+  question,
 };
 
 // register();

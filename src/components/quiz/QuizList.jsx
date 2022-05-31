@@ -28,7 +28,7 @@ function QuizList({ navigation }) {
 
   const renderItem = ({ item }) => (
     <TouchableOpacity
-      onLongPress={() => navigation.navigate("quiz_edit", { id: item.id })}
+      onPress={() => navigation.navigate("quiz_edit", { id: item.id })}
     >
       <QuizItem key={item.id} quiz={item} />
     </TouchableOpacity>

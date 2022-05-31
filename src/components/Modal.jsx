@@ -5,7 +5,12 @@ export default function Modal({ children, btns }) {
   const [visible, setVisible] = React.useState(false);
   const showModal = () => setVisible(true);
   const hideModal = () => setVisible(false);
-  const containerStyle = { backgroundColor: "white", padding: 20 };
+  const containerStyle = {
+    backgroundColor: "white",
+    padding: 5,
+    width: "90%",
+    marginHorizontal: "auto",
+  };
 
   return (
     <Provider>
@@ -16,10 +21,11 @@ export default function Modal({ children, btns }) {
           contentContainerStyle={containerStyle}
         >
           {React.Children.map(children, (child) => {
-            return child.props.name
+            return child.props
               ? React.createElement(child.type, {
                   ...{
                     ...child.props,
+                    hideModal,
                   },
                 })
               : child;

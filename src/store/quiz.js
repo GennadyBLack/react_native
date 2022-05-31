@@ -44,7 +44,7 @@ export default class Quiz {
       this.loading = true;
       console.log(this.root.api.quiz, "ALOOO I M HERE");
       let res = await this.root.api.quiz.create(data);
-      quiz = res?.data;
+      this.quiz = res?.data;
       this.loading = false;
     } catch (error) {
       this.root.setError(error);
