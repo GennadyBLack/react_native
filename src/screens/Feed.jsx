@@ -5,13 +5,19 @@ import React from "react";
 import FeedEdit from "../components/feed/FeedEdit";
 import FeedCurrent from "../components/feed/FeedCurrent";
 import ImagePickerExample from "./Upload";
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+// import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
-const { Navigator, Screen } = createBottomTabNavigator();
+// const { Navigator, Screen } = createBottomTabNavigator();
+const { Navigator, Screen } = createNativeStackNavigator();
 
+//screenOptions={{ unmountOnBlur: true }} чтобы навигатор не кэшировал содержимое страницы
 export default function Feed() {
   return (
-    <Navigator options={{ headerShown: false }} initialRouteName="feed">
+    <Navigator
+      screenOptions={{ unmountOnBlur: true }}
+      options={{ headerShown: false }}
+      initialRouteName="feed"
+    >
       <Screen
         name="feed"
         component={FeedMain}

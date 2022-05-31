@@ -22,6 +22,11 @@ export default observer(FeedMain);
 function FeedMain({ navigation }) {
   const [feed] = useStore("feed");
 
+  const deletePost = async (id) => {
+    await feed.delete(id);
+    await feed.getAll();
+  };
+
   useEffect(() => {
     feed.getAll();
   }, []);
@@ -29,7 +34,7 @@ function FeedMain({ navigation }) {
     <TouchableOpacity
       onLongPress={() => navigation.navigate("feed_edit", { id: item.id })}
     >
-      <FeedItem feed={item} key={item.id} />
+      <FeedItem feed={item} key={item.id} onDelete={deletePost} />
     </TouchableOpacity>
   );
   return (
@@ -53,10 +58,10 @@ function FeedMain({ navigation }) {
               icon="camera"
               mode="contained"
               onPress={() => {
-                navigation.navigate("upload");
+                navigation.navigate("feed_create");
               }}
             >
-              UPLOAD
+              Create Post
             </Button>
           </>
         )}

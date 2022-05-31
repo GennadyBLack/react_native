@@ -1,8 +1,10 @@
-import React from "react";
-import { View, StyleSheet } from "react-native";
+import React, { useState } from "react";
+import { View, StyleSheet, Button, TextInput } from "react-native";
 import { Card, Title, Paragraph } from "react-native-paper";
 
-export default function FeedItem({ feed }) {
+export default function FeedItem({ feed, onDelete }) {
+  const [showComment, setShowComment] = useState(false);
+
   return (
     <View style={styles.item}>
       <Card>
@@ -17,7 +19,18 @@ export default function FeedItem({ feed }) {
         </Card.Content>
         <Card.Cover source={{ uri: "https://picsum.photos/700" }} />
         {/*<Card.Cover source={{ uri: feed?.path }} /> Not allowed to load local resource // https://stackoverflow.com/questions/39007243/cannot-open-local-file-chrome-not-allowed-to-load-local-resource*/}
+        {showComment ? (
+          <>
+            <TextInput placeholder="Оставьте свой комментарий"></TextInput>
+            <Button title="Отправить" />
+          </>
+        ) : null}
       </Card>
+      <Button title="Удалить пост" onPress={(e) => onDelete(feed.id, e)} />
+      <Button
+        title="Комментировать"
+        onPress={setShowComment.bind(null, !showComment)}
+      />
     </View>
   );
 }

@@ -61,7 +61,7 @@ export default class Feed {
   delete = async (id) => {
     try {
       this.loading = true;
-      let res = await this.root.api.feed.del({ id: id });
+      let res = await this.root.api.feed.del(id);
       this.loading = false;
     } catch (error) {
       this.root.setError(error);

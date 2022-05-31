@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { View, Text, Button } from "react-native";
 import { TextInput } from "react-native-paper";
 import useStore from "../../hooks/useStore";
+import Upload from "../validation/Upload";
 
 export default function FeedCreate({ navigation }) {
   let [feed] = useStore("feed");
@@ -12,9 +13,10 @@ export default function FeedCreate({ navigation }) {
     setForm({ ...form, [field]: e });
   };
 
-  let create = () => {
-    feed.create(form);
-    feed.getAll();
+  let create = async () => {
+    await feed.create(form);
+    // feed.getAll();
+    navigation.replace("feed");
   };
 
   return (
@@ -30,7 +32,7 @@ export default function FeedCreate({ navigation }) {
         value={form?.desc}
         onChangeText={(text) => setText(text, "desc")}
       />
-
+      <Upload />
       <Button title="Create Feed" onPress={() => create()}></Button>
       <Button
         title="go Back"
