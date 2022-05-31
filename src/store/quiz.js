@@ -42,8 +42,9 @@ export default class Quiz {
   create = async (data) => {
     try {
       this.loading = true;
-      let res = await this.root.api.feed.create(data);
-      currentFeed = res?.data;
+      console.log(this.root.api.quiz, "ALOOO I M HERE");
+      let res = await this.root.api.quiz.create(data);
+      quiz = res?.data;
       this.loading = false;
     } catch (error) {
       this.root.setError(error);
@@ -76,6 +77,6 @@ export default class Quiz {
   constructor(root) {
     makeAutoObservable(this);
     this.root = root;
-    this.api = this.root.api.feed;
+    this.api = this.root.api.quiz;
   }
 }

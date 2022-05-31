@@ -8,9 +8,9 @@ import {
   StyleSheet,
   View,
 } from "react-native";
-import { Button } from "react-native-paper";
+import { Button, FAB } from "react-native-paper";
 
-import quizItem from "./quizItem";
+import QuizItem from "./QuizItem";
 
 import useStore from "../../hooks/useStore";
 // import Spiner from "../Spiner";
@@ -25,13 +25,15 @@ function QuizList({ navigation }) {
   useEffect(() => {
     quiz.getAll();
   }, []);
+
   const renderItem = ({ item }) => (
     <TouchableOpacity
       onLongPress={() => navigation.navigate("quiz_edit", { id: item.id })}
     >
-      <quizItem quiz={item} key={item.id} />
+      <QuizItem key={item.id} quiz={item} />
     </TouchableOpacity>
   );
+
   return (
     <View style={styles.wrap}>
       <>
@@ -45,19 +47,16 @@ function QuizList({ navigation }) {
               }}
             ></Button>
             <FlatList
-              data={quiz?.quizs}
+              data={quiz?.quiz_list}
               renderItem={renderItem}
               keyExtractor={(item) => item.id}
             />
-            <Button
-              icon="camera"
-              mode="contained"
-              onPress={() => {
-                navigation.navigate("upload");
-              }}
-            >
-              UPLOAD
-            </Button>
+            <FAB
+              style={styles.fab}
+              small
+              icon="plus"
+              onPress={() => navigation.navigate("quiz_create")}
+            />
           </>
         )}
       </>
@@ -71,5 +70,11 @@ const styles = StyleSheet.create({
     margin: "5%",
     paddingTop: 5,
     height: "100%",
+  },
+  fab: {
+    position: "absolute",
+    margin: 16,
+    right: 0,
+    bottom: 0,
   },
 });

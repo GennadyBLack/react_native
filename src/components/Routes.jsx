@@ -1,15 +1,18 @@
 // In App.js in a new project
 
 import React, { useEffect } from "react";
+import { observer } from "mobx-react-lite";
 import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+
 import Login from "../screens/Login";
 import Main from "../screens/Main";
 import Profile from "../screens/Profile";
 import Register from "../screens/Register";
 import Feed from "../screens/Feed";
 import Test from "../screens/Test";
-import { observer } from "mobx-react-lite";
+import Quiz from "../screens/Quiz";
+
 import useStore from "../hooks/useStore";
 import { Text, StyleSheet } from "react-native";
 
@@ -50,6 +53,15 @@ function Routes() {
             Upload: "feed/upload",
           },
         },
+        Quiz: {
+          path: "quiz",
+          screens: {
+            QuizList: "quiz_list",
+            QuizCreate: "quiz_create",
+            QuizCurrent: "quiz/:id",
+            QuizEdit: "quiz/:id/edit",
+          },
+        },
         Register: "register",
         Chat: "chat",
       },
@@ -85,6 +97,11 @@ function Routes() {
             <Screen
               name="Test"
               component={Test}
+              options={{ headerShown: false }}
+            />
+            <Screen
+              name="Quiz"
+              component={Quiz}
               options={{ headerShown: false }}
             />
           </>

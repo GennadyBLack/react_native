@@ -14,7 +14,7 @@ export default function QuizCreate({ navigation }) {
 
   let create = () => {
     quiz.create(form);
-    quiz.getAll();
+    // quiz.getAll();
   };
 
   return (
@@ -31,7 +31,7 @@ export default function QuizCreate({ navigation }) {
         onChangeText={(text) => setText(text, "desc")}
       />
 
-      <Button title="Create quiz" onPress={() => create()}></Button>
+      <Button title="Creaute qiz" onPress={() => create()}></Button>
       <Button
         title="go Back"
         onPress={() => navigation.navigate("quizMain")}
