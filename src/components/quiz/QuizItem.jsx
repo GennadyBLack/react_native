@@ -1,11 +1,13 @@
 import React from "react";
 import { View, Text, StyleSheet } from "react-native";
+import { Badge } from "react-native-paper";
 
 export default function QuizItem({ quiz }) {
   return (
     <View style={styles.item_container}>
       <Text>{quiz?.title}</Text>
       <Text>{quiz?.createdAt}</Text>
+      <Badge>{quiz?.questions?.length || 0}</Badge>
     </View>
   );
 }
