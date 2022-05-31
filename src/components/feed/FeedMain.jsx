@@ -67,9 +67,6 @@ function FeedMain({ navigation }) {
 //TODO:поправить скролл
 const styles = StyleSheet.create({
   wrap: {
-    width: "90%",
-    margin: "5%",
-    paddingTop: 5,
     height: "100%",
   },
 });
