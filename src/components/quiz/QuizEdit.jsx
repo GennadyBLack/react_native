@@ -1,16 +1,25 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, StyleSheet, Button, FAB } from "react-native";
+import {
+  View,
+  StyleSheet,
+  Text,
+  Button,
+  FlatList,
+  TouchableOpacity,
+} from "react-native";
 import { observer } from "mobx-react-lite";
 import useStore from "../../hooks/useStore";
 import { Paragraph, Title } from "react-native-paper";
 import Form from "../validation/Form";
 import prepareEdit from "../../helpers/editHelper";
 import QuestionModal from "../question/QuestionModal";
+import QuestionItemList from "../question/QuestionItemList";
 
 export default observer(QuizEdit);
 
 function QuizEdit({ route, navigation }) {
   const [quiz] = useStore("quiz");
+  const [question] = useStore("question");
   const [isEdit, setIsEdit] = useState(false);
 
   useEffect(() => {
@@ -26,11 +35,33 @@ function QuizEdit({ route, navigation }) {
 
     // if (Object.keys(pre).length) quiz.update(route?.params?.id, pre);
   };
+  let remove = async (id, itemId) => {
+    await question?.delete(id, itemId);
+  };
+
+  const renderItem = ({ item }) => (
+    <TouchableOpacity
+    // onPress={() => navigation.navigate("quiz_edit", { id: item.id })}
+    >
+      <QuestionItemList
+        key={item.id}
+        question={item}
+        index={item.id}
+        edit={true}
+        onDelete={() => remove(item.id)}
+      />
+    </TouchableOpacity>
+  );
   return (
     <View style={styles.wrap}>
       {!isEdit ? (
         <>
           <Title>{quiz?.quiz?.title || "Название отсутствует"}</Title>
+          <Text>
+            {quiz?.quiz?.questions?.length
+              ? `${quiz?.quiz?.questions?.length} questions`
+              : "no questions yet"}
+          </Text>
           <Paragraph>{quiz?.quiz?.desc || "Описание отсутствует"}</Paragraph>
         </>
       ) : null}
@@ -38,6 +69,7 @@ function QuizEdit({ route, navigation }) {
         <>
           <Form onSubmit={submit} defaultValues={quiz?.quiz}>
             <Form.Input
+              placeholder="title"
               name="title"
               rules={{
                 required: {
@@ -48,6 +80,7 @@ function QuizEdit({ route, navigation }) {
               }}
             />
             <Form.Input
+              placeholder="desc"
               name="desc"
               rules={{
                 required: {
@@ -57,7 +90,23 @@ function QuizEdit({ route, navigation }) {
                 max: { value: 250, message: "меньше 250" },
               }}
             />
+            <Form.Input
+              name="time"
+              placeholder="time on answer"
+              rules={{
+                required: {
+                  value: true,
+                  message: "Это поле обязательно для заполнения чудик",
+                },
+                max: { value: 250, message: "меньше 250" },
+              }}
+            />
           </Form>
+          <FlatList
+            data={quiz?.quiz?.questions}
+            renderItem={renderItem}
+            keyExtractor={(item) => item.id}
+          />
           <QuestionModal />
         </>
       ) : null}

@@ -54,7 +54,7 @@ export default class Question {
   delete = async (id) => {
     try {
       this.loading = true;
-      let res = await this.api.del({ id: id });
+      let res = await this.api.del(id);
       this.loading = false;
     } catch (error) {
       this.root.setError(error);
