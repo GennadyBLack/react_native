@@ -4,7 +4,6 @@ import { getToken } from "../helpers/storage";
 const apiUrl = process.env.BASE_URL || "http://localhost:8081/api";
 let token = null;
 getToken().then((res) => (token = res));
-console.log(token, "tokentokentokentoken");
 
 const axiosParams = {
   baseURL: `${apiUrl}`,

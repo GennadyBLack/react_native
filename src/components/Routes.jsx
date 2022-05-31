@@ -22,9 +22,7 @@ const { Screen, Navigator } = createBottomTabNavigator();
 
 function Routes() {
   let [auth] = useStore("auth");
-  useEffect(() => {
-    console.log("update");
-  }, [auth.isAuth]);
+  useEffect(() => {}, [auth.isAuth]);
 
   //LINKING CONFIG
   const linking = {
