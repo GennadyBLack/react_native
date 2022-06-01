@@ -9,7 +9,7 @@ export default class Auth {
 
   fetchMe = async () => {
     try {
-      let token = getToken();
+      let token = await getToken();
       if (this?.user?.id || !token) {
         return;
       }
