@@ -8,20 +8,36 @@ export default observer(ErrorPopupList);
 
 function ErrorPopupList() {
   const root = useStore();
-  useEffect(() => {}, [root.errors, mappedErrors]);
 
-  const mappedErrors = root?.errors.length
-    ? root?.errors.map((item, index) => (
-        <ErrorPopup key={index} text={item.message} />
-      ))
-    : null;
+  const errors = root?.errors;
 
-  return <View style={styles.error_container}>{mappedErrors}</View>;
+  useEffect(() => {
+    console.log(errors, "ALOOOO");
+  }, [errors]);
+
+  let remove = (index) => {
+    root.removeError(index);
+  };
+
+  const mappedErrors = root?.errors.length ? (
+    <View style={styles.error_container}>
+      {root?.errors.map((item, index) => (
+        <ErrorPopup
+          key={index}
+          text={item.message}
+          onDelete={() => remove(index)}
+        />
+      ))}
+    </View>
+  ) : null;
+
+  return <>{mappedErrors}</>;
 }
 
 const styles = StyleSheet.create({
   error_container: {
     position: "absolute",
     zIndex: 2,
+    bottom: 50,
   },
 });

@@ -13,6 +13,10 @@ export default class store {
       message: `${error?.message} from: ${methodName ?? ""}`,
     });
   };
+  removeError = (index) => {
+    this.errors = this.errors.filter((item, ind) => ind !== index);
+    console.log(this.errors, "errorrrr");
+  };
 
   constructor() {
     this.api = apis;
