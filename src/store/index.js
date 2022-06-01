@@ -8,8 +8,10 @@ import apis from "../api/api";
 
 export default class store {
   errors = [];
-  setError = (error) => {
-    this.errors.push(error);
+  setError = (error, methodName) => {
+    this.errors.push({
+      message: `${error?.message} from: ${methodName ?? ""}`,
+    });
   };
 
   constructor() {

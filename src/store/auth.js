@@ -23,7 +23,7 @@ export default class Auth {
       });
     } catch (error) {
       console.log(error, "error me");
-      // this.root.setError(error);
+      this.root.setError(error, "auth fetch me");
       this.loading = false;
     }
   };

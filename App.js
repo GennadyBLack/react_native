@@ -1,6 +1,7 @@
 // In App.js in a new project
 
 import { DefaultTheme, Provider as PaperProvider } from "react-native-paper";
+import { StyleSheet } from "react-native-web";
 // import "./src/styles/main.css";
 import React, { useState } from "react";
 import AppLoading from "expo-app-loading";
@@ -8,6 +9,7 @@ import Routes from "./src/components/Routes";
 import store from "./src/store/index";
 import StoreContext from "./src/contexts/store";
 const rootStore = new store();
+import ErrorPopupList from "./src/components/error/ErrorPopupList";
 
 const initialApp = async () => {
   await new Promise((resolve) => {
@@ -43,6 +45,7 @@ function App() {
   return (
     <StoreContext.Provider value={rootStore}>
       <PaperProvider theme={theme}>
+        <ErrorPopupList className="errors" />
         <Routes />
       </PaperProvider>
     </StoreContext.Provider>
