@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 
 import {
   Text,
@@ -36,13 +36,14 @@ function QuizList({ navigation }) {
 
   return (
     <View style={styles.wrap}>
-      <GridList
-        data={[
-          { id: 1, title: "penis", desc: "denis" },
-          { id: 2, title: "denis", desc: "penis" },
-        ]}
-        ItemComponent={QuizItem}
-      />
+      {/*<GridList*/}
+      {/*  data={options}*/}
+      {/*  ItemComponent={QuizItem}*/}
+      {/*  onSave={setOptions.bind(null, [*/}
+      {/*    { id: 3, title: "hehe", desc: "sasai" },*/}
+      {/*    { id: 4, title: "ohohoh", desc: "kudasai" },*/}
+      {/*  ])}*/}
+      {/*/>*/}
       <>
         {quiz?.loading ? null : (
           <>

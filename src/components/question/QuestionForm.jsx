@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { View, StyleSheet } from "react-native";
+import { View, StyleSheet, Button } from "react-native";
 import { observer } from "mobx-react-lite";
 import useStore from "../../hooks/useStore";
 import { useRoute } from "@react-navigation/native";
@@ -10,6 +10,7 @@ export default observer(QuestionForm);
 
 function QuestionForm({ navigation, hideModal }) {
   const [question] = useStore("question");
+  const [answers, setAnswers] = useState([]);
   const route = useRoute();
   console.log(route);
   const submit = async (e) => {
@@ -17,6 +18,21 @@ function QuestionForm({ navigation, hideModal }) {
     await question.create(route?.params?.id, e);
     hideModal();
   };
+
+  const answerInputs = answers?.map((answer) => (
+    <Form.Input
+      name="title"
+      rules={{
+        required: {
+          value: true,
+
+          message: "Это поле обязательно для заполнения чудик",
+        },
+        min: { value: 3, message: "Больше 3" },
+      }}
+    />
+  ));
+
   return (
     <View style={styles.wrap}>
       <>
@@ -30,6 +46,19 @@ function QuestionForm({ navigation, hideModal }) {
               },
               min: { value: 3, message: "Больше 3" },
             }}
+          />
+          {answerInputs}
+          <Button
+            title="Добавить ответ"
+            onPress={(e) =>
+              setAnswers([
+                ...answers,
+                {
+                  quizId: route?.params?.id,
+                  id: answers?.length + 1 || 1,
+                },
+              ])
+            }
           />
         </Form>
       </>
