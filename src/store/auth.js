@@ -13,6 +13,7 @@ export default class Auth {
       if (this?.user?.id || !token) {
         return;
       }
+
       this.loading = true;
       await this?.root?.api?.me?.me({}).then((res) => {
         runInAction(() => {

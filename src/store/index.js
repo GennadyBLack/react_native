@@ -15,7 +15,6 @@ export default class store {
   };
   removeError = (index) => {
     this.errors = this.errors.filter((item, ind) => ind !== index);
-    console.log(this.errors, "errorrrr");
   };
 
   constructor() {

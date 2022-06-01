@@ -19,9 +19,9 @@ function ErrorPopupList() {
     root.removeError(index);
   };
 
-  const mappedErrors = root?.errors.length ? (
+  const mappedErrors = errors.length ? (
     <View style={styles.error_container}>
-      {root?.errors.map((item, index) => (
+      {errors.map((item, index) => (
         <ErrorPopup
           key={index}
           text={item.message}
