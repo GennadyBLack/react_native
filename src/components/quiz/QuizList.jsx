@@ -11,7 +11,7 @@ import {
 import { Button, FAB } from "react-native-paper";
 
 import QuizItem from "./QuizItem";
-
+import GridList from "../grid/GridList";
 import useStore from "../../hooks/useStore";
 // import Spiner from "../Spiner";
 
@@ -30,12 +30,19 @@ function QuizList({ navigation }) {
     <TouchableOpacity
       onPress={() => navigation.navigate("quiz_edit", { id: item.id })}
     >
-      <QuizItem key={item.id} quiz={item} />
+      <QuizItem key={item.id} entry={item} />
     </TouchableOpacity>
   );
 
   return (
     <View style={styles.wrap}>
+      <GridList
+        data={[
+          { id: 1, title: "penis", desc: "denis" },
+          { id: 2, title: "denis", desc: "penis" },
+        ]}
+        ItemComponent={QuizItem}
+      />
       <>
         {quiz?.loading ? null : (
           <>
