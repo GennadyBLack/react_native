@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 
 import {
   Text,
@@ -18,7 +18,12 @@ import useStore from "../../hooks/useStore";
 import { observer } from "mobx-react-lite";
 
 export default observer(QuizList);
-
+const Item = ({ entry }) => (
+  <View>
+    <Text>{entry.title}</Text>
+    <Text>{entry.desc}</Text>
+  </View>
+);
 function QuizList({ navigation }) {
   const [quiz] = useStore("quiz");
 

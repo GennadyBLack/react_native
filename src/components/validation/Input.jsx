@@ -18,6 +18,7 @@ export default function Input({
           <TextInput
             error={fieldState?.error?.message}
             value={value || ""}
+            label={label || ""}
             onChangeText={(value) => onChange(value)}
             {...{
               ...fieldState,

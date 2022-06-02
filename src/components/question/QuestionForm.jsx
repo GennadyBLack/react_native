@@ -5,6 +5,7 @@ import useStore from "../../hooks/useStore";
 import { useRoute } from "@react-navigation/native";
 import Form from "../validation/Form";
 import prepareEdit from "../../helpers/editHelper";
+import FieldArray from "../validation/FieldArray";
 
 export default observer(QuestionForm);
 
@@ -15,13 +16,15 @@ function QuestionForm({ navigation, hideModal }) {
   console.log(route);
   const submit = async (e) => {
     console.log(e);
-    await question.create(route?.params?.id, e);
+    // await question.create(route?.params?.id, e);
     hideModal();
   };
 
-  const answerInputs = answers?.map((answer) => (
+  const answerInputs = answers?.map((answer, index) => (
     <Form.Input
-      name="title"
+      name={`title${index}`}
+      key={answer.id}
+      label={`Введите ответ # ${index + 1}`}
       rules={{
         required: {
           value: true,
@@ -38,7 +41,10 @@ function QuestionForm({ navigation, hideModal }) {
       <>
         <Form onSubmit={submit}>
           <Form.Input
+            style={styles.mb2}
             name="title"
+            mode="outlined"
+            label="Введите вопрос"
             rules={{
               required: {
                 value: true,
@@ -47,19 +53,21 @@ function QuestionForm({ navigation, hideModal }) {
               min: { value: 3, message: "Больше 3" },
             }}
           />
-          {answerInputs}
-          <Button
-            title="Добавить ответ"
-            onPress={(e) =>
-              setAnswers([
-                ...answers,
-                {
-                  quizId: route?.params?.id,
-                  id: answers?.length + 1 || 1,
-                },
-              ])
-            }
-          />
+          <FieldArray name="answers" />
+          {/*{answerInputs}*/}
+          {/*<Button*/}
+          {/*  title="Добавить ответ"*/}
+          {/*  onPress={(e) =>*/}
+          {/*    setAnswers([*/}
+          {/*      ...answers,*/}
+          {/*      {*/}
+          {/*        quizId: route?.params?.id,*/}
+          {/*        id: answers?.length + 1 || 1,*/}
+          {/*        value: "",*/}
+          {/*      },*/}
+          {/*    ])*/}
+          {/*  }*/}
+          {/*/>*/}
         </Form>
       </>
     </View>
@@ -70,5 +78,8 @@ const styles = StyleSheet.create({
     width: "90%",
     margin: "5%",
     paddingTop: 5,
+  },
+  mb2: {
+    marginBottom: "2%",
   },
 });
