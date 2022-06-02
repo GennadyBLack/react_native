@@ -1,9 +1,10 @@
 import React from "react";
-import { View } from "react-native";
+import { View, Button, Text } from "react-native";
 import { observer } from "mobx-react-lite";
 import Form from "../components/validation/Form";
 import Input from "../components/validation/Input";
 import File from "../components/validation/File";
+import Swipe from "../components/Swipe";
 
 export default observer(Test);
 
@@ -26,6 +27,12 @@ function Test({ navigation }) {
           }}
         />
         <File name="file" />
+        <Button title="<-- back" onPress={() => navigation.goBack(null)} />
+        <Swipe onChange={(e) => console.log(e)}>
+          <View style={{ height: 400 }}>
+            <Text>SWIPE ME</Text>
+          </View>
+        </Swipe>
       </Form>
     </View>
   );
