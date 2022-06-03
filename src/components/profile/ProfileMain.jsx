@@ -6,6 +6,7 @@ import { Card, Title, Paragraph } from "react-native-paper";
 import Form from "../validation/Form";
 import prepareEdit from "../../helpers/editHelper";
 import Swipe from "../Swipe";
+import Switch from "../validation/Switch";
 
 export default observer(ProfileMain);
 
@@ -13,7 +14,6 @@ function ProfileMain({ route, navigation }) {
   const [auth] = useStore("auth");
   const [isEdit, setIsEdit] = useState(false);
   const user = auth?.user?.user;
-
   const submit = async (e) => {
     const pre = prepareEdit(e, user);
     await auth?.updateMe(pre);
@@ -62,6 +62,14 @@ function ProfileMain({ route, navigation }) {
                   }}
                 />
                 <Form.File name="avatar" title="Загрузить фото профиля" />
+                {/* {user?.menu
+                  ? user?.menu?.map((item) => {
+                      if (item) {
+                        return <Text>{item}</Text>;
+                      }
+                    })
+                  : null} */}
+                <Switch />
               </Form>
             ) : null}
           </Card.Content>

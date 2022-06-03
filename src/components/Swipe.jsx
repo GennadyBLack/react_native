@@ -3,12 +3,11 @@ import GestureRecognizer from "react-native-swipe-detect";
 
 import { Animated, Button, StyleSheet, View, Text } from "react-native";
 
-const Test = ({ children, start, direction }) => {
+const Test = ({ children, start, direction, duration }) => {
   const value = useRef(new Animated.Value(0)).current;
 
   useEffect(() => {
     if (start) {
-      console.log(direction, "dir - TEST");
       startAnimate();
     }
   }, [start]);
@@ -17,7 +16,7 @@ const Test = ({ children, start, direction }) => {
     Animated.timing(value, {
       toValue: 1000,
       useNativeDriver: true,
-      duration: 1000,
+      duration: duration,
     }).start();
   };
 
@@ -80,12 +79,13 @@ const Test = ({ children, start, direction }) => {
 
 export default function Swipe({
   children,
-  onChange,
   swipeUp,
   swipeDown,
   swipeLeft,
   swipeRight,
   config,
+  change,
+  duration = 1000,
 }) {
   const [start, setStart] = useState(false);
   const [dir, setDir] = useState("");
@@ -97,7 +97,7 @@ export default function Swipe({
 
   let onSwipeUp = () => {
     try {
-      swipeUp();
+      swipeUp ? swipeUp() : null;
     } catch (error) {
       console.log(error);
     }
@@ -105,7 +105,7 @@ export default function Swipe({
 
   let onSwipeDown = () => {
     try {
-      swipeDown();
+      swipeDown ? swipeDown() : null;
     } catch (error) {
       console.log(error);
     }
@@ -113,7 +113,7 @@ export default function Swipe({
 
   let onSwipeLeft = () => {
     try {
-      swipeLeft();
+      swipeLeft ? swipeLeft() : null;
     } catch (error) {
       console.log(error);
     }
@@ -121,7 +121,7 @@ export default function Swipe({
 
   let onSwipeRight = () => {
     try {
-      swipeRight();
+      swipeRight ? swipeRight() : null;
     } catch (error) {
       console.log(error);
     }
@@ -131,7 +131,9 @@ export default function Swipe({
     try {
       setDir(gestureName);
       setStart(true);
-      onChange(gestureName);
+      setTimeout(() => {
+        change(gestureName);
+      }, duration);
     } catch (error) {
       console.log(error);
     }
@@ -146,7 +148,7 @@ export default function Swipe({
       onSwipeRight={() => onSwipeRight()}
       config={config ? config : defaultConfig}
     >
-      <Test start={start} direction={dir}>
+      <Test start={start} direction={dir} duration={duration}>
         {children}
       </Test>
     </GestureRecognizer>

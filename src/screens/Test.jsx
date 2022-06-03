@@ -12,6 +12,9 @@ function Test({ navigation }) {
   const save = (value) => {
     console.log(value, "form form");
   };
+  let tet = (e) => {
+    console.log(e, "ssssssssssssssssssssssssssssssssssss");
+  };
   return (
     <View>
       {/*Form - компонент из которого в чилды типа инпута передаются пропсами эл-ты useForm типа control*/}
@@ -28,7 +31,7 @@ function Test({ navigation }) {
         />
         <File name="file" />
         <Button title="<-- back" onPress={() => navigation.goBack(null)} />
-        <Swipe onChange={(e) => console.log(e)}>
+        <Swipe change={(e) => tet(e)} duration={1000}>
           <View style={{ height: 400 }}>
             <Text>SWIPE ME</Text>
           </View>
