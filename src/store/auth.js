@@ -1,5 +1,5 @@
 import { makeAutoObservable, runInAction } from "mobx";
-import { setToken, getToken } from "../helpers/storage";
+import { setToken, getToken, removeToken } from "../helpers/storage";
 
 export default class Auth {
   user = null;
@@ -10,10 +10,10 @@ export default class Auth {
   fetchMe = async () => {
     try {
       let token = await getToken();
-      if (this?.user?.id || !token) {
+      console.log(typeof token, "tokentokentokentokentokentokentokentoken");
+      if (this?.user?.id || !token || token == "null") {
         return;
       }
-
       this.loading = true;
       await this?.root?.api?.me?.me({}).then((res) => {
         runInAction(() => {
@@ -23,8 +23,8 @@ export default class Auth {
         });
       });
     } catch (error) {
-      await setToken(null);
-      console.log(error, "error me");
+      await removeToken();
+
       this.root.setError(error, "auth fetch me");
       this.loading = false;
     }

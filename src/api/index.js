@@ -4,15 +4,17 @@ import { getToken } from "../helpers/storage";
 const apiUrl = process.env.BASE_URL || "http://localhost:8081/api";
 let token = null;
 getToken().then((res) => (token = res));
-
+console.log(token, "token");
 const axiosParams = {
   baseURL: `${apiUrl}`,
   headers: {
     "Content-Type": "application/json",
     Accept: "application/json",
-    Authorization: `Bearer ${JSON.parse(token || null)}`,
   },
 };
+if (token && token !== "null") {
+  axiosParams.headers.Authorization = `Bearer ${token}`;
+}
 
 const axiosInstance = Axios.create(axiosParams);
 
@@ -20,8 +22,10 @@ axiosInstance.interceptors.request.use(async (config) => {
   await getToken().then((res) => (token = res));
   config.headers = {
     ...config.headers,
-    Authorization: token ? `Bearer ${token}` : null,
   };
+  if (token && token !== "null") {
+    config.headers.Authorization = `Bearer ${token}`;
+  }
   return config;
 });
 
