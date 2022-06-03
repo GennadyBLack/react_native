@@ -54,6 +54,13 @@ const Test = ({ children, start, direction }) => {
       });
       return obj;
     }
+
+    let obj = {};
+    obj.translateX = value.interpolate({
+      inputRange: [0, 100],
+      outputRange: [0, 100],
+    });
+    return obj;
   };
   let dir = translateDirection(direction);
   return (
@@ -141,9 +148,11 @@ export default function Swipe({
       onSwipeLeft={() => onSwipeLeft()}
       onSwipeRight={() => onSwipeRight()}
       config={config ? config : defaultConfig}
-      style={{
-        backgroundColor: "red",
-      }}
+      style={
+        {
+          // backgroundColor: "red",
+        }
+      }
     >
       <Test start={start} direction={dir}>
         {children}
