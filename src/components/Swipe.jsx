@@ -1,5 +1,78 @@
-import React from "react";
+import React, { useRef, useEffect, useState } from "react";
 import GestureRecognizer from "react-native-swipe-detect";
+
+import { Animated, Button, StyleSheet, View, Text } from "react-native";
+
+const Test = ({ children, start, direction }) => {
+  const value = useRef(new Animated.Value(0)).current;
+
+  useEffect(() => {
+    if (start) {
+      console.log(direction, "dir - TEST");
+      startAnimate();
+    }
+  }, [start]);
+
+  const startAnimate = () => {
+    Animated.timing(value, {
+      toValue: 1000,
+      useNativeDriver: true,
+      duration: 1000,
+    }).start();
+  };
+
+  const translateDirection = (direction) => {
+    if (direction == "SWIPE_UP") {
+      let obj = {};
+      obj.translateY = value.interpolate({
+        inputRange: [0, 100],
+        outputRange: [100, 0],
+      });
+      return obj;
+    }
+    if (direction == "SWIPE_DOWN") {
+      let obj = {};
+      obj.translateY = value.interpolate({
+        inputRange: [0, 100],
+        outputRange: [0, 100],
+      });
+      return obj;
+    }
+    if (direction == "SWIPE_LEFT") {
+      let obj = {};
+      obj.translateX = value.interpolate({
+        inputRange: [0, 100],
+        outputRange: [100, 0],
+      });
+      return obj;
+    }
+    if (direction == "SWIPE_RIGHT") {
+      let obj = {};
+      obj.translateX = value.interpolate({
+        inputRange: [0, 100],
+        outputRange: [0, 100],
+      });
+      return obj;
+    }
+  };
+  let dir = translateDirection(direction);
+  return (
+    <Animated.View
+      style={{
+        transform: [
+          {
+            ...dir,
+          },
+        ],
+
+        justifyContent: "center",
+        // backgroundColor: "#4649ad",
+      }}
+    >
+      {children}
+    </Animated.View>
+  );
+};
 
 export default function Swipe({
   children,
@@ -10,6 +83,9 @@ export default function Swipe({
   swipeRight,
   config,
 }) {
+  const [start, setStart] = useState(false);
+  const [dir, setDir] = useState("");
+
   const defaultConfig = {
     velocityThreshold: 0.3,
     directionalOffsetThreshold: 80,
@@ -49,6 +125,8 @@ export default function Swipe({
 
   let onSwipe = (gestureName) => {
     try {
+      setDir(gestureName);
+      setStart(true);
       onChange(gestureName);
     } catch (error) {
       console.log(error);
@@ -67,7 +145,11 @@ export default function Swipe({
         backgroundColor: "red",
       }}
     >
-      {children}
+      <Test start={start} direction={dir}>
+        {children}
+      </Test>
     </GestureRecognizer>
   );
 }
+
+Swipe.Test = Test;
