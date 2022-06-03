@@ -10,7 +10,7 @@ import FieldArray from "../validation/FieldArray";
 export default observer(QuestionForm);
 
 function QuestionForm({ navigation, hideModal }) {
-  const [question] = useStore("question");
+  const [question, answer] = useStore("question", "answer");
   // const [answers, setAnswers] = useState([]);
   const route = useRoute();
   console.log(route);

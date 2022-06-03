@@ -9,7 +9,7 @@ export default function useStore(...list) {
     return list.length > 0
       ? list.map((name) => {
           console.log(stores[name], "stores[name]");
-          return stores.hasOwnProperty(name) ? stores[name] : null;
+          return stores[name] ? stores[name] : null;
         })
       : stores;
   } catch (e) {
