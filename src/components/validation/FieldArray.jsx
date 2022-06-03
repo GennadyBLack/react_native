@@ -6,6 +6,7 @@ import { StyleSheet, View, Button } from "react-native";
 export default function FieldArray({
   name,
   label,
+  appendBtn,
   variant,
   control,
   rules,
@@ -22,10 +23,12 @@ export default function FieldArray({
           <>
             <TextInput
               error={fieldState?.error?.message}
-              name={`test.${index}.lastName`}
-              value={value || ""}
               label={label || ""}
-              onChangeText={(value) => onChange(value)}
+              value={value || item.title}
+              onChangeText={(value) => {
+                console.log(fieldState, "fieldState");
+                onChange(value);
+              }}
               {...{
                 ...fieldState,
                 ...rest,
@@ -36,11 +39,11 @@ export default function FieldArray({
         )}
         rules={rules}
         control={control}
-        name={name}
+        name={`${name}[${index}].title`}
       />
-      <Button type="button" onClick={() => remove(index)}>
-        Delete
-      </Button>
+      {/*<Button type="button" onClick={() => remove(index)}>*/}
+      {/*  Delete*/}
+      {/*</Button>*/}
     </View>
   );
   const items = fields.map((item, index) => field(item, index));
@@ -49,11 +52,11 @@ export default function FieldArray({
       <h1>Hello Boy</h1>
       {items}
       <Button
-        title="APPEND"
+        title={appendBtn}
+        disabled={fields.length === 4}
         type="button"
         onPress={(e) => {
-          console.log(e, "EEEEE");
-          append({ lastName: "luo" });
+          append({ title: "", id: fields.length + 1 });
         }}
       />
     </>

@@ -3,6 +3,16 @@ import { useContext } from "react";
 import storeContext from "../contexts/store";
 
 export default function useStore(...list) {
-  let stores = useContext(storeContext);
-  return list.length > 0 ? list.map((name) => stores[name]) : stores;
+  try {
+    console.log(list);
+    let stores = useContext(storeContext);
+    return list.length > 0
+      ? list.map((name) => {
+          console.log(stores[name], "stores[name]");
+          return stores.hasOwnProperty(name) ? stores[name] : null;
+        })
+      : stores;
+  } catch (e) {
+    console.error(e);
+  }
 }

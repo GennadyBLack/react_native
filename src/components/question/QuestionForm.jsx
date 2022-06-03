@@ -11,30 +11,35 @@ export default observer(QuestionForm);
 
 function QuestionForm({ navigation, hideModal }) {
   const [question] = useStore("question");
-  const [answers, setAnswers] = useState([]);
+  // const [answers, setAnswers] = useState([]);
   const route = useRoute();
   console.log(route);
   const submit = async (e) => {
     console.log(e);
-    // await question.create(route?.params?.id, e);
+    // await question.create(route?.params?.id, { title: e.question });
+    //
+    // for (const ans in e.answers) {
+    //   await answer.create(route?.params?.id, { ans });
+    // }
+
     hideModal();
   };
 
-  const answerInputs = answers?.map((answer, index) => (
-    <Form.Input
-      name={`title${index}`}
-      key={answer.id}
-      label={`Введите ответ # ${index + 1}`}
-      rules={{
-        required: {
-          value: true,
-
-          message: "Это поле обязательно для заполнения чудик",
-        },
-        min: { value: 3, message: "Больше 3" },
-      }}
-    />
-  ));
+  // const answerInputs = answers?.map((answer, index) => (
+  //   <Form.Input
+  //     name={`title${index}`}
+  //     key={answer.id}
+  //     label={`Введите ответ # ${index + 1}`}
+  //     rules={{
+  //       required: {
+  //         value: true,
+  //
+  //         message: "Это поле обязательно для заполнения чудик",
+  //       },
+  //       min: { value: 3, message: "Больше 3" },
+  //     }}
+  //   />
+  // ));
 
   return (
     <View style={styles.wrap}>
@@ -42,7 +47,7 @@ function QuestionForm({ navigation, hideModal }) {
         <Form onSubmit={submit}>
           <Form.Input
             style={styles.mb2}
-            name="title"
+            name="question"
             mode="outlined"
             label="Введите вопрос"
             rules={{
@@ -53,7 +58,7 @@ function QuestionForm({ navigation, hideModal }) {
               min: { value: 3, message: "Больше 3" },
             }}
           />
-          <FieldArray name="answers" />
+          <FieldArray name="answers" appendBtn="Добавить ответ" />
           {/*{answerInputs}*/}
           {/*<Button*/}
           {/*  title="Добавить ответ"*/}
