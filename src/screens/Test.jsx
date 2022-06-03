@@ -31,7 +31,6 @@ function Test({ navigation }) {
         <Swipe onChange={(e) => console.log(e)}>
           <View style={{ height: 400 }}>
             <Text>SWIPE ME</Text>
-            <Swipe.Test></Swipe.Test>
           </View>
         </Swipe>
       </Form>

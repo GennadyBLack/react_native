@@ -71,9 +71,6 @@ const Test = ({ children, start, direction }) => {
             ...dir,
           },
         ],
-
-        justifyContent: "center",
-        // backgroundColor: "#4649ad",
       }}
     >
       {children}
@@ -148,11 +145,6 @@ export default function Swipe({
       onSwipeLeft={() => onSwipeLeft()}
       onSwipeRight={() => onSwipeRight()}
       config={config ? config : defaultConfig}
-      style={
-        {
-          // backgroundColor: "red",
-        }
-      }
     >
       <Test start={start} direction={dir}>
         {children}
