@@ -26,7 +26,6 @@ export default function FieldArray({
               label={label || ""}
               value={value || item.title}
               onChangeText={(value) => {
-                console.log(fieldState, "fieldState");
                 onChange(value);
               }}
               {...{

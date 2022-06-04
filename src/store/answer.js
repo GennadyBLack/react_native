@@ -12,7 +12,9 @@ export default class Answer {
       this.loading = true;
       console.log(this.api, "ALOOO I M HERE");
       let res = await this.api.create(questId, data);
-      this.answer.push(res?.data);
+      if (res && res.data) {
+        this.answer.push(res?.data);
+      }
       this.loading = false;
     } catch (error) {
       this.root.setError(error);

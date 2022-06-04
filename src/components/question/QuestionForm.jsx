@@ -16,11 +16,12 @@ function QuestionForm({ navigation, hideModal }) {
   console.log(route);
   const submit = async (e) => {
     console.log(e);
-    // await question.create(route?.params?.id, { title: e.question });
-    //
-    // for (const ans in e.answers) {
-    //   await answer.create(route?.params?.id, { ans });
-    // }
+    await question.create(route?.params?.id, { title: e.question });
+
+    for (const ans in e.answers) {
+      console.log(ans);
+      await answer.create(route?.params?.id, { title: ans.title });
+    }
 
     hideModal();
   };
