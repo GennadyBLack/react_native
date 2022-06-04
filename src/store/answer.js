@@ -7,11 +7,11 @@ export default class Answer {
   error = null;
   pagination = null;
 
-  create = async (questId, data) => {
+  create = async (data) => {
     try {
       this.loading = true;
       console.log(this.api, "ALOOO I M HERE");
-      let res = await this.api.create(questId, data);
+      let res = await this.api.create(data);
       if (res && res.data) {
         this.answer.push(res?.data);
       }
