@@ -7,7 +7,6 @@ export default function Upload({ value = null, error, onChange, title }) {
   const [image, setImage] = useState(() => (value ? value : null));
   const [tools] = useStore("tools");
 
-  console.log(value, "VAL IMAGE");
   useEffect(() => {
     (async () => {
       if (Platform.OS !== "web") {

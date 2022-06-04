@@ -10,7 +10,6 @@ export default class Auth {
   fetchMe = async () => {
     try {
       let token = await getToken();
-      console.log(typeof token, "tokentokentokentokentokentokentokentoken");
       if (this?.user?.id || !token || token == "null") {
         return;
       }
@@ -35,7 +34,6 @@ export default class Auth {
 
       await this.root.api.auth.login(data).then(async (res) =>
         runInAction(async () => {
-          console.log(res, "res?.data?.token");
           if (res?.data?.token) {
             await setToken(res?.data?.token);
             await this.fetchMe();

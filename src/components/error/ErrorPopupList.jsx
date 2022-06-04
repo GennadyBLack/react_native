@@ -11,9 +11,7 @@ function ErrorPopupList() {
 
   const errors = root?.errors;
 
-  useEffect(() => {
-    console.log(errors, "ALOOOO");
-  }, [errors]);
+  useEffect(() => {}, [errors]);
 
   let remove = (index) => {
     root.removeError(index);

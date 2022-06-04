@@ -6,41 +6,60 @@ import Feed from "../screens/Feed";
 import Test from "../screens/Test";
 import Quiz from "../screens/Quiz";
 
+export const profileMenuList = (userMunu) => {
+  //не выводить в профиле чекбокс если ссылка обязательна
+  return availableLinks
+    .filter((item) => (item.required || !item.auth ? false : true))
+    .map((item, index) => {
+      if (userMunu.includes(item.name)) {
+        return {
+          label: item.name,
+          value: true,
+        };
+      } else {
+        return {
+          label: item.name,
+          value: false,
+        };
+      }
+    });
+};
+
 const availableLinks = [
   {
     name: "Profile",
     component: Profile,
-    public: false,
     auth: true,
     options: { headerShown: false },
+    required: true,
   },
   {
     name: "Test",
-    public: false,
     component: Test,
     auth: true,
     options: { headerShown: false },
+    required: false,
   },
   {
     name: "Feed",
     component: Feed,
-    public: false,
     auth: true,
     options: { headerShown: false },
+    required: false,
   },
   {
     name: "Quiz",
     component: Quiz,
-    public: false,
     auth: true,
     options: { headerShown: false },
+    required: false,
   },
   {
     name: "Login",
     component: Login,
-    public: false,
     auth: false,
     options: { headerShown: false },
+    required: false,
   },
 
   // {
@@ -52,10 +71,10 @@ const availableLinks = [
   // },
   {
     name: "Register",
-    public: false,
     component: Register,
     auth: false,
     options: { headerShown: false },
+    required: false,
   },
 ];
 
@@ -103,14 +122,20 @@ export const linking = {
 
 let filterMenuLinks = (auth, user_links) => {
   return availableLinks.filter((item) => {
-    if (auth && item.auth) {
+    //к роуту нужен доступ и пользователь зашел //
+    //TODO fix this condition + fix error chenge link in profile
+
+    if (
+      (auth && item.auth && item.required && user_links) ||
+      (user_links && user_links.includes(item.name))
+    ) {
       return true;
     }
-    if (item.public) {
+    //не авторизован
+    if ((!auth && !item.auth) || (item.required && !item.auth)) {
       return true;
-    }
-    if (!auth && !item.auth) {
-      return true;
+    } else {
+      return false;
     }
   });
 };
