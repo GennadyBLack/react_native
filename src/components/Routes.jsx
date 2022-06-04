@@ -18,16 +18,18 @@ function Routes() {
   useEffect(() => {}, [auth.isAuth]);
 
   //LINKING CONFIG END
-  let mappedLinks = filterMenuLinks(auth?.isAuth).map((item, inx) => {
-    return (
-      <Screen
-        name={item.name}
-        component={item?.component}
-        options={item?.options}
-        key={inx}
-      />
-    );
-  });
+  let mappedLinks = filterMenuLinks(auth?.isAuth, auth?.user?.user?.menu).map(
+    (item, inx) => {
+      return (
+        <Screen
+          name={item?.name}
+          component={item?.component}
+          options={item?.options}
+          key={inx}
+        />
+      );
+    }
+  );
 
   return (
     <NavigationContainer
