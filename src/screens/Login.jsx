@@ -45,7 +45,7 @@ function Login({ navigation }) {
             password: "tester",
             email: "tester@mail.ru",
           });
-          login();
+          setTimeout(() => login(), 1500);
         }}
         color="#76b5c5"
       />

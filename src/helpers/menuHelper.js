@@ -131,13 +131,13 @@ let filterMenuLinks = (auth = false, user_links = []) => {
       //к роуту нужен доступ и пользователь зашел //
       //TODO fix this condition + fix error chenge link in profile
       if (
-        (auth && item?.auth && item?.required && user_links) ||
-        (user_links && user_links.includes(item?.name))
+        (auth && item?.auth && item?.required && user_links.length) ||
+        (user_links.length && user_links.includes(item?.name))
       ) {
         return true;
       }
       //не авторизован
-      if ((!auth && !item.auth) || (item.required && !item.auth)) {
+      if (!auth && !item.auth) {
         return true;
       } else {
         return false;
