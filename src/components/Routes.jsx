@@ -15,6 +15,7 @@ const { Screen, Navigator } = createBottomTabNavigator();
 
 function Routes() {
   let [auth] = useStore("auth");
+
   useEffect(() => {}, [auth.isAuth]);
 
   //LINKING CONFIG END
@@ -30,7 +31,6 @@ function Routes() {
       );
     }
   );
-  console.log(mappedLinks, "mappedLinks");
 
   return (
     <NavigationContainer

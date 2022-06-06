@@ -1,5 +1,10 @@
 import React from "react";
+import { Text } from "react-native";
 
-function QuizMain() {
-  return <></>;
+export default function QuizMain() {
+  return (
+    <>
+      <Text>HERE</Text>
+    </>
+  );
 }

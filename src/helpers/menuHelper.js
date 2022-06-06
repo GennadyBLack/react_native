@@ -116,6 +116,7 @@ export const linking = {
           QuizCreate: "quiz_create",
           QuizCurrent: "quiz/:id",
           QuizEdit: "quiz/:id/edit",
+          QuizMain: "quiz_start",
         },
       },
       Register: "register",
