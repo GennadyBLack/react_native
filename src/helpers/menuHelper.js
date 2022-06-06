@@ -6,23 +6,27 @@ import Feed from "../screens/Feed";
 import Test from "../screens/Test";
 import Quiz from "../screens/Quiz";
 
-export const profileMenuList = (userMunu) => {
+export const profileMenuList = (userMunu = []) => {
+  try {
+    return availableLinks
+      .filter((item) => (item?.required || !item?.auth ? false : true))
+      .map((item) => {
+        if (Array.isArray(userMunu) && userMunu.includes(item?.name)) {
+          return {
+            label: item.name,
+            value: true,
+          };
+        } else {
+          return {
+            label: item.name,
+            value: false,
+          };
+        }
+      });
+  } catch (error) {
+    console.error(error);
+  }
   //не выводить в профиле чекбокс если ссылка обязательна
-  return availableLinks
-    .filter((item) => (item.required || !item.auth ? false : true))
-    .map((item, index) => {
-      if (userMunu.includes(item.name)) {
-        return {
-          label: item.name,
-          value: true,
-        };
-      } else {
-        return {
-          label: item.name,
-          value: false,
-        };
-      }
-    });
 };
 
 const availableLinks = [
@@ -120,22 +124,25 @@ export const linking = {
   },
 };
 
-let filterMenuLinks = (auth, user_links) => {
+let filterMenuLinks = (auth = false, user_links = []) => {
   return availableLinks.filter((item) => {
-    //к роуту нужен доступ и пользователь зашел //
-    //TODO fix this condition + fix error chenge link in profile
-
-    if (
-      (auth && item.auth && item.required && user_links) ||
-      (user_links && user_links.includes(item.name))
-    ) {
-      return true;
-    }
-    //не авторизован
-    if ((!auth && !item.auth) || (item.required && !item.auth)) {
-      return true;
-    } else {
-      return false;
+    try {
+      //к роуту нужен доступ и пользователь зашел //
+      //TODO fix this condition + fix error chenge link in profile
+      if (
+        (auth && item?.auth && item?.required && user_links) ||
+        (user_links && user_links.includes(item?.name))
+      ) {
+        return true;
+      }
+      //не авторизован
+      if ((!auth && !item.auth) || (item.required && !item.auth)) {
+        return true;
+      } else {
+        return false;
+      }
+    } catch (error) {
+      console.error(error);
     }
   });
 };

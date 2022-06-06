@@ -30,6 +30,7 @@ function Routes() {
       );
     }
   );
+  console.log(mappedLinks, "mappedLinks");
 
   return (
     <NavigationContainer
