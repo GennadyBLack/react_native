@@ -7,6 +7,7 @@ import {
   FlatList,
   TouchableOpacity,
 } from "react-native";
+
 import { observer } from "mobx-react-lite";
 import useStore from "../../hooks/useStore";
 import { Paragraph, Title } from "react-native-paper";
@@ -25,6 +26,7 @@ function QuizEdit({ route, navigation }) {
   useEffect(() => {
     quiz.get(route?.params?.id);
   }, []);
+
   const submit = async (e) => {
     const pre = prepareEdit(e, quiz?.quiz);
     if (Object.keys(pre).length) {
