@@ -31,6 +31,11 @@ export default function Quiz() {
         component={QuizEdit}
         options={{ headerShown: false }}
       />
+      <Screen
+        name="quiz_start"
+        component={QuizMain}
+        options={{ headerShown: false }}
+      />
     </Navigator>
   );
 }

@@ -86,7 +86,7 @@ function ProfileMain({ route, navigation }) {
                   <Switch />
                 </Form>
                 <MenuSwicher
-                  data={profileMenuList(user.menu)}
+                  data={profileMenuList(user?.menu)}
                   onChange={(e, l) => {
                     onMenuChange(e, l);
                   }}

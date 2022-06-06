@@ -20,12 +20,14 @@ import { observer } from "mobx-react-lite";
 export default observer(QuizList);
 const Item = ({ entry }) => (
   <View>
-    <Text>{entry.title}</Text>
-    <Text>{entry.desc}</Text>
+    <Text>{entry?.title}</Text>
+    <Text>{entry?.desc}</Text>
   </View>
 );
 function QuizList({ navigation }) {
   const [quiz] = useStore("quiz");
+  const [auth] = useStore("auth");
+  const user = auth?.user?.user;
 
   useEffect(() => {
     quiz.getAll();
@@ -33,7 +35,11 @@ function QuizList({ navigation }) {
 
   const renderItem = ({ item }) => (
     <TouchableOpacity
-      onPress={() => navigation.navigate("quiz_edit", { id: item.id })}
+      onPress={() => navigation.navigate("quiz_start", { id: item.id })}
+      onLongPress={() => {
+        // if(user && user.id === item.user.id)
+        navigation.navigate("quiz_edit", { id: item.id });
+      }}
     >
       <QuizItem key={item.id} entry={item} />
     </TouchableOpacity>

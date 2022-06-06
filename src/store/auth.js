@@ -76,6 +76,7 @@ export default class Auth {
           this.loading = false;
         });
       });
+      await this.fetchMe();
     } catch (error) {
       console.log(error, "error me");
       // this.root.setError(error);

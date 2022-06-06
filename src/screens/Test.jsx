@@ -5,6 +5,15 @@ import Form from "../components/validation/Form";
 import Input from "../components/validation/Input";
 import File from "../components/validation/File";
 import Swipe from "../components/Swipe";
+import Tabulator from "../components/Tabulator";
+
+function TestHeader() {
+  return (
+    <>
+      <Text>Header</Text>
+    </>
+  );
+}
 
 export default observer(Test);
 
@@ -12,9 +21,7 @@ function Test({ navigation }) {
   const save = (value) => {
     console.log(value, "form form");
   };
-  let tet = (e) => {
-    console.log(e, "ssssssssssssssssssssssssssssssssssss");
-  };
+  let tet = (e) => {};
   return (
     <View>
       {/*Form - компонент из которого в чилды типа инпута передаются пропсами эл-ты useForm типа control*/}
@@ -34,6 +41,7 @@ function Test({ navigation }) {
         <Swipe change={(e) => tet(e)} duration={1000}>
           <View style={{ height: 400 }}>
             <Text>SWIPE ME</Text>
+            <Tabulator Header={TestHeader} />
           </View>
         </Swipe>
       </Form>

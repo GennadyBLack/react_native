@@ -37,6 +37,18 @@ function Login({ navigation }) {
         onPress={() => navigation.navigate("Profile")}
         color="#841584"
       />
+      <Button
+        title="CREDS"
+        onPress={() => {
+          setForm({
+            ...form,
+            password: "tester",
+            email: "tester@mail.ru",
+          });
+          setTimeout(() => login(), 1500);
+        }}
+        color="#76b5c5"
+      />
     </View>
   );
 }
