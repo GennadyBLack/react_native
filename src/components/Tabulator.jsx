@@ -24,12 +24,11 @@ export default function Tabulator({
   return (
     <>
       <View className={customClass}>
-        {currentTab}
-        {Header && <Header />}
+        {/* {Header && <Header data={tabs[currentTab]} />} */}
         {Content && tabs.length && (
           <Content data={tabs[currentTab]} next={setTab} />
         )}
-        {Btns && <Btns />}
+        {/* {Btns && <Btns />} */}
       </View>
     </>
   );

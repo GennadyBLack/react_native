@@ -48,7 +48,7 @@ function Routes() {
   if (!isReady) {
     return (
       <View>
-        <h5>Loading...please wait</h5>
+        <Text>Loading...please wait</Text>
       </View>
     );
   }
