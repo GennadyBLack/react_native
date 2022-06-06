@@ -13,7 +13,6 @@ function QuizMain({ route }) {
   useEffect(() => {
     quiz.get(route?.params?.id);
   }, []);
-  console.log(quiz?.quiz, "quiz");
   return (
     <>
       {quiz?.quiz && (

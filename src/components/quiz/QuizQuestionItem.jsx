@@ -26,6 +26,7 @@ function Answer({ answer, next }) {
             backgroundColor: "white",
             margin: 10,
             justifyContent: "center",
+            alignItems: "center",
           }}
         >
           <Text>{answer?.title}</Text>

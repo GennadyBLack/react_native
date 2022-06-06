@@ -13,14 +13,18 @@ export default function Tabulator({
     return initialTab ? initialTab : 0;
   });
 
-  console.log(tabs, "tabstabs");
   let setTab = (tabInx) => {
-    tabs[tabInx] ? setCurrentTab(tabInx ? tabInx : currentTab + 1) : null;
+    if (tabInx && tabs[tabInx]) {
+      setCurrentTab(tabInx);
+    } else {
+      tabs[currentTab + 1] ? setCurrentTab(currentTab + 1) : null;
+    }
   };
 
   return (
     <>
       <View className={customClass}>
+        {currentTab}
         {Header && <Header />}
         {Content && tabs.length && (
           <Content data={tabs[currentTab]} next={setTab} />
