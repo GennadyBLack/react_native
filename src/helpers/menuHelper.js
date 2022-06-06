@@ -104,8 +104,8 @@ export const linking = {
         screens: {
           FeedMain: "feed",
           FeedCreate: "feed_create",
-          FeedCurrent: "feed/:id",
-          FeedEdit: "feed/:id/edit",
+          FeedCurrent: "feed_current",
+          FeedEdit: "feed_edit",
           Upload: "feed/upload",
         },
       },
@@ -114,8 +114,8 @@ export const linking = {
         screens: {
           QuizList: "quiz_list",
           QuizCreate: "quiz_create",
-          QuizCurrent: "quiz/:id",
-          QuizEdit: "quiz/:id/edit",
+          QuizCurrent: "quiz_current",
+          QuizEdit: "quiz_edit",
           QuizMain: "quiz_start",
         },
       },
