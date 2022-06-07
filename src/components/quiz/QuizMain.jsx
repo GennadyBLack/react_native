@@ -4,6 +4,7 @@ import { observer } from "mobx-react-lite";
 import useStore from "../../hooks/useStore";
 import Tabulator from "../Tabulator";
 import QuizQuestionItem from "./QuizQuestionItem";
+import QuizQuestionHeader from "./QuizQuestionHeader";
 
 export default observer(QuizMain);
 
@@ -16,7 +17,11 @@ function QuizMain({ route }) {
   return (
     <>
       {quiz?.quiz && (
-        <Tabulator Content={QuizQuestionItem} tabs={quiz?.quiz?.questions} />
+        <Tabulator
+          Content={QuizQuestionItem}
+          tabs={quiz?.quiz?.questions}
+          Header={QuizQuestionHeader}
+        />
       )}
     </>
   );

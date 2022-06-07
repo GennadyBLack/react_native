@@ -20,6 +20,7 @@ import tools from "./tools";
 import quiz from "./quiz";
 import question from "./question";
 import answer from "./answer";
+import result from "./result";
 
 const apis = {
   me,
@@ -29,6 +30,7 @@ const apis = {
   quiz,
   question,
   answer,
+  result,
 };
 
 // register();

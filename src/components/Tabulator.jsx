@@ -24,7 +24,7 @@ export default function Tabulator({
   return (
     <>
       <View className={customClass}>
-        {/* {Header && <Header data={tabs[currentTab]} />} */}
+        {Header && tabs.length && <Header data={tabs[currentTab]} />}
         {Content && tabs.length && (
           <Content data={tabs[currentTab]} next={setTab} />
         )}

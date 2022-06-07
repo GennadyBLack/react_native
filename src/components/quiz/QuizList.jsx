@@ -18,16 +18,25 @@ import useStore from "../../hooks/useStore";
 import { observer } from "mobx-react-lite";
 
 export default observer(QuizList);
+
 const Item = ({ entry }) => (
   <View>
     <Text>{entry?.title}</Text>
     <Text>{entry?.desc}</Text>
   </View>
 );
+
 function QuizList({ navigation }) {
   const [quiz] = useStore("quiz");
   const [auth] = useStore("auth");
   const user = auth?.user?.user;
+
+  const startQuiz = async (id) => {
+    //create Result in db
+    await quiz.start(id);
+    //redirect to firs question
+    await navigation.navigate("quiz_start", { id: id });
+  };
 
   useEffect(() => {
     quiz.getAll();
@@ -35,7 +44,9 @@ function QuizList({ navigation }) {
 
   const renderItem = ({ item }) => (
     <TouchableOpacity
-      onPress={() => navigation.navigate("quiz_start", { id: item.id })}
+      onPress={() => {
+        startQuiz(item.id);
+      }}
       onLongPress={() => {
         // if(user && user.id === item.user.id)
         navigation.navigate("quiz_edit", { id: item.id });
