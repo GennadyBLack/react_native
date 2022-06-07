@@ -79,7 +79,8 @@ export default class Quiz {
     try {
       this.loading = true;
       const res = await this.api.start(id);
-      this.result = res;
+      this.result = res.data;
+      this.root.result.setResult(res.data);
       console.log(res, "res from result create");
       this.loading = false;
     } catch (error) {
