@@ -8,8 +8,11 @@ import QuizQuestionHeader from "./QuizQuestionHeader";
 
 export default observer(QuizMain);
 
-function QuizMain({ route }) {
+function QuizMain({ navigation, route }) {
   const [quiz] = useStore("quiz");
+  let redirectToResultPage = (id) => {
+    navigation.navigate("Result", { id: id });
+  };
 
   useEffect(() => {
     quiz.get(route?.params?.id);
@@ -18,6 +21,7 @@ function QuizMain({ route }) {
     <>
       {quiz?.quiz && (
         <Tabulator
+          lastFunction={redirectToResultPage}
           Content={QuizQuestionItem}
           tabs={quiz?.quiz?.questions}
           Header={QuizQuestionHeader}
