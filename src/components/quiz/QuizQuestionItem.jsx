@@ -1,6 +1,8 @@
 import React from "react";
 import { View, Text, TouchableOpacity } from "react-native";
 
+import useStore from "../../hooks/useStore";
+
 export default function QuizQuestionItem({ data, next }) {
   let mappedAnswers = data?.answers
     ? data.answers.map((item, index) => {
@@ -12,12 +14,34 @@ export default function QuizQuestionItem({ data, next }) {
 }
 
 function Answer({ answer, next }) {
+  let [result] = useStore("result");
+  let setQuiestionResult = async (answer) => {
+    let preData = {};
+
+    // if(answer?.right){
+    //   preData
+
+    // }
+
+    answer?.right
+      ? (preData.right = [
+          result?.result?.right ? result.result.right : null,
+          answer.id,
+        ])
+      : (preData.wrong = [
+          result?.result?.wrong ? result.result.wrong : null,
+          answer.id,
+        ]);
+
+    await result.update(result.result.id, preData);
+  };
+
   return (
     <>
       <TouchableOpacity
-        onPress={() => {
-          console.log(answer);
-          next();
+        onPress={async () => {
+          await setQuiestionResult(answer);
+          await next();
         }}
       >
         <View

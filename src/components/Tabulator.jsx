@@ -1,7 +1,10 @@
 import React, { useState } from "react";
 import { View, Text } from "react-native";
+import { isFunction } from "../helpers/utils";
 
 export default function Tabulator({
+  lastFunction,
+  onClose,
   initialTab,
   tabs,
   Header,
@@ -14,6 +17,11 @@ export default function Tabulator({
   });
 
   let setTab = (tabInx) => {
+    if (currentTab == tabs?.length) {
+      isFunction(lastFunction());
+      return;
+    }
+
     if (tabInx && tabs[tabInx]) {
       setCurrentTab(tabInx);
     } else {
@@ -28,7 +36,7 @@ export default function Tabulator({
         {Content && tabs.length && (
           <Content data={tabs[currentTab]} next={setTab} />
         )}
-        {/* {Btns && <Btns />} */}
+        {Btns && <Btns />}
       </View>
     </>
   );
