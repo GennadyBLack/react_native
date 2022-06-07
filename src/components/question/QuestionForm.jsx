@@ -11,42 +11,28 @@ export default observer(QuestionForm);
 
 function QuestionForm({ navigation, hideModal }) {
   const [question, answer] = useStore("question", "answer");
-  // const [answers, setAnswers] = useState([]);
+  const [rightId, setRightId] = useState(false);
   const route = useRoute();
   console.log(route);
+
   const submit = async (e) => {
     console.log(e);
     await question.create(route?.params?.id, {
       title: e.question,
     });
     for (const ans of e.answers) {
-      console.log(ans);
+      console.log(ans.id, rightId);
       await answer.create({
         id: question?.question?.id,
         data: {
           title: ans.title,
+          right: ans.id == rightId,
         },
       });
     }
 
     hideModal();
   };
-
-  // const answerInputs = answers?.map((answer, index) => (
-  //   <Form.Input
-  //     name={`title${index}`}
-  //     key={answer.id}
-  //     label={`Введите ответ # ${index + 1}`}
-  //     rules={{
-  //       required: {
-  //         value: true,
-  //
-  //         message: "Это поле обязательно для заполнения чудик",
-  //       },
-  //       min: { value: 3, message: "Больше 3" },
-  //     }}
-  //   />
-  // ));
 
   return (
     <View style={styles.wrap}>
@@ -65,21 +51,12 @@ function QuestionForm({ navigation, hideModal }) {
               min: { value: 3, message: "Больше 3" },
             }}
           />
-          <FieldArray name="answers" appendBtn="Добавить ответ" />
-          {/*{answerInputs}*/}
-          {/*<Button*/}
-          {/*  title="Добавить ответ"*/}
-          {/*  onPress={(e) =>*/}
-          {/*    setAnswers([*/}
-          {/*      ...answers,*/}
-          {/*      {*/}
-          {/*        quizId: route?.params?.id,*/}
-          {/*        id: answers?.length + 1 || 1,*/}
-          {/*        value: "",*/}
-          {/*      },*/}
-          {/*    ])*/}
-          {/*  }*/}
-          {/*/>*/}
+          <FieldArray
+            name="answers"
+            appendBtn="Добавить ответ"
+            label="Верный ответ"
+            switchAction={setRightId}
+          />
         </Form>
       </>
     </View>
