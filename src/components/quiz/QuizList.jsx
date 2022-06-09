@@ -37,17 +37,15 @@ function QuizList({ navigation }) {
     //redirect to firs question
     await navigation.navigate("quiz_start", { id: id });
   };
-  const query = {
-    order: { id: "desc" },
-  };
+
   useEffect(() => {
     quiz.getAll({
       params: {
-        filter: {
-          title: "qwerty",
-        },
         order: {
           id: "asc",
+          questions: {
+            id: "desc",
+          },
         },
       },
     });
