@@ -38,14 +38,15 @@ function QuizList({ navigation }) {
     await navigation.navigate("quiz_start", { id: id });
   };
 
+  //для вложенного сортинга через seq-search-builder нужно в объект order передать объект '[поле из модели].[поле для сортировки]:"desc/asc"'
+  //"questions.id": "desc"
+  // это в seq-search-builder превратится в понятный для sequilize массив вида ["questions","id","desc"]
   useEffect(() => {
     quiz.getAll({
       params: {
         order: {
           id: "asc",
-          questions: {
-            id: "desc",
-          },
+          "questions.id": "desc",
         },
       },
     });
