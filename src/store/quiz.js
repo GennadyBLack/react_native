@@ -9,10 +9,11 @@ export default class Quiz {
   result = null;
   pagination = null;
 
-  getAll = async () => {
+  getAll = async (config = {}) => {
     try {
       this.loading = true;
-      await this?.root?.api?.quiz.getAll({}).then((res) => {
+      console.log(config, "config");
+      await this?.root?.api?.quiz.getAll(config).then((res) => {
         runInAction(() => {
           this.quiz_list = res?.data?.data;
           this.pagination = res?.data?.paginator;
