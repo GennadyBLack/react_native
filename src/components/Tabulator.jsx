@@ -32,8 +32,8 @@ export default function Tabulator({
   return (
     <>
       <View className={customClass}>
-        {Header && tabs.length && <Header data={tabs[currentTab]} />}
-        {Content && tabs.length && (
+        {Header && tabs?.length && <Header data={tabs[currentTab]} />}
+        {Content && tabs?.length && (
           <Content data={tabs[currentTab]} next={setTab} />
         )}
         {Btns && <Btns />}

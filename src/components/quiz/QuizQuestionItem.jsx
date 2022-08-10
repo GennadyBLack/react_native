@@ -24,14 +24,12 @@ function Answer({ answer, next }) {
     // }
 
     answer?.right
-      ? (preData.right = [
-          result?.result?.right ? result.result.right : null,
-          answer.id,
-        ])
-      : (preData.wrong = [
-          result?.result?.wrong ? result.result.wrong : null,
-          answer.id,
-        ]);
+      ? (preData.right = result?.result?.right
+          ? [...result.result.right, answer.id]
+          : [answer.id])
+      : (preData.wrong = result?.result?.wrong
+          ? [...result.result.wrong, answer.id]
+          : [answer.id]);
 
     await result.update(result.result.id, preData);
   };
