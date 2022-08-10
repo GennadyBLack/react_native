@@ -1,20 +1,30 @@
 import React, { useState } from "react";
 import { View, StyleSheet, Button, TextInput } from "react-native";
 import { Card, Title, Paragraph } from "react-native-paper";
+import Icon from "../base/Icon";
+import MenuToggler from "../menu/MenuToggler";
 
 export default function FeedItem({ feed, onDelete }) {
   const [showComment, setShowComment] = useState(false);
 
+  const menuList = [{ title: "delete", onPress: () => {} }];
+
   return (
     <View style={styles.item}>
       <Card>
-        {/* <Card.Title
-          title="Card Title"
-          subtitle="Card Subtitle"
-          left={feed.title}
-        /> */}
         <Card.Content>
-          <Title>{feed?.title}</Title>
+          <Title>
+            {feed?.title}
+            <MenuToggler
+              anchor={
+                <Icon
+                  source={Icon?.sources?.base?.menuDot}
+                  style={{ height: "20px", width: "20px" }}
+                />
+              }
+              items={menuList}
+            />
+          </Title>
           <Paragraph>{feed?.desc}</Paragraph>
         </Card.Content>
         <Card.Cover source={{ uri: "https://picsum.photos/700" }} />
