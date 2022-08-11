@@ -1,31 +1,45 @@
-import React, {useEffect} from "react";
+import React, { useEffect, useState } from "react";
 import { View, Text, TouchableOpacity } from "react-native";
 
 import useStore from "../../hooks/useStore";
 
 export default function QuizQuestionItem({ data, next }) {
-    let [result] = useStore("result");
-   useEffect(() => {
-       const resultId = result?.result?.id;
-       if (!resultId) {
-           await result.create(result.result.id, preData);
-       }
-   })
+  let [result, quiz] = useStore("result", "quiz");
+  useEffect(() => {
+    // console.log(quiz.quiz.id, "quiz");
+    // console.log(result, "result");
+    const fetchResult = async () => {
+      await result.getAll({
+        params: {
+          filter: {
+            quizId: 2,
+            userId: 1,
+          },
+          limit: 100,
+        },
+      });
+    };
+    // const createResult = async () => {
+    //   await result.create({ quizId: quiz?.quiz?.id });
+    // };
+    if (!result?.result?.id) {
+      fetchResult();
+    }
+  }, []);
 
   let mappedAnswers = data?.answers
     ? data.answers.map((item, index) => {
-        return <Answer answer={item} key={index} next={next} resultId={} quizId={} />;
+        return <Answer answer={item} key={index} next={next} result={result} />;
       })
     : null;
 
   return <>{mappedAnswers}</>;
 }
 
-function Answer({ answer, next, resultId, quizId }) {
-
+function Answer({ answer, next, result }) {
   let setQuiestionResult = async (answer) => {
+    const resultObj = result?.result;
     let preData = {};
-
 
     // if(answer?.right){
     //   preData
@@ -42,16 +56,16 @@ function Answer({ answer, next, resultId, quizId }) {
     // тяжело читать :(
 
     if (answer?.right) {
-      preData.right = result?.result?.right
-        ? [...result.result.right, answer.id]
+      preData.right = resultObj?.right
+        ? [...resultObj.right, answer.id]
         : [answer.id];
     } else {
-      preData.wrong = result?.result?.wrong
-        ? [...result.result.wrong, answer.id]
+      preData.wrong = resultObj?.wrong
+        ? [...resultObj.wrong, answer.id]
         : [answer.id];
     }
 
-    await result.update(result.result.id, preData);
+    await result.update(resultObj.id, preData);
   };
 
   return (
