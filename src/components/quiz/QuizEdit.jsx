@@ -41,6 +41,11 @@ function QuizEdit({ route, navigation }) {
     await question?.delete(id, itemId);
   };
 
+  let quizRemove = async (id) => {
+    console.log(id);
+    await quiz?.delete(id);
+  };
+
   const renderItem = ({ item }) => (
     <TouchableOpacity
     // onPress={() => navigation.navigate("quiz_edit", { id: item.id })}
@@ -119,6 +124,11 @@ function QuizEdit({ route, navigation }) {
           onPress={setIsEdit.bind(null, !isEdit)}
         ></Button>
       ) : null}
+      <Button
+        style={styles.deleteBtn}
+        title="Удалить"
+        onPress={() => quizRemove(quiz?.quiz?.id)}
+      ></Button>
     </View>
   );
 }
@@ -128,5 +138,9 @@ const styles = StyleSheet.create({
     // margin: "5%",
     // paddingTop: 5,
     height: "100%",
+  },
+  deleteBtn: {
+    marginTop: 15,
+    backgroundColor: "red",
   },
 });

@@ -57,7 +57,7 @@ export default class Quiz {
   delete = async (id) => {
     try {
       this.loading = true;
-      await this.root.api.quiz.del({ id: id });
+      await this.root.api.quiz.del(id);
       this.loading = false;
     } catch (error) {
       this.root.setError(error);
