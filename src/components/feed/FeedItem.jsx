@@ -7,24 +7,39 @@ import MenuToggler from "../menu/MenuToggler";
 export default function FeedItem({ feed, onDelete }) {
   const [showComment, setShowComment] = useState(false);
 
-  const menuList = [{ title: "delete", onPress: () => {} }];
+  const menuList = [
+    {
+      permission: ["owner"],
+      title: "delete",
+      onPress: (e) => onDelete(feed.id, e),
+      // icon:
+      class: "test",
+    },
+    {
+      permission: ["owner"],
+      title: "edit",
+      onPress: () => {
+        console.log("idit");
+      },
+      class: "test",
+    },
+  ];
 
   return (
-    <View style={styles.item}>
+    <View>
       <Card>
-        <Card.Content>
-          <Title>
-            {feed?.title}
-            <MenuToggler
-              anchor={
-                <Icon
-                  source={Icon?.sources?.base?.menuDot}
-                  style={{ height: "20px", width: "20px" }}
-                />
-              }
-              items={menuList}
+        <MenuToggler
+          anchor={
+            <Icon
+              source={Icon?.sources?.base?.menuDot}
+              style={{ height: "20px", width: "20px" }}
             />
-          </Title>
+          }
+          items={menuList}
+          style={styles.topMenu}
+        />
+        <Card.Content style={styles.item}>
+          <Title>{feed?.title}</Title>
           <Paragraph>{feed?.desc}</Paragraph>
         </Card.Content>
         <Card.Cover source={{ uri: "https://picsum.photos/700" }} />
@@ -36,7 +51,6 @@ export default function FeedItem({ feed, onDelete }) {
           </>
         ) : null}
       </Card>
-      <Button title="Удалить пост" onPress={(e) => onDelete(feed.id, e)} />
       <Button
         title="Комментировать"
         onPress={setShowComment.bind(null, !showComment)}
@@ -48,7 +62,14 @@ export default function FeedItem({ feed, onDelete }) {
 const styles = StyleSheet.create({
   item: {
     width: "90%",
+    // pointerEvents: "none",
     marginHorizontal: "5%",
     marginVertical: "1%",
+  },
+  topMenu: {
+    zIndex: 100 + "!important",
+    top: 100,
+    backgroundColor: "blue",
+    position: "absolute",
   },
 });
