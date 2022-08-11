@@ -8,10 +8,10 @@ export default class Result {
   error = null;
   pagination = null;
 
-  getAll = async () => {
+  getAll = async (config = {}) => {
     try {
       this.loading = true;
-      await this?.root?.api?.result.getAll({}).then((res) => {
+      await this?.root?.api?.result.getAll(config).then((res) => {
         runInAction(() => {
           this.result_list = res?.data?.data;
           this.pagination = res?.data?.paginator;
