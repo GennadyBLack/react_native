@@ -9,7 +9,9 @@ const MenuToggler = ({ items, anchor }) => {
 
   const toggleButton = () => {
     return anchor ? (
-      <Button onPress={openMenu}>{anchor}</Button>
+      <Button onPress={openMenu} style={{ zIndex: 10000 }}>
+        {anchor}
+      </Button>
     ) : (
       <Button onPress={openMenu}>Show menu</Button>
     );
@@ -19,18 +21,31 @@ const MenuToggler = ({ items, anchor }) => {
     return <div>no</div>;
   }
   return (
-    <Provider>
-      <View className="menu-toggler">
-        <Menu visible={visible} onDismiss={closeMenu} anchor={toggleButton()}>
-          <div>sdsd</div>
-          {/* {items.map((item, idx) => {
-            <Menu.Item
-              key={idx}
-              {...item.props}
-              style={styles.menuItem}
-              className="aloo"
-            />;
-          })} */}
+    <Provider style={styles.index}>
+      <View
+        style={{
+          zIndex: 1000000,
+        }}
+      >
+        <Menu
+          visible={visible}
+          onDismiss={closeMenu}
+          anchor={toggleButton()}
+          style={styles.menu}
+        >
+          {items.map((item, idx) => {
+            return (
+              <View style={{ zIndex: 10000 + "!important" }}>
+                {item?.icon ?? null}
+                <Menu.Item
+                  key={idx}
+                  title={item.title}
+                  onPress={item.onPress}
+                  style={styles?.menuItem}
+                />
+              </View>
+            );
+          })}
         </Menu>
       </View>
     </Provider>
@@ -39,8 +54,15 @@ const MenuToggler = ({ items, anchor }) => {
 
 const styles = StyleSheet.create({
   menuItem: {
-    width: "20px",
-    height: "20px",
+    zIndex: 1000 + "!important",
+  },
+  menu: {
+    backgroundColor: "red",
+    zIndex: 1000000000 + "!important",
+    left: "30%",
+  },
+  index: {
+    zIndex: 10000 + "!important",
   },
 });
 
