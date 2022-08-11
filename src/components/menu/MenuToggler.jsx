@@ -35,7 +35,7 @@ const MenuToggler = ({ items, anchor }) => {
         >
           {items.map((item, idx) => {
             return (
-              <View style={{ zIndex: 10000 + "!important" }}>
+              <View style={{ zIndex: 10000 }}>
                 {item?.icon ?? null}
                 <Menu.Item
                   key={idx}
@@ -54,15 +54,15 @@ const MenuToggler = ({ items, anchor }) => {
 
 const styles = StyleSheet.create({
   menuItem: {
-    zIndex: 1000 + "!important",
+    zIndex: 1000,
   },
   menu: {
     backgroundColor: "red",
-    zIndex: 1000000000 + "!important",
+    zIndex: 1000000000,
     left: "30%",
   },
   index: {
-    zIndex: 10000 + "!important",
+    zIndex: 10000,
   },
 });
 

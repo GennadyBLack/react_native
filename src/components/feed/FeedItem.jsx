@@ -67,7 +67,7 @@ const styles = StyleSheet.create({
     marginVertical: "1%",
   },
   topMenu: {
-    zIndex: 100 + "!important",
+    zIndex: 100,
     top: 100,
     backgroundColor: "blue",
     position: "absolute",
