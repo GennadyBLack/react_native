@@ -6,5 +6,6 @@ const result = {
   create: async (data) => api.post("results", data),
   update: async (id, data) => api.patch(`results/${id}`, data),
   del: async (id) => api.delete(`results/${id}`),
+  clearResults: async () => api.delete(`results`),
 };
 export default result;

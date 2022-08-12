@@ -19,7 +19,7 @@ import QuestionItemList from "../question/QuestionItemList";
 export default observer(QuizEdit);
 
 function QuizEdit({ route, navigation }) {
-  const [quiz] = useStore("quiz");
+  const [quiz, result] = useStore("quiz", "result");
   const [question] = useStore("question");
   const [isEdit, setIsEdit] = useState(false);
 
@@ -44,6 +44,9 @@ function QuizEdit({ route, navigation }) {
   let quizRemove = async (id) => {
     console.log(id);
     await quiz?.delete(id);
+  };
+  let clearResults = async () => {
+    await result?.clearResults();
   };
 
   const renderItem = ({ item }) => (
@@ -128,6 +131,11 @@ function QuizEdit({ route, navigation }) {
         style={styles.deleteBtn}
         title="Удалить"
         onPress={() => quizRemove(quiz?.quiz?.id)}
+      ></Button>
+      <Button
+        style={styles.deleteBtn}
+        title="Очистить результаты"
+        onPress={clearResults}
       ></Button>
     </View>
   );

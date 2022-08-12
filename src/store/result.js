@@ -62,6 +62,17 @@ export default class Result {
       this.loading = false;
     }
   };
+
+  clearResults = async () => {
+    try {
+      this.loading = true;
+      await this.root.api.result.clearResults();
+      this.loading = false;
+    } catch (error) {
+      this.root.setError(error);
+      this.loading = false;
+    }
+  };
   update = async (id, data) => {
     try {
       this.loading = true;
