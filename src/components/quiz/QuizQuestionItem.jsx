@@ -19,12 +19,19 @@ export default function QuizQuestionItem({ data, next }) {
         },
       });
     };
+    const createResult = async () => {
+      await result.create({ quizId: quiz?.quiz?.id });
+    };
     // const createResult = async () => {
     //   await result.create({ quizId: quiz?.quiz?.id });
     // };
-    if (!result?.result?.id) {
-      fetchResult();
+    fetchResult();
+    const resultList = result?.result_list;
+    if (!resultList?.length) {
+      createResult();
     }
+    // if (!result?.result?.id) {
+    // }
   }, []);
 
   let mappedAnswers = data?.answers
