@@ -5,6 +5,7 @@ import useStore from "../../hooks/useStore";
 
 export default function QuizQuestionItem({ data, next }) {
   let [result, quiz] = useStore("result", "quiz");
+  let resultList;
   useEffect(() => {
     // console.log(quiz.quiz.id, "quiz");
     // console.log(result, "result");
@@ -18,18 +19,23 @@ export default function QuizQuestionItem({ data, next }) {
           limit: 100,
         },
       });
+
+      console.log(result?.result_list, "res.res_list");
+      resultList = result?.result_list;
+      console.log(resultList);
+      if (!resultList.length) {
+        console.log("jopka");
+      }
     };
     const createResult = async () => {
       await result.create({ quizId: quiz?.quiz?.id });
     };
-    // const createResult = async () => {
-    //   await result.create({ quizId: quiz?.quiz?.id });
-    // };
+
     fetchResult();
-    const resultList = result?.result_list;
-    if (!resultList?.length) {
-      createResult();
-    }
+    console.log(resultList, "resList");
+    // if (!resultList?.length) {
+    //   createResult();
+    // }
     // if (!result?.result?.id) {
     // }
   }, []);
