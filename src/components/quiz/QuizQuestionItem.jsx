@@ -4,54 +4,21 @@ import { View, Text, TouchableOpacity } from "react-native";
 import useStore from "../../hooks/useStore";
 
 export default function QuizQuestionItem({ data, next }) {
-  let [result, quiz] = useStore("result", "quiz");
-  let resultList;
-  useEffect(() => {
-    // console.log(quiz.quiz.id, "quiz");
-    // console.log(result, "result");
-    const fetchResult = async () => {
-      await result.getAll({
-        params: {
-          filter: {
-            quizId: 2,
-            userId: 1,
-          },
-          limit: 100,
-        },
-      });
-
-      console.log(result?.result_list, "res.res_list");
-      resultList = result?.result_list;
-      console.log(resultList);
-      if (!resultList.length) {
-        console.log("jopka");
-      }
-    };
-    const createResult = async () => {
-      await result.create({ quizId: quiz?.quiz?.id });
-    };
-
-    fetchResult();
-    console.log(resultList, "resList");
-    // if (!resultList?.length) {
-    //   createResult();
-    // }
-    // if (!result?.result?.id) {
-    // }
-  }, []);
 
   let mappedAnswers = data?.answers
     ? data.answers.map((item, index) => {
-        return <Answer answer={item} key={index} next={next} result={result} />;
+        return <Answer answer={item} key={index} next={next} />;
       })
     : null;
 
   return <>{mappedAnswers}</>;
 }
 
-function Answer({ answer, next, result }) {
+function Answer({ answer, next}) {
+    const [result] = useStore('result');
   let setQuiestionResult = async (answer) => {
     const resultObj = result?.result;
+    console.log(resultObj);
     let preData = {};
 
     // if(answer?.right){
