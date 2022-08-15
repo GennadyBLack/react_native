@@ -28,16 +28,6 @@ export default function FeedItem({ feed, onDelete }) {
   return (
     <View>
       <Card>
-        <MenuToggler
-          anchor={
-            <Icon
-              source={Icon?.sources?.base?.menuDot}
-              style={{ height: "20px", width: "20px" }}
-            />
-          }
-          items={menuList}
-          style={styles.topMenu}
-        />
         <Card.Content style={styles.item}>
           <Title>{feed?.title}</Title>
           <Paragraph>{feed?.desc}</Paragraph>
@@ -50,10 +40,21 @@ export default function FeedItem({ feed, onDelete }) {
             <Button title="Отправить" />
           </>
         ) : null}
+        <Card.Actions></Card.Actions>
       </Card>
       <Button
         title="Комментировать"
         onPress={setShowComment.bind(null, !showComment)}
+      />
+      <MenuToggler
+        anchor={
+          <Icon
+            source={Icon?.sources?.base?.menuDot}
+            style={{ height: "20px", width: "20px" }}
+          />
+        }
+        items={menuList}
+        // style={styles.topMenu}
       />
     </View>
   );

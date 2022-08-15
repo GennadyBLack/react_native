@@ -57,7 +57,6 @@ const styles = StyleSheet.create({
     zIndex: 1000,
   },
   menu: {
-    backgroundColor: "red",
     zIndex: 1000000000,
     left: "30%",
   },
