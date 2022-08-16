@@ -17,7 +17,7 @@ export default function Tabulator({
   });
 
   let setTab = (tabInx) => {
-    if (currentTab == tabs?.length) {
+    if (currentTab == tabs?.length - 1) {
       isFunction(lastFunction());
       return;
     }
