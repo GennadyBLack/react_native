@@ -4,7 +4,6 @@ import { View, Text, TouchableOpacity } from "react-native";
 import useStore from "../../hooks/useStore";
 
 export default function QuizQuestionItem({ data, next }) {
-
   let mappedAnswers = data?.answers
     ? data.answers.map((item, index) => {
         return <Answer answer={item} key={index} next={next} />;
@@ -14,8 +13,8 @@ export default function QuizQuestionItem({ data, next }) {
   return <>{mappedAnswers}</>;
 }
 
-function Answer({ answer, next}) {
-    const [result] = useStore('result');
+function Answer({ answer, next }) {
+  const [result] = useStore("result");
   let setQuiestionResult = async (answer) => {
     const resultObj = result?.result;
     console.log(resultObj);
