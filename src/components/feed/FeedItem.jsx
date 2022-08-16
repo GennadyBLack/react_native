@@ -4,9 +4,10 @@ import { Card, Title, Paragraph } from "react-native-paper";
 import Icon from "../base/Icon";
 import MenuToggler from "../menu/MenuToggler";
 
-export default function FeedItem({ feed, onDelete }) {
+export default function FeedItem({ feed, onDelete, ...props }) {
   const [showComment, setShowComment] = useState(false);
 
+  console.log(props, "navigation");
   const menuList = [
     {
       permission: ["owner"],
@@ -19,14 +20,18 @@ export default function FeedItem({ feed, onDelete }) {
       permission: ["owner"],
       title: "edit",
       onPress: () => {
-        console.log("idit");
+        try {
+          navigation.navigate("feed_edit", { id: feed.id });
+        } catch (error) {
+          console.log(error);
+        }
       },
       class: "test",
     },
   ];
 
   return (
-    <View>
+    <View style={{ padding: "30px" }}>
       <Card>
         <Card.Content style={styles.item}>
           <Title>{feed?.title}</Title>

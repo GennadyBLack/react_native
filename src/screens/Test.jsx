@@ -6,6 +6,7 @@ import Input from "../components/validation/Input";
 import File from "../components/validation/File";
 import Swipe from "../components/Swipe";
 import Tabulator from "../components/Tabulator";
+import ModalSwipe from "../components/base/ModalSwipe";
 
 function TestHeader() {
   return (
@@ -45,6 +46,9 @@ function Test({ navigation }) {
           </View>
         </Swipe>
       </Form>
+      <ModalSwipe closeOnDown>
+        <div>aaasdasdasd</div>
+      </ModalSwipe>
     </View>
   );
 }

@@ -7,6 +7,7 @@ import Question from "./question";
 import Answer from "./answer";
 import apis from "../api/api";
 import Result from "./result";
+import Modal from "./modal";
 
 export default class store {
   errors = [];
@@ -22,6 +23,7 @@ export default class store {
   constructor() {
     this.api = apis;
     this.feed = new Feed(this);
+    this.modal = new Modal(this);
     this.storage = window.localStorage;
     this.todos = new Todos(this);
     this.auth = new Auth(this);

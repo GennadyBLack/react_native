@@ -13,7 +13,6 @@ import { Button } from "react-native-paper";
 import FeedItem from "./FeedItem";
 
 import useStore from "../../hooks/useStore";
-// import Spiner from "../Spiner";
 
 import { observer } from "mobx-react-lite";
 
@@ -46,7 +45,11 @@ function FeedMain({ navigation }) {
             <Button
               title="Create"
               onPress={() => {
-                navigation.navigate("feed_create");
+                try {
+                  navigation?.navigate("feed_create");
+                } catch (error) {
+                  console.log(error);
+                }
               }}
             ></Button>
             <FlatList

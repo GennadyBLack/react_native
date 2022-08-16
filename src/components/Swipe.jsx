@@ -55,6 +55,7 @@ const Test = ({ children, start, direction, duration }) => {
     }
 
     let obj = {};
+
     obj.translateX = value.interpolate({
       inputRange: [0, 100],
       outputRange: [0, 100],
@@ -62,6 +63,7 @@ const Test = ({ children, start, direction, duration }) => {
     return obj;
   };
   let dir = translateDirection(direction);
+
   return (
     <Animated.View
       style={{

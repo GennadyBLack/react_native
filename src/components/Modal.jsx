@@ -1,15 +1,20 @@
 import * as React from "react";
 import { Modal as M, Portal, FAB, Button, Provider } from "react-native-paper";
 import { StyleSheet } from "react-native";
-export default function Modal({ children, btns }) {
+export default function Modal({ children, btns, closeOnSwipeDown }) {
   const [visible, setVisible] = React.useState(false);
+
   const showModal = () => setVisible(true);
   const hideModal = () => setVisible(false);
+
   const containerStyle = {
     backgroundColor: "white",
     padding: 5,
     width: "90%",
     marginHorizontal: "auto",
+    margin: "0 auto",
+    height: "auto",
+    minHeight: "450px",
   };
 
   return (
