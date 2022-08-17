@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Text } from "react-native";
+import { Button, Text } from "react-native";
 import { observer } from "mobx-react-lite";
 import useStore from "../../hooks/useStore";
 import Tabulator from "../Tabulator";
@@ -11,7 +11,8 @@ export default observer(QuizMain);
 function QuizMain({ navigation, route }) {
   const [quiz] = useStore("quiz");
   let redirectToResultPage = (id) => {
-    navigation.navigate("Result", { id: id });
+    // navigation.navigate("Result", { id: id });
+    navigation.navigate("Quiz", { screen: "QuizMain" });
   };
 
   useEffect(() => {

@@ -1,16 +1,27 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, TouchableOpacity } from "react-native";
+import { View, Text, TouchableOpacity, Button } from "react-native";
 
 import useStore from "../../hooks/useStore";
+import { useNavigation } from "@react-navigation/native";
+import QuizList from "./QuizList";
 
 export default function QuizQuestionItem({ data, next }) {
+  const navigation = useNavigation();
   let mappedAnswers = data?.answers
     ? data.answers.map((item, index) => {
         return <Answer answer={item} key={index} next={next} />;
       })
     : null;
 
-  return <>{mappedAnswers}</>;
+  return (
+    <>
+      {mappedAnswers}{" "}
+      <Button
+        onPress={() => navigation.navigate("register")}
+        title="VADIM IS GAY"
+      ></Button>
+    </>
+  );
 }
 
 function Answer({ answer, next }) {
