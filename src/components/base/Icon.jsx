@@ -1,5 +1,6 @@
 import React from "react";
 import baseIcons from "../../content/iconPack/baseIcons";
+import arrows from "../../content/iconPack/arrows";
 import { Image } from "react-native";
 
 const Icon = ({ source, style }) => {
@@ -20,6 +21,7 @@ const Icon = ({ source, style }) => {
 
 Icon.sources = {
   base: baseIcons,
+  arrows,
 };
 
 export default Icon;

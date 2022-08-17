@@ -5,7 +5,10 @@ import { Linking, View } from "react-native";
 import { observer } from "mobx-react-lite";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { NavigationContainer } from "@react-navigation/native";
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import {
+  createBottomTabNavigator,
+  useRoute,
+} from "@react-navigation/bottom-tabs";
 
 import useStore from "../hooks/useStore";
 import { Text, StyleSheet } from "react-native";
@@ -16,6 +19,7 @@ const PERSISTENCE_KEY = "NAVIGATION_STATE_V1";
 const { Screen, Navigator } = createBottomTabNavigator();
 
 function Routes() {
+  const route = useRoute();
   //state persistence
   const [isReady, setIsReady] = React.useState(__DEV__ ? false : true);
   const [initialState, setInitialState] = React.useState();
