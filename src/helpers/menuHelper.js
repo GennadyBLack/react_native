@@ -5,7 +5,6 @@ import Register from "../screens/Register";
 import Feed from "../screens/Feed";
 import Test from "../screens/Test";
 import Quiz from "../screens/Quiz";
-import Result from "../screens/Result";
 
 export const profileMenuList = (userMunu = []) => {
   try {
@@ -55,13 +54,6 @@ const availableLinks = [
   {
     name: "Quiz",
     component: Quiz,
-    auth: true,
-    options: { headerShown: false },
-    required: false,
-  },
-  {
-    name: "Result",
-    component: Result,
     auth: true,
     options: { headerShown: false },
     required: false,
@@ -127,7 +119,6 @@ export const linking = {
           QuizMain: "quiz_start",
         },
       },
-      Result: "result",
       Register: "register",
       Chat: "chat",
     },

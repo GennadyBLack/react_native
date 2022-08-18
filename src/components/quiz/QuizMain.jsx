@@ -12,7 +12,7 @@ function QuizMain({ navigation, route }) {
   const [quiz] = useStore("quiz");
   let redirectToResultPage = (id) => {
     // navigation.navigate("Result", { id: id });
-    navigation.navigate("Quiz", { screen: "QuizMain" });
+    navigation.navigate("quiz_result");
   };
 
   useEffect(() => {

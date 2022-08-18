@@ -7,7 +7,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { NavigationContainer } from "@react-navigation/native";
 import {
   createBottomTabNavigator,
-  useRoute,
+  // useRoute,
 } from "@react-navigation/bottom-tabs";
 
 import useStore from "../hooks/useStore";
@@ -19,7 +19,7 @@ const PERSISTENCE_KEY = "NAVIGATION_STATE_V1";
 const { Screen, Navigator } = createBottomTabNavigator();
 
 function Routes() {
-  const route = useRoute();
+  // const route = useRoute();
   //state persistence
   const [isReady, setIsReady] = React.useState(__DEV__ ? false : true);
   const [initialState, setInitialState] = React.useState();

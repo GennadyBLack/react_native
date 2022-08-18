@@ -5,6 +5,7 @@ import QuizList from "../components/quiz/QuizList";
 import QuizCurrent from "../components/quiz/QuizCurrent";
 import QuizEdit from "../components/quiz/QuizEdit";
 import QuizCreate from "../components/quiz/QuizCreate";
+import QuizResult from "../components/quiz/QuizResult";
 
 const { Navigator, Screen } = createNativeStackNavigator();
 
@@ -34,6 +35,11 @@ export default function Quiz() {
       <Screen
         name="quiz_start"
         component={QuizMain}
+        options={{ headerShown: false }}
+      />
+      <Screen
+        name="quiz_result"
+        component={QuizResult}
         options={{ headerShown: false }}
       />
     </Navigator>
