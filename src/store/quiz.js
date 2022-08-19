@@ -76,10 +76,10 @@ export default class Quiz {
     }
   };
 
-  start = async (id) => {
+  start = async (id, config) => {
     try {
       this.loading = true;
-      const res = await this.api.start(id);
+      const res = await this.api.start(id, config);
       this.result = res.data;
       this.root.result.setResult(res.data);
       console.log(res, "res from result create");
