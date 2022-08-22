@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Button, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import useStore from "../../hooks/useStore";
 
 export default function QuizResult({ navigation, route }) {
@@ -10,15 +10,16 @@ export default function QuizResult({ navigation, route }) {
   useEffect(() => {
     const getResult = async () => {
       await result.update(result?.result?.id, { completed: true });
-      const res = await result.get(result?.result?.id);
-      console.log(res, "RES");
-      setFullResult(res?.data);
-      setQuizFailed(res?.data?.wrong && res?.data?.wrong.length > 0);
+      await result.get(result?.result?.id);
+      // console.log(result.result, "resultino");
+      // setFullResult(res?.data);
+      setFullResult(result.result);
+      setQuizFailed(result?.result?.wrong && result?.result?.wrong?.length > 0);
     };
     getResult();
   }, []);
-  console.log(fullResult);
-  console.log(quizFail);
+  console.log(fullResult, "fullResult");
+  console.log(quizFail, "quizFail");
   console.log(route.params.id);
 
   return (
@@ -41,7 +42,7 @@ export default function QuizResult({ navigation, route }) {
             navigation.navigate("quiz_start", { id: route.params.id });
           }}
         >
-          Пройти заново
+          <Text>Пройти заново</Text>
         </TouchableOpacity>
       )}
     </View>

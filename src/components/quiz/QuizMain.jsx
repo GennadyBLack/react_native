@@ -9,7 +9,7 @@ import QuizQuestionHeader from "./QuizQuestionHeader";
 export default observer(QuizMain);
 
 function QuizMain({ navigation, route }) {
-  const [quiz] = useStore("quiz");
+  const [quiz, result] = useStore("quiz", "result");
   let redirectToResultPage = (id) => {
     // navigation.navigate("Result", { id: id });
     navigation.navigate("quiz_result", { id: id });
@@ -17,7 +17,7 @@ function QuizMain({ navigation, route }) {
 
   useEffect(() => {
     quiz.get(route?.params?.id);
-  }, []);
+  }, [result?.result?.id]);
   return (
     <>
       {quiz?.quiz && (
