@@ -39,7 +39,10 @@ export default function QuizResult({ navigation, route }) {
           title="Пройти заново"
           onPress={() => {
             quiz.start(route.params.id, { restart: true });
-            navigation.navigate("quiz_start", { id: route.params.id });
+            navigation.navigate("quiz_start", {
+              id: route.params.id,
+              restart: true,
+            });
           }}
         >
           <Text>Пройти заново</Text>

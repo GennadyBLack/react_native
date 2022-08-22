@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { View, Text } from "react-native";
 import { isFunction } from "../helpers/utils";
+import { useNavigation, useRoute } from "@react-navigation/native";
 
 export default function Tabulator({
   lastFunction,
@@ -12,6 +13,8 @@ export default function Tabulator({
   Content,
   customClass = "",
 }) {
+  const route = useRoute();
+  const navigation = useNavigation();
   let [currentTab, setCurrentTab] = useState(() => {
     return initialTab ? initialTab : 0;
   });
@@ -28,6 +31,13 @@ export default function Tabulator({
       tabs[currentTab + 1] ? setCurrentTab(currentTab + 1) : null;
     }
   };
+
+  useEffect(() => {
+    if (route?.params?.restart) {
+      console.log("settabs");
+      setTab(0);
+    }
+  }, [route.params]);
 
   return (
     <>
