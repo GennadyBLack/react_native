@@ -54,7 +54,7 @@ const ModalSwipe = ({
 
   const TopComponent = () => {
     return (
-      <View style={{ display: "flex", alignItems: "center" }}>
+      <View style={{}}>
         {topIcon && (
           <Icon
             source={Icon.sources.arrows.arrowDown}
@@ -94,7 +94,9 @@ const styles = StyleSheet.create({
     margin: "0 auto",
     height: "auto",
     minHeight: "450px",
-    backgroundColor: "rgb(202 198 198)",
+    background: "red",
+    // position: "absolute",
+    top: 0,
   },
 });
 

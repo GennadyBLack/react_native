@@ -82,6 +82,6 @@ const styles = StyleSheet.create({
     position: "absolute",
   },
   actions: {
-    display: "flex",
+    // display: "flex",
   },
 });

@@ -1,8 +1,5 @@
-// In App.js in a new project
-
-import { DefaultTheme, Provider as PaperProvider } from "react-native-paper";
-import { StyleSheet } from "react-native-web";
-// import "./src/styles/main.css";
+import { StyleSheet } from "react-native";
+import { View } from "react-native";
 import React, { useState } from "react";
 import AppLoading from "expo-app-loading";
 import Routes from "./src/components/Routes";
@@ -10,7 +7,6 @@ import store from "./src/store/index";
 import StoreContext from "./src/contexts/store";
 const rootStore = new store();
 import ErrorPopupList from "./src/components/error/ErrorPopupList";
-import ModalSwipe from "./src/components/base/ModalSwipe";
 
 const initialApp = async () => {
   await new Promise((resolve) => {
@@ -21,17 +17,6 @@ const initialApp = async () => {
 
 function App() {
   let [isReady, setReady] = useState(false);
-
-  const theme = {
-    ...DefaultTheme,
-    roundness: 2,
-    mode: "adaptive",
-    colors: {
-      ...DefaultTheme.colors,
-      primary: "#3498db",
-      accent: "#f1c40f",
-    },
-  };
 
   if (!isReady) {
     return (
@@ -44,14 +29,17 @@ function App() {
   }
 
   return (
-    <StoreContext.Provider value={rootStore}>
-      <PaperProvider theme={theme}>
+    <View style={styles.app_wrapper}>
+      <StoreContext.Provider value={rootStore}>
         <ErrorPopupList className="errors" />
         <Routes />
-        <ModalSwipe />
-      </PaperProvider>
-    </StoreContext.Provider>
+      </StoreContext.Provider>
+    </View>
   );
 }
+
+const styles = StyleSheet.create({
+  app_wrapper: { backgroundColor: "red", width: "100%", height: "100vh" },
+});
 
 export default App;
