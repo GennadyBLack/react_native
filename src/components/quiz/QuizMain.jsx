@@ -12,7 +12,7 @@ function QuizMain({ navigation, route }) {
   const [quiz] = useStore("quiz");
   let redirectToResultPage = (id) => {
     // navigation.navigate("Result", { id: id });
-    navigation.navigate("quiz_result");
+    navigation.navigate("quiz_result", { id: id });
   };
 
   useEffect(() => {
@@ -22,7 +22,7 @@ function QuizMain({ navigation, route }) {
     <>
       {quiz?.quiz && (
         <Tabulator
-          lastFunction={redirectToResultPage}
+          lastFunction={() => redirectToResultPage(route?.params?.id)}
           Content={QuizQuestionItem}
           tabs={quiz?.quiz?.questions}
           Header={QuizQuestionHeader}

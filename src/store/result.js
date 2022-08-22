@@ -28,9 +28,10 @@ export default class Result {
   get = async (id) => {
     try {
       this.loading = true;
-      await this?.root?.api?.result.get(id).then((res) => {
+      return await this?.root?.api?.result.get(id).then((res) => {
         this.result = res?.data;
         this.loading = false;
+        return res;
       });
     } catch (error) {
       console.log(error, "error me");
