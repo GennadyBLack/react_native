@@ -10,6 +10,7 @@ import store from "./src/store/index";
 import StoreContext from "./src/contexts/store";
 const rootStore = new store();
 import ErrorPopupList from "./src/components/error/ErrorPopupList";
+import ModalSwipe from "./src/components/base/ModalSwipe";
 
 const initialApp = async () => {
   await new Promise((resolve) => {
@@ -47,6 +48,7 @@ function App() {
       <PaperProvider theme={theme}>
         <ErrorPopupList className="errors" />
         <Routes />
+        <ModalSwipe />
       </PaperProvider>
     </StoreContext.Provider>
   );

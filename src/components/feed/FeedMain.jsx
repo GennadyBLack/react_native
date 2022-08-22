@@ -33,7 +33,12 @@ function FeedMain({ navigation }) {
     <TouchableOpacity
       onLongPress={() => navigation.navigate("feed_edit", { id: item.id })}
     >
-      <FeedItem feed={item} key={item.id} onDelete={deletePost} />
+      <FeedItem
+        feed={item}
+        key={item.id}
+        onDelete={deletePost}
+        navigation={navigation}
+      />
     </TouchableOpacity>
   );
   return (

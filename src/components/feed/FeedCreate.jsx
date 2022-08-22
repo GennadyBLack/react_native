@@ -26,11 +26,13 @@ export default function FeedCreate({ navigation }) {
         label="Title"
         value={form?.title}
         onChangeText={(text) => setText(text, "title")}
+        mode="flat"
       />
       <TextInput
         label="Description"
         value={form?.desc}
         onChangeText={(text) => setText(text, "desc")}
+        mode="outlined"
       />
       <Upload />
       <Button title="Create Feed" onPress={() => create()}></Button>

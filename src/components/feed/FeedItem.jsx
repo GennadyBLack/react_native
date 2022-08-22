@@ -1,13 +1,13 @@
 import React, { useState } from "react";
-import { View, StyleSheet, Button, TextInput } from "react-native";
-import { Card, Title, Paragraph } from "react-native-paper";
+import { View, StyleSheet, TextInput } from "react-native";
+import { Card, Title, Paragraph, Button } from "react-native-paper";
 import Icon from "../base/Icon";
 import MenuToggler from "../menu/MenuToggler";
 
-export default function FeedItem({ feed, onDelete, ...props }) {
+export default function FeedItem({ feed, onDelete, navigation }) {
   const [showComment, setShowComment] = useState(false);
 
-  console.log(props, "navigation");
+  console.log(navigation, "navigation");
   const menuList = [
     {
       permission: ["owner"],
@@ -47,9 +47,12 @@ export default function FeedItem({ feed, onDelete, ...props }) {
         ) : null}
         <Card.Actions></Card.Actions>
       </Card>
+
       <Button
-        title="Комментировать"
         onPress={setShowComment.bind(null, !showComment)}
+        mode="contained"
+        color="green"
+        icon="card-text"
       />
       <MenuToggler
         anchor={
@@ -77,5 +80,8 @@ const styles = StyleSheet.create({
     top: 100,
     backgroundColor: "blue",
     position: "absolute",
+  },
+  actions: {
+    display: "flex",
   },
 });

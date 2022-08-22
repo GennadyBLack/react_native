@@ -98,6 +98,7 @@ export default class Result {
       this.loading = false;
     }
   };
+
   setResult = (result) => {
     this.result = result;
   };

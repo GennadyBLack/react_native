@@ -5,6 +5,12 @@ import Register from "../screens/Register";
 import Feed from "../screens/Feed";
 import Test from "../screens/Test";
 import Quiz from "../screens/Quiz";
+import ProfileMain from "../components/profile/ProfileMain";
+import FeedEdit from "../components/feed/FeedEdit";
+import FeedMain from "../components/feed/FeedMain";
+import FeedCreate from "../components/feed/FeedCreate";
+import FeedCurrent from "../components/feed/FeedCurrent";
+import Upload from "../components/validation/Upload";
 
 export const profileMenuList = (userMunu = []) => {
   try {
@@ -38,9 +44,16 @@ const availableLinks = [
     required: true,
   },
   {
+    name: "ProfileMain",
+    component: ProfileMain,
+    auth: true,
+    options: { headerShown: false },
+    required: false,
+  },
+  {
     name: "Test",
     component: Test,
-    auth: true,
+    auth: false,
     options: { headerShown: false },
     required: false,
   },
@@ -51,6 +64,49 @@ const availableLinks = [
     options: { headerShown: false },
     required: false,
   },
+  {
+    name: "FeedEdit",
+    component: FeedEdit,
+    auth: true,
+    options: { headerShown: false },
+    required: false,
+  },
+  {
+    name: "FeedMain",
+    component: FeedMain,
+    auth: true,
+    options: { headerShown: false },
+    required: false,
+  },
+  {
+    name: "FeedCreate",
+    component: FeedCreate,
+    auth: true,
+    options: { headerShown: false },
+    required: false,
+  },
+  {
+    name: "FeedCurrent",
+    component: FeedCurrent,
+    auth: true,
+    options: { headerShown: false },
+    required: false,
+  },
+  {
+    name: "FeedEdit",
+    component: FeedEdit,
+    auth: true,
+    options: { headerShown: false },
+    required: false,
+  },
+  {
+    name: "Upload",
+    component: Upload,
+    auth: true,
+    options: { headerShown: false },
+    required: false,
+  },
+
   {
     name: "Quiz",
     component: Quiz,
@@ -65,14 +121,6 @@ const availableLinks = [
     options: { headerShown: false },
     required: false,
   },
-
-  // {
-  //   name: "Chat",
-  //component:Profile,
-  //   public: false,
-  //   auth: true,
-  //   options: { headerShown: false },
-  // },
   {
     name: "Register",
     component: Register,

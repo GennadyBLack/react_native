@@ -67,9 +67,8 @@ const ModalSwipe = ({
   };
 
   const content = (
-    <View style={combineStyles}>
+    <View style={combineStyles} draggable>
       <TopComponent />
-
       {children}
     </View>
   );

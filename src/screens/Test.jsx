@@ -47,7 +47,7 @@ function Test({ navigation }) {
         </Swipe>
       </Form>
       <ModalSwipe closeOnDown priority="1" topIcon>
-        <div>aaasdasdasd</div>
+        <Text>aaasdasdasd</Text>
       </ModalSwipe>
     </View>
   );
