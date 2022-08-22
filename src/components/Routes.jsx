@@ -5,6 +5,8 @@ import { Linking, View } from "react-native";
 import { observer } from "mobx-react-lite";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { NavigationContainer } from "@react-navigation/native";
+import ModalSwipe from "./base/ModalSwipe";
+
 import {
   createBottomTabNavigator,
   // useRoute,
@@ -19,7 +21,6 @@ const PERSISTENCE_KEY = "NAVIGATION_STATE_V1";
 const { Screen, Navigator } = createBottomTabNavigator();
 
 function Routes() {
-  // const route = useRoute();
   //state persistence
   const [isReady, setIsReady] = React.useState(__DEV__ ? false : true);
   const [initialState, setInitialState] = React.useState();
@@ -88,12 +89,11 @@ function Routes() {
       >
         {mappedLinks}
       </Navigator>
+      <ModalSwipe />
     </NavigationContainer>
   );
 }
 
 const styles = StyleSheet.create({
-  wrap: {
-    width: "90%",
-  },
+  wrap: {},
 });

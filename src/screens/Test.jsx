@@ -40,7 +40,7 @@ function Test({ navigation }) {
         <File name="file" />
         <Button title="<-- back" onPress={() => navigation.goBack(null)} />
         <Swipe change={(e) => tet(e)} duration={1000}>
-          <View style={{ height: 400 }}>
+          <View>
             <Text>SWIPE ME</Text>
             <Tabulator Header={TestHeader} />
           </View>
