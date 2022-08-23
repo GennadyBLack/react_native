@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import useStore from "../../hooks/useStore";
 
@@ -9,15 +9,28 @@ export default function QuizResult({ navigation, route }) {
 
   useEffect(() => {
     const getResult = async () => {
-      await result.update(result?.result?.id, { completed: true });
       await result.get(result?.result?.id);
       // console.log(result.result, "resultino");
       // setFullResult(res?.data);
       setFullResult(result.result);
-      setQuizFailed(result?.result?.wrong && result?.result?.wrong?.length > 0);
+      const fail = result?.result?.wrong && result?.result?.wrong?.length > 0;
+      setQuizFailed(fail);
+      if (!fail) {
+        await result.update(result?.result?.id, { completed: true });
+      }
     };
     getResult();
   }, []);
+
+  const restartQuiz = useCallback(async () => {
+    await result.update(result?.result?.id, { wrong: null, right: null });
+    quiz.start(route.params.id, { failedRestart: true });
+    navigation.navigate("quiz_start", {
+      id: route.params.id,
+      restart: true,
+    });
+  }, []);
+
   console.log(fullResult, "fullResult");
   console.log(quizFail, "quizFail");
   console.log(route.params.id);
@@ -25,10 +38,11 @@ export default function QuizResult({ navigation, route }) {
   return (
     <View style={styles.quizWrap}>
       <Text style={styles.textH3}>
-        Верных ответов: {fullResult?.right || ""}
+        Верных ответов: {fullResult?.right?.length || "0"}
       </Text>
+      {/*todo вывести вопросы с неверными ответами*/}
       <Text style={styles.textH3}>
-        Неправильных ответов: {fullResult?.wrong || ""}
+        Неправильных ответов: {fullResult?.wrong?.length || "0"}
       </Text>
       <Text style={styles.textH2}>
         {quizFail ? "Вы не прошли квиз" : "Поздравляем, вы прошли квиз!"}
@@ -37,13 +51,7 @@ export default function QuizResult({ navigation, route }) {
         <TouchableOpacity
           style={styles.button}
           title="Пройти заново"
-          onPress={() => {
-            quiz.start(route.params.id, { restart: true });
-            navigation.navigate("quiz_start", {
-              id: route.params.id,
-              restart: true,
-            });
-          }}
+          onPress={restartQuiz}
         >
           <Text>Пройти заново</Text>
         </TouchableOpacity>

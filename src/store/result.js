@@ -77,7 +77,7 @@ export default class Result {
   update = async (id, data) => {
     try {
       this.loading = true;
-      await this.api.update(id, data);
+      this.result = (await this.api.update(id, data))?.data;
       this.loading = false;
     } catch (error) {
       console.error(error);
