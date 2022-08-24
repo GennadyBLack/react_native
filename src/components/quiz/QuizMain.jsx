@@ -26,6 +26,7 @@ function QuizMain({ navigation, route }) {
           Content={QuizQuestionItem}
           tabs={quiz?.quiz?.questions}
           Header={QuizQuestionHeader}
+          resetTab
         />
       )}
     </>

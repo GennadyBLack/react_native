@@ -28,7 +28,7 @@ function Answer({ answer, next }) {
   const [result] = useStore("result");
   let setQuiestionResult = async (answer) => {
     const resultObj = result?.result;
-    console.log(resultObj);
+    console.log(resultObj, "resultObj");
     let preData = {};
 
     // if(answer?.right){
