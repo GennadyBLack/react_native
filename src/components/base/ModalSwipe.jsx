@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { observer } from "mobx-react-lite";
-import { Text, StyleSheet, View, Button } from "react-native";
+import { Text, StyleSheet, View, Button, Modal } from "react-native";
 import GestureRecognizer from "react-native-swipe-detect";
 import useStore from "../../hooks/useStore";
 import Icon from "./Icon.jsx";
@@ -67,18 +67,40 @@ const ModalSwipe = ({
   };
 
   const content = (
-    <View style={combineStyles} draggable>
-      <TopComponent />
-      {children}
-    </View>
+    <Modal
+      animationType="slide"
+      presentationStyle="overFullScreen"
+      transparent={true}
+      visible={modalOpen}
+    >
+      <View
+        style={{
+          height: "80vh",
+          padding: 40,
+          backgroundColor: "#eee",
+          marginTop: "auto",
+          borderTopLeftRadius: 20,
+          borderTopRightRadius: 20,
+        }}
+      >
+        <TopComponent />
+        {children}
+      </View>
+    </Modal>
   );
 
   const onSwipe = (direction) => {
+    console.log("direction", direction);
     closeOnDown && direction === "SWIPE_DOWN" ? setModalOpen(false) : null;
   };
 
   return (
-    <GestureRecognizer onSwipe={(direction) => onSwipe(direction)}>
+    <GestureRecognizer
+      onSwipe={(direction) => {
+        console.log("asdasd");
+        onSwipe(direction);
+      }}
+    >
       {modalOpen ? content : <OpenModal />}
     </GestureRecognizer>
   );
@@ -94,8 +116,6 @@ const styles = StyleSheet.create({
     margin: "0 auto",
     height: "auto",
     minHeight: "450px",
-    background: "red",
-    // position: "absolute",
     top: 0,
   },
 });

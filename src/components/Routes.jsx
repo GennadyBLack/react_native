@@ -7,10 +7,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { NavigationContainer } from "@react-navigation/native";
 import ModalSwipe from "./base/ModalSwipe";
 
-import {
-  createBottomTabNavigator,
-  // useRoute,
-} from "@react-navigation/bottom-tabs";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
 import useStore from "../hooks/useStore";
 import { Text, StyleSheet } from "react-native";
@@ -89,7 +86,9 @@ function Routes() {
       >
         {mappedLinks}
       </Navigator>
-      <ModalSwipe />
+      <ModalSwipe>
+        <div>DUASUUADSUDUASDUUADSUasdasd</div>
+      </ModalSwipe>
     </NavigationContainer>
   );
 }
