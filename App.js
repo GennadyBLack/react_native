@@ -42,7 +42,7 @@ const styles = StyleSheet.create({
   app_wrapper: {
     width: "100%",
     height: "100vh",
-    position: "relative",
+    // position: "relative",
   },
 });
 

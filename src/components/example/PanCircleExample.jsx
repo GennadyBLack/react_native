@@ -9,6 +9,7 @@ import Animated, {
 } from "react-native-reanimated";
 import { Dimensions } from "react-native-web";
 
+const SIZE = 80;
 const useFollowAnimatedPosition = ({ x, y, b }) => {
   const followX = useDerivedValue(() => {
     return withSpring(x.value);
@@ -29,7 +30,6 @@ const useFollowAnimatedPosition = ({ x, y, b }) => {
 };
 
 export default function PanCircleExample() {
-  const SIZE = 80;
   const { width: SCREEN_WIDTH } = Dimensions.get("window");
   const translateX = useSharedValue(0);
   const translateY = useSharedValue(0);
@@ -46,7 +46,7 @@ export default function PanCircleExample() {
     })
     .onEnd(() => {
       if (translateX.value > SCREEN_WIDTH / 2) {
-        translateX.value = SCREEN_WIDTH - 80;
+        translateX.value = SCREEN_WIDTH - SIZE;
       } else {
         translateX.value = 0;
       }
@@ -107,9 +107,9 @@ const styles = StyleSheet.create({
   circle: {
     opacity: 0.6,
     position: "absolute",
-    height: 80,
+    height: SIZE,
     aspectRatio: 1,
-    borderRadius: 40,
+    borderRadius: SIZE / 2,
     opacity: 0.8,
   },
 });

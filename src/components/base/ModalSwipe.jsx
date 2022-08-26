@@ -116,7 +116,7 @@ const styles = StyleSheet.create({
     margin: "0 auto",
     height: "auto",
     minHeight: "450px",
-    top: 0,
+    // top: 0,
   },
 });
 
