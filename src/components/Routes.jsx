@@ -86,9 +86,6 @@ function Routes() {
       >
         {mappedLinks}
       </Navigator>
-      <ModalSwipe>
-        <div>DUASUUADSUDUASDUUADSUasdasd</div>
-      </ModalSwipe>
     </NavigationContainer>
   );
 }

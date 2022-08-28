@@ -7,6 +7,7 @@ import store from "./src/store/index";
 import StoreContext from "./src/contexts/store";
 const rootStore = new store();
 import ErrorPopupList from "./src/components/error/ErrorPopupList";
+import ModalExample from "./src/components/example/ModalExample";
 
 const initialApp = async () => {
   await new Promise((resolve) => {
@@ -30,9 +31,11 @@ function App() {
 
   return (
     <View style={styles.app_wrapper}>
-      <StoreContext.Provider value={rootStore}>
-        <ErrorPopupList className="errors" />
-        <Routes />
+      <StoreContext.Provider value={rootStore} data-id="StoreContext">
+        <ModalExample data-id-modal="StormodaleContext">
+          <ErrorPopupList className="errors" />
+          <Routes />
+        </ModalExample>
       </StoreContext.Provider>
     </View>
   );
@@ -41,7 +44,7 @@ function App() {
 const styles = StyleSheet.create({
   app_wrapper: {
     width: "100%",
-    height: "100vh",
+    height: "100%",
     // position: "relative",
   },
 });

@@ -3,6 +3,7 @@ import { makeAutoObservable, runInAction } from "mobx";
 export default class Modal {
   isOpen = false;
   data = null;
+  component = null;
 
   get getData() {
     return this.data;
@@ -16,6 +17,13 @@ export default class Modal {
     this.data = data;
   };
 
+  setOpen = () => {
+    this.isOpen = true;
+  };
+
+  setClose = () => {
+    this.isOpen = false;
+  };
   setIsOpen = (val) => {
     this.isOpen = val;
   };
