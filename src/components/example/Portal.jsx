@@ -6,13 +6,11 @@ import useStore from "../../hooks/useStore";
 const Portal = ({ children, id }) => {
   const [modal] = useStore("modal");
   const elId = id ? id : "modal-root";
-  console.log(`#${elId}`);
   let mount = document.getElementById(`#${elId}`);
   const el = document.createElement("div");
 
   useEffect(() => {
-    mount = document.getElementById(`#${elId}`);
-    console.log(mount);
+    // mount = document.getElementById(`${elId}`);
     if (!mount) return;
     mount.appendChild(el);
     return () => mount.removeChild(el);

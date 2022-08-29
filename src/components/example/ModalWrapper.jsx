@@ -4,12 +4,13 @@ import { StatusBar } from "expo-status-bar";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import BottomSheet from "./BottomSheet";
 
-const ModalExample = ({ children }) => {
+const ModalWrapper = ({ children }) => {
   return (
     <GestureHandlerRootView style={{ flex: 1, justifyContent: "flex-end" }}>
-      <View style={styles.containerModal} data-attr="modal-view">
+      <View style={styles.containerModal}>
         {children}
         <BottomSheet />
+        <View nativeID="modal-root"> </View>
       </View>
     </GestureHandlerRootView>
   );
@@ -25,4 +26,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ModalExample;
+export default ModalWrapper;

@@ -31,6 +31,12 @@ export default class Modal {
     this.isOpen = !this.isOpen;
   };
 
+  clearData = () => {
+    isOpen = false;
+    data = null;
+    component = null;
+  };
+
   constructor(root) {
     makeAutoObservable(this);
     this.root = root;

@@ -1,6 +1,7 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useCallback } from "react";
 import { View, StyleSheet, Dimensions } from "react-native";
 import { Gesture, GestureDetector } from "react-native-gesture-handler";
+import Portal from "./Portal";
 import Animated, {
   Extrapolate,
   interpolate,
@@ -13,21 +14,25 @@ import useStore from "../../hooks/useStore";
 import { observer } from "mobx-react-lite";
 
 const { height: SCREEN_HEIGHT } = Dimensions.get("window");
-const CLOSE_HEIGHT = 50;
 
 const MAX_TRANSLATE_Y = -SCREEN_HEIGHT;
 
-const BottomSheet = ({}) => {
+const BottomSheet = ({ portal }) => {
   const translateY = useSharedValue(0);
   const active = useSharedValue(false);
   const context = useSharedValue({ y: 0 });
+
+  const scrollTo = useCallback((destination) => {
+    "worklet";
+    translateY.value = withSpring(destination, { damping: 50 });
+  }, []);
 
   const [modal] = useStore("modal");
   const modalOpen = modal.getIsOpen;
 
   const clearData = () => {
     context.value.y = 0;
-    translateY.value = -SCREEN_HEIGHT / 3;
+    scrollTo(-SCREEN_HEIGHT / 3);
   };
 
   const closeModa = () => {
@@ -44,14 +49,18 @@ const BottomSheet = ({}) => {
     })
     .onEnd(() => {
       if (translateY.value > -SCREEN_HEIGHT / 3) {
-        translateY.value = withSpring(0, { damping: 50 });
+        scrollTo(0);
         closeModa();
         clearData();
+      } else if (translateY.value < -SCREEN_HEIGHT / 1.5) {
+        scrollTo(-SCREEN_HEIGHT);
       }
     });
 
   useEffect(() => {
-    translateY.value = withSpring(-SCREEN_HEIGHT / 3, { damping: 50 });
+    scrollTo(MAX_TRANSLATE_Y / 3);
+
+    return () => modal.clearData();
   }, []);
 
   const rBottonStyle = useAnimatedStyle(() => {
@@ -63,14 +72,17 @@ const BottomSheet = ({}) => {
     );
     return { borderRadius, transform: [{ translateY: translateY.value }] };
   });
-  return modalOpen ? (
+
+  const content = modalOpen ? (
     <GestureDetector gesture={gesture}>
       <Animated.View style={[styles.bottomContainer, rBottonStyle]}>
         <View style={styles.line}></View>
-        <div id="modal-root">asdas</div>
+        <View nativeID="modal-root-content"></View>
       </Animated.View>
     </GestureDetector>
   ) : null;
+  portal ? <Portal>{content}</Portal> : content;
+  return content;
 };
 
 const styles = StyleSheet.create({

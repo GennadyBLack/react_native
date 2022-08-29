@@ -5,7 +5,6 @@ import { Linking, View } from "react-native";
 import { observer } from "mobx-react-lite";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { NavigationContainer } from "@react-navigation/native";
-import ModalSwipe from "./base/ModalSwipe";
 
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 

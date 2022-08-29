@@ -7,7 +7,7 @@ import store from "./src/store/index";
 import StoreContext from "./src/contexts/store";
 const rootStore = new store();
 import ErrorPopupList from "./src/components/error/ErrorPopupList";
-import ModalExample from "./src/components/example/ModalExample";
+import ModalWrapper from "./src/components/example/ModalWrapper";
 
 const initialApp = async () => {
   await new Promise((resolve) => {
@@ -31,11 +31,11 @@ function App() {
 
   return (
     <View style={styles.app_wrapper}>
-      <StoreContext.Provider value={rootStore} data-id="StoreContext">
-        <ModalExample data-id-modal="StormodaleContext">
+      <StoreContext.Provider value={rootStore}>
+        <ModalWrapper>
           <ErrorPopupList className="errors" />
           <Routes />
-        </ModalExample>
+        </ModalWrapper>
       </StoreContext.Provider>
     </View>
   );
