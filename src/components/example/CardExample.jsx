@@ -20,6 +20,11 @@ const CardExample = ({ children }) => {
   const context = useSharedValue({ x: 0, y: 0 });
   const touched = useSharedValue(false);
 
+  const rotateDiapazon = (v) => {
+    if (v < -13) return -13;
+    if (v > 13) return 13;
+    return v;
+  };
   const cardStyle = useAnimatedStyle(() => {
     const scale = interpolate(
       coordinates.value.y,
@@ -31,6 +36,9 @@ const CardExample = ({ children }) => {
       transform: [
         { translateY: coordinates.value.y },
         { translateX: coordinates.value.x },
+        {
+          rotate: `${rotateDiapazon(coordinates.value.x)}deg`,
+        },
         { scale },
       ],
     };
@@ -48,7 +56,14 @@ const CardExample = ({ children }) => {
       touched.value = true;
     });
   return (
-    <GestureHandlerRootView style={{ flex: 1, backgroundColor: "red" }}>
+    <GestureHandlerRootView
+      style={{
+        flex: 1,
+        backgroundColor: "red",
+        justifyContent: "center",
+        alignItems: "center",
+      }}
+    >
       <GestureDetector gesture={gesture}>
         <Animated.View style={[styles.card, cardStyle]}>
           <View style={styles.line}></View>

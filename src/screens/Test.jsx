@@ -4,11 +4,14 @@ import { observer } from "mobx-react-lite";
 import useStore from "../hooks/useStore";
 import Portal from "../components/base/Portal";
 import CardExample from "../components/example/CardExample";
+import ReEx1 from "../components/example/ReEx1";
 
 function Test({ navigation }) {
   const [modal] = useStore("modal");
   return (
+    // <ReEx1 />
     <CardExample />
+
     // <View>
     //   <Text>
     //     Text Viewasd asdasdasd asdasd asd asdasd adasd asdas dasd asd asd asdasd

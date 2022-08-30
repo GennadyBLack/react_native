@@ -36,9 +36,9 @@ export default class Modal {
   };
 
   clearData = () => {
-    isOpen = false;
-    data = null;
-    component = null;
+    this.isOpen = false;
+    this.data = null;
+    this.component = null;
   };
 
   constructor(root) {
