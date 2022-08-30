@@ -17,7 +17,6 @@ function FeedEdit({ route, navigation }) {
   }, []);
   const submit = async (e) => {
     const pre = prepareEdit(e, feed?.currentFeed);
-    console.log(pre);
     if (Object.keys(pre).length) {
       await feed.update(route?.params?.id, pre);
       setIsEdit(false);

@@ -43,7 +43,6 @@ export default class Result {
   create = async (data) => {
     try {
       this.loading = true;
-      console.log(this.root.api.result, "ALOOO I M HERE");
       let res = await this.root.api.result.create(data);
       this.result = res?.data;
       this.loading = false;
@@ -91,7 +90,6 @@ export default class Result {
       this.loading = true;
       const res = await this.api.start(id);
       this.result = res;
-      console.log(res, "res from result create");
       this.loading = false;
     } catch (error) {
       console.error(error);

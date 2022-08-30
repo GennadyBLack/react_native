@@ -7,7 +7,6 @@ import MenuToggler from "../menu/MenuToggler";
 export default function FeedItem({ feed, onDelete, navigation }) {
   const [showComment, setShowComment] = useState(false);
 
-  console.log(navigation, "navigation");
   const menuList = [
     {
       permission: ["owner"],

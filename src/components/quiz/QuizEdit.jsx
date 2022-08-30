@@ -42,7 +42,6 @@ function QuizEdit({ route, navigation }) {
   };
 
   let quizRemove = async (id) => {
-    console.log(id);
     await quiz?.delete(id);
   };
   let clearResults = async () => {

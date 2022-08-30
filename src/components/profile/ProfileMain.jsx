@@ -28,7 +28,6 @@ function ProfileMain({ route, navigation }) {
     } else {
       userLinks = userLinks.filter((item) => item !== link);
     }
-    console.log(userLinks, "userLinks");
     await auth?.updateMe({ menu: userLinks });
   };
   return (

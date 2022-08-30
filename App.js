@@ -7,7 +7,7 @@ import store from "./src/store/index";
 import StoreContext from "./src/contexts/store";
 const rootStore = new store();
 import ErrorPopupList from "./src/components/error/ErrorPopupList";
-import ModalWrapper from "./src/components/example/ModalWrapper";
+import ModalWrapper from "./src/components/base/ModalWrapper";
 
 const initialApp = async () => {
   await new Promise((resolve) => {

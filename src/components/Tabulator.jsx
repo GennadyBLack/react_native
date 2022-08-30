@@ -21,7 +21,6 @@ export default function Tabulator({
   });
 
   let setTab = (tabInx) => {
-    console.log(tabInx, "tabInx");
     if (currentTab == tabs?.length - 1) {
       isFunction(lastFunction());
       if (resetTab) {
@@ -40,7 +39,6 @@ export default function Tabulator({
 
   // useEffect(() => {
   //   if (route?.params?.restart) {
-  //     console.log("settabs");
   //     setTab(0);
   //   }
   // }, [route.params]);

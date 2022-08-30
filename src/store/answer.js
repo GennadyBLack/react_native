@@ -10,7 +10,6 @@ export default class Answer {
   create = async (data) => {
     try {
       this.loading = true;
-      console.log(this.api, "ALOOO I M HERE");
       let res = await this.api.create(data);
       if (res && res.data) {
         this.answer.push(res?.data);

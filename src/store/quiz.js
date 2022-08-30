@@ -12,7 +12,6 @@ export default class Quiz {
   getAll = async (config = {}) => {
     try {
       this.loading = true;
-      console.log(config, "config");
       await this?.root?.api?.quiz.getAll(config).then((res) => {
         runInAction(() => {
           this.quiz_list = res?.data?.data;
@@ -44,7 +43,6 @@ export default class Quiz {
   create = async (data) => {
     try {
       this.loading = true;
-      console.log(this.root.api.quiz, "ALOOO I M HERE");
       let res = await this.root.api.quiz.create(data);
       this.quiz = res?.data;
       this.loading = false;
@@ -82,7 +80,6 @@ export default class Quiz {
       const res = await this.api.start(id, config);
       this.result = res.data;
       this.root.result.setResult(res.data);
-      console.log(res, "res from result create");
       this.loading = false;
     } catch (error) {
       console.error(error);

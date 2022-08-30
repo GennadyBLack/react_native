@@ -4,9 +4,13 @@ export default class Modal {
   isOpen = false;
   data = null;
   component = null;
+  params = { toTop: null, toMiddle: null, toBottom: null };
 
   get getData() {
     return this.data;
+  }
+  get getParams() {
+    return this.params;
   }
 
   get getIsOpen() {

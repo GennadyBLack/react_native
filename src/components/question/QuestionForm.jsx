@@ -13,15 +13,12 @@ function QuestionForm({ navigation, hideModal }) {
   const [question, answer] = useStore("question", "answer");
   const [rightId, setRightId] = useState(false);
   const route = useRoute();
-  console.log(route);
 
   const submit = async (e) => {
-    console.log(e);
     await question.create(route?.params?.id, {
       title: e.question,
     });
     for (const ans of e.answers) {
-      console.log(ans.id, rightId);
       await answer.create({
         id: question?.question?.id,
         data: {

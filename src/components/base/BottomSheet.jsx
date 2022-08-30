@@ -1,7 +1,6 @@
 import React, { useEffect, useCallback } from "react";
 import { View, StyleSheet, Dimensions } from "react-native";
 import { Gesture, GestureDetector } from "react-native-gesture-handler";
-import Portal from "./Portal";
 import Animated, {
   Extrapolate,
   interpolate,
@@ -17,7 +16,11 @@ const { height: SCREEN_HEIGHT } = Dimensions.get("window");
 
 const MAX_TRANSLATE_Y = -SCREEN_HEIGHT;
 
-const BottomSheet = ({ portal }) => {
+const BottomSheet = ({ children }) => {
+  const [modal] = useStore("modal");
+  const modalOpen = modal.getIsOpen;
+  const modalData = modal.getData;
+  const modalParams = modal.getParams;
   const translateY = useSharedValue(0);
   const active = useSharedValue(false);
   const context = useSharedValue({ y: 0 });
@@ -27,8 +30,16 @@ const BottomSheet = ({ portal }) => {
     translateY.value = withSpring(destination, { damping: 50 });
   }, []);
 
-  const [modal] = useStore("modal");
-  const modalOpen = modal.getIsOpen;
+  const initModal = () => {
+    const { toTop, toMiddle, toBottom } = modalParams;
+    if (toTop || toMiddle || toBottom) {
+      toTop ? scrollTo(MAX_TRANSLATE_Y) : null;
+      toMiddle ? scrollTo(MAX_TRANSLATE_Y / 2) : null;
+      toBottom ? scrollTo(MAX_TRANSLATE_Y / 3) : null;
+    } else {
+      scrollTo(MAX_TRANSLATE_Y / 3);
+    }
+  };
 
   const clearData = () => {
     context.value.y = 0;
@@ -58,7 +69,7 @@ const BottomSheet = ({ portal }) => {
     });
 
   useEffect(() => {
-    scrollTo(MAX_TRANSLATE_Y / 3);
+    initModal();
 
     return () => modal.clearData();
   }, []);
@@ -77,11 +88,10 @@ const BottomSheet = ({ portal }) => {
     <GestureDetector gesture={gesture}>
       <Animated.View style={[styles.bottomContainer, rBottonStyle]}>
         <View style={styles.line}></View>
-        <View nativeID="modal-root-content"></View>
+        <View>{children}</View>
       </Animated.View>
     </GestureDetector>
   ) : null;
-  portal ? <Portal>{content}</Portal> : content;
   return content;
 };
 

@@ -31,10 +31,6 @@ export default function QuizResult({ navigation, route }) {
     });
   }, []);
 
-  console.log(fullResult, "fullResult");
-  console.log(quizFail, "quizFail");
-  console.log(route.params.id);
-
   return (
     <View style={styles.quizWrap}>
       <Text style={styles.textH3}>

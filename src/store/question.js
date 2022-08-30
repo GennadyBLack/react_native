@@ -41,7 +41,6 @@ export default class Question {
   create = async (quizId, data) => {
     try {
       this.loading = true;
-      console.log(this.api, "ALOOO I M HERE");
       let res = await this.api.create(quizId, data);
       this.question = res?.data;
       this.loading = false;

@@ -46,7 +46,6 @@ export default class Feed {
   };
 
   create = async (data) => {
-    console.log("fere", this.root.api);
     try {
       this.loading = true;
       let res = await this.root.api.feed.create(data);
