@@ -37,7 +37,7 @@ const CardExample = ({ children }) => {
         { translateY: coordinates.value.y },
         { translateX: coordinates.value.x },
         {
-          rotate: `${rotateDiapazon(coordinates.value.x)}deg`,
+          rotateZ: `${rotateDiapazon(coordinates.value.x)}deg`,
         },
         { scale },
       ],
@@ -49,6 +49,7 @@ const CardExample = ({ children }) => {
       context.value = { x: coordinates.value.x, y: coordinates.value.y };
     })
     .onUpdate((e) => {
+      console.log(e.translationX, e.translationY);
       coordinates.value = { x: e.translationX, y: e.translationY };
     })
     .onEnd(() => {

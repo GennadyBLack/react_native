@@ -25,8 +25,8 @@ const ReEx1 = () => {
   }, []);
   useEffect(() => {
     proccess.value = withTiming(0.5, { duration: 5000 });
-    scale.value = withRepeat(withTiming(2, { duration: 5000 }), true);
-    rotate.value = withRepeat(withSpring(100), true);
+    scale.value = withRepeat(withTiming(2, { duration: 5000 }), -1, true);
+    rotate.value = withRepeat(withSpring(100), -1, true);
     return () => {};
   }, []);
   return (
