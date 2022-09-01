@@ -6,11 +6,13 @@ import Portal from "../components/base/Portal";
 import CardExample from "../components/example/CardExample";
 import ReEx1 from "../components/example/ReEx1";
 import ReEx2 from "../components/example/ReEx2";
+import ReEx3 from "../components/example/ReEx3";
 
 function Test({ navigation }) {
   const [modal] = useStore("modal");
   return (
-    <ReEx2 />
+    <ReEx3 />
+    // <ReEx2 />
     // <ReEx1 />
     // <CardExample />
 
