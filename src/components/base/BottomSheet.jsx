@@ -1,6 +1,7 @@
 import React, { useEffect, useCallback } from "react";
 import { View, StyleSheet, Dimensions } from "react-native";
 import { Gesture, GestureDetector } from "react-native-gesture-handler";
+import Portal from "./Portal";
 import Animated, {
   Extrapolate,
   interpolate,
@@ -25,6 +26,7 @@ const BottomSheet = ({ children }) => {
   const active = useSharedValue(false);
   const context = useSharedValue({ y: 0 });
 
+  console.log(modalOpen, "modalOpen");
   const scrollTo = useCallback((destination) => {
     "worklet";
     translateY.value = withSpring(destination, { damping: 50 });
@@ -92,7 +94,7 @@ const BottomSheet = ({ children }) => {
       </Animated.View>
     </GestureDetector>
   ) : null;
-  return content;
+  return <Portal>{content}</Portal>;
 };
 
 const styles = StyleSheet.create({

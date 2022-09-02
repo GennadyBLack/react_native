@@ -11,6 +11,7 @@ const Portal = ({ children, id }) => {
 
   useEffect(() => {
     mount = document.getElementById(`${elId}`);
+    console.log(mount, "mount");
     if (!mount) return;
     mount.appendChild(el);
     return () => mount.removeChild(el);

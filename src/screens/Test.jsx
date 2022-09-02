@@ -8,11 +8,14 @@ import ReEx1 from "../components/example/ReEx1";
 import ReEx2 from "../components/example/ReEx2";
 import ReEx3 from "../components/example/ReEx3";
 import ReEx4 from "../components/example/ReEx4";
+import ReEx5 from "../components/example/ReEx5";
+import BottomSheet from "../components/base/BottomSheet";
 
 function Test({ navigation }) {
   const [modal] = useStore("modal");
   return (
-    <ReEx4 />
+    // <ReEx5 />
+    // <ReEx4 />
     // <ReEx3 />
     // <ReEx2 />
     // <ReEx1 />
@@ -30,12 +33,17 @@ function Test({ navigation }) {
     //     asdasd as das asd a sasdsad
     //   </Text>
     //   <Portal>
-    //     <View>
-    //       <Text onPress={() => console.log("fdfd")}>Salam</Text>
-    //     </View>
+    // <View>
+    //   <Text onPress={() => console.log("fdfd")}>Salam</Text>
+    // </View>
     //   </Portal>
-    //   <Button title="open modal" onPress={() => modal.setOpen()}></Button>
-    //   <Button title="open close" onPress={() => modal.setClose()}></Button>
+    <View>
+      <BottomSheet>
+        <Text>asdsdfsdf</Text>
+      </BottomSheet>
+
+      <Button title="open close" onPress={() => modal.setOpen()}></Button>
+    </View>
     // </View>
   );
 }

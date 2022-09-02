@@ -11,14 +11,16 @@ import Animated, {
   interpolate,
   withTiming,
   Extrapolate,
+  interpolateColor,
+  useDerivedValue,
 } from "react-native-reanimated";
 import { StatusBar } from "expo-status-bar";
 
 const Colors = {
   dark: {
-    background: "1e1e1e1",
+    background: "#1E1E1E",
     circle: "#252525",
-    text: "#f8f8f8",
+    text: "#F8F8F8",
   },
   light: {
     background: "#F8F8F8",
@@ -31,29 +33,89 @@ const SWITCH_TRAK_COLOR = {
   true: "rgba(256,0,256,0.2)",
   false: "rgba(0,0,0,0.1)",
 };
+
 const ReEx4 = () => {
   const [theme, setTheme] = useState("light");
+
+  const progress = useDerivedValue(() => {
+    return theme === "dark" ? 0 : 1;
+  }, [theme]);
+
+  const rStyle = useAnimatedStyle(() => {
+    const backgroundColor = interpolateColor(
+      progress.value,
+      [0, 1],
+      [Colors.light.background, Colors.dark.background],
+      Extrapolate.HSV
+    );
+
+    return { backgroundColor };
+  });
+  const rCircleStyle = useAnimatedStyle(() => {
+    const backgroundColor = interpolateColor(
+      progress.value,
+      [0, 1],
+      [Colors.light.circle, Colors.dark.circle]
+    );
+
+    return { backgroundColor };
+  });
+
+  const rTextStyle = useAnimatedStyle(() => {
+    const color = interpolateColor(
+      progress.value,
+      [0, 1],
+      [Colors.light.text, Colors.dark.text]
+    );
+
+    return { color };
+  });
   return (
-    <View style={styles.container}>
-      <Text>test text</Text>
-      <Switch
-        value={theme === "dark"}
-        onValueChange={(toggled) => {
-          setTheme(toggled ? "dark" : "light");
-        }}
-        thumbColor="violet"
-        trackColor={SWITCH_TRAK_COLOR[`${theme === "light"}`]}
-      />
+    <Animated.View style={[styles.container, rStyle]}>
+      <Animated.Text style={[rTextStyle, styles.text]}>test text</Animated.Text>
+      <Animated.View style={[styles.circle, rCircleStyle]}>
+        <Switch
+          value={theme === "dark"}
+          onValueChange={(toggled) => {
+            setTheme(toggled ? "dark" : "light");
+          }}
+          thumbColor="violet"
+          trackColor={SWITCH_TRAK_COLOR[`${theme === "light"}`]}
+        />
+      </Animated.View>
       <StatusBar style="auto" />
-    </View>
+    </Animated.View>
   );
 };
+const SIZE = Dimensions.get("window").width * 0.7;
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
+  },
+  circle: {
+    width: SIZE,
+    height: SIZE,
+    backgroundColor: "#FFF",
+    alignItems: "center",
+    justifyContent: "center",
+    borderRadius: SIZE / 2,
+    shadowOffset: {
+      width: 0,
+      height: 20,
+    },
+    shadowRadius: 10,
+    shadowOpacity: 0.1,
+    elevation: 8,
+  },
+  text: {
+    fontSize: 70,
+    textTransform: "uppercase",
+    fontWeight: "700",
+    letterSpacing: 14,
+    marginBottom: 35,
   },
 });
 export default ReEx4;
