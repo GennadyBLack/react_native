@@ -1,5 +1,11 @@
-import React, { useEffect, useCallback } from "react";
-import { View, StyleSheet, Dimensions } from "react-native";
+import React, { useEffect, useCallback, useContext } from "react";
+import {
+  View,
+  StyleSheet,
+  Dimensions,
+  TouchableOpacity,
+  Text,
+} from "react-native";
 import { Gesture, GestureDetector } from "react-native-gesture-handler";
 import Portal from "./Portal";
 import Animated, {
@@ -12,6 +18,8 @@ import Animated, {
 } from "react-native-reanimated";
 import useStore from "../../hooks/useStore";
 import { observer } from "mobx-react-lite";
+import { PortalGate } from "./PortalNative";
+import PortalContext from "../../contexts/portalContext";
 
 const { height: SCREEN_HEIGHT } = Dimensions.get("window");
 
@@ -19,6 +27,7 @@ const MAX_TRANSLATE_Y = -SCREEN_HEIGHT;
 
 const BottomSheet = ({ children }) => {
   const [modal] = useStore("modal");
+  const portal = useContext(PortalContext);
   const modalOpen = modal.getIsOpen;
   const modalData = modal.getData;
   const modalParams = modal.getParams;
@@ -94,7 +103,15 @@ const BottomSheet = ({ children }) => {
       </Animated.View>
     </GestureDetector>
   ) : null;
-  return <Portal>{content}</Portal>;
+
+  useEffect(() => {
+    modalOpen
+      ? portal.teleport("modal-root", content)
+      : portal.destroy("modal-root");
+  }, [modalOpen]);
+
+  return <></>;
+  // return <Portal>{content}</Portal>;
 };
 
 const styles = StyleSheet.create({

@@ -1,13 +1,15 @@
 import React from "react";
 import { View, StyleSheet } from "react-native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
+import { PortalGate } from "./PortalNative";
 
 const ModalWrapper = ({ children }) => {
   return (
     <GestureHandlerRootView style={{ flex: 1, justifyContent: "flex-end" }}>
       <View style={styles.containerModal}>
         {children}
-        <View nativeID="modal-root"></View>
+        <PortalGate gateName={"modal-root"}></PortalGate>
+        {/*<View nativeID="modal-root"></View>*/}
       </View>
     </GestureHandlerRootView>
   );

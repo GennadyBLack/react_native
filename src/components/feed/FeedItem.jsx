@@ -1,11 +1,32 @@
 import React, { useState } from "react";
 import { View, StyleSheet, TextInput } from "react-native";
 import { Card, Title, Paragraph, Button } from "react-native-paper";
+import Animated, {
+  useAnimatedGestureHandler,
+  useAnimatedStyle,
+  useSharedValue,
+} from "react-native-reanimated";
 import Icon from "../base/Icon";
 import MenuToggler from "../menu/MenuToggler";
+import { PinchGestureHandler } from "react-native-gesture-handler";
+
+const AnimatedCardCover = Animated.createAnimatedComponent(Card.Cover);
 
 export default function FeedItem({ feed, onDelete, navigation }) {
   const [showComment, setShowComment] = useState(false);
+  const scale = useSharedValue(1);
+
+  const pinchHandler = useAnimatedGestureHandler({
+    onActive: (event) => {
+      scale.value = event.scale;
+    },
+  });
+
+  const rCover = useAnimatedStyle(() => {
+    return {
+      transform: [{ scale: scale.value }],
+    };
+  });
 
   const menuList = [
     {
@@ -36,7 +57,12 @@ export default function FeedItem({ feed, onDelete, navigation }) {
           <Title>{feed?.title}</Title>
           <Paragraph>{feed?.desc}</Paragraph>
         </Card.Content>
-        <Card.Cover source={{ uri: "https://picsum.photos/700" }} />
+        <PinchGestureHandler onGestureEvent={pinchHandler}>
+          <AnimatedCardCover
+            style={rCover}
+            source={{ uri: "https://picsum.photos/700" }}
+          />
+        </PinchGestureHandler>
         {/*<Card.Cover source={{ uri: feed?.path }} /> Not allowed to load local resource // https://stackoverflow.com/questions/39007243/cannot-open-local-file-chrome-not-allowed-to-load-local-resource*/}
         {showComment ? (
           <>
