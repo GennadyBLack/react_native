@@ -81,9 +81,6 @@ function Routes() {
         initialRouteName="Main"
         activeColor="#f0edf6"
         inactiveColor="#3e2465"
-        screenOptions={{
-          tabBarStyle: { position: "absolute" },
-        }}
         barStyle={{ backgroundColor: "#694fad" }}
       >
         {mappedLinks}

@@ -53,17 +53,17 @@ const BottomSheet = ({ children }) => {
   };
 
   const clearData = () => {
-    context.value.y = 0;
+    context.value = { y: 0 };
     scrollTo(-SCREEN_HEIGHT / 3);
   };
 
-  const closeModa = () => {
+  const closeModal = useCallback(() => {
     modal.setClose();
-  };
+  }, []);
 
   const gesture = Gesture.Pan()
-    .onBegin(() => {
-      context.value.y = translateY?.value;
+    .onBegin((e) => {
+      context.value = { y: translateY?.value };
     })
     .onUpdate((e) => {
       translateY.value = e.translationY + context?.value?.y;
@@ -72,8 +72,8 @@ const BottomSheet = ({ children }) => {
     .onEnd(() => {
       if (translateY.value > -SCREEN_HEIGHT / 3) {
         scrollTo(0);
-        closeModa();
         clearData();
+        closeModal();
       } else if (translateY.value < -SCREEN_HEIGHT / 1.5) {
         scrollTo(-SCREEN_HEIGHT);
       }
@@ -82,7 +82,7 @@ const BottomSheet = ({ children }) => {
   useEffect(() => {
     initModal();
 
-    return () => modal.clearData();
+    // return () => modal.clearData();
   }, []);
 
   const rBottonStyle = useAnimatedStyle(() => {
