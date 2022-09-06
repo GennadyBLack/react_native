@@ -23,15 +23,15 @@ export const PortalProvider = ({ children }) => {
 
 export const PortalGate = ({ gateName, children }) => {
   const value = useContext(PortalContext);
-  console.log(gateName, "gateName");
-  console.log(children, "children");
-  console.log(value.teleport, "children");
-  console.log(value.gates, "gates");
+  // console.log(gateName, "gateName");
+  // console.log(value.gates, "gates");
+  // console.log(children, "children");
+  // console.log(value.gates, "gates");
 
   return (
     <>
       {value.gates[gateName]}
-      {children && children(value.teleport)}
+      {children}
     </>
   );
 };
