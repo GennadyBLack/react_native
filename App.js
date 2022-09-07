@@ -9,8 +9,6 @@ const rootStore = new store();
 import ErrorPopupList from "./src/components/error/ErrorPopupList";
 import ModalWrapper from "./src/components/base/ModalWrapper";
 import "react-native-gesture-handler";
-import { PortalProvider } from "./src/components/base/PortalNative";
-import BottomSheet from "./src/components/base/BottomSheet";
 
 const initialApp = async () => {
   await new Promise((resolve) => {
@@ -35,12 +33,10 @@ function App() {
   return (
     <View style={styles.app_wrapper}>
       <StoreContext.Provider value={rootStore}>
-        <PortalProvider>
-          <ModalWrapper>
-            <ErrorPopupList className="errors" />
-            <Routes />
-          </ModalWrapper>
-        </PortalProvider>
+        <ModalWrapper>
+          <ErrorPopupList className="errors" />
+          <Routes />
+        </ModalWrapper>
       </StoreContext.Provider>
     </View>
   );

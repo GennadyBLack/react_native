@@ -38,7 +38,7 @@ function Test({ navigation }) {
     // </View>
     //   </Portal>
     <View>
-      <Button title="open" onPress={() => modal.setOpen()}></Button>
+      <Button title="open" onPress={() => modal.scrollFn()}></Button>
       <Button title="open close" onPress={() => modal.setClose()}></Button>
     </View>
     // </View>

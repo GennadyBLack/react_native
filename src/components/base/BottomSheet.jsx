@@ -1,4 +1,10 @@
-import React, { useEffect, useCallback, useContext, useState } from "react";
+import React, {
+  useEffect,
+  useCallback,
+  useContext,
+  useState,
+  useImperativeHandle,
+} from "react";
 
 import { View, StyleSheet, Dimensions } from "react-native";
 import { Gesture, GestureDetector } from "react-native-gesture-handler";
@@ -18,39 +24,50 @@ const { height: SCREEN_HEIGHT } = Dimensions.get("window");
 
 const MAX_TRANSLATE_Y = -SCREEN_HEIGHT;
 
-const BottomSheet = ({ children }) => {
-  const [modal] = useStore("modal");
+const BottomSheet = React.forwardRef((props, ref) => {
+  const active = useSharedValue(false);
 
-  const isActive = useSharedValue(false);
-
-  const modalParams = modal.getParams;
   const translateY = useSharedValue(0);
   const context = useSharedValue({ y: 0 });
 
   const scrollTo = useCallback((destination) => {
+    "worklet";
+    active.value = destination !== 0;
     translateY.value = withSpring(destination, { damping: 50 });
   }, []);
 
-  const initModal = () => {
-    const { toTop, toMiddle, toBottom } = modalParams;
-    isActive.value = true;
-    if (toTop || toMiddle || toBottom) {
-      toTop ? scrollTo(MAX_TRANSLATE_Y) : null;
-      toMiddle ? scrollTo(MAX_TRANSLATE_Y / 2) : null;
-      toBottom ? scrollTo(MAX_TRANSLATE_Y / 3) : null;
-    } else {
-      scrollTo(MAX_TRANSLATE_Y / 2);
-    }
+  const isActive = useCallback(() => {
+    return active.value;
+  }, []);
+
+  const initModal = (modalParams) => {
+    scrollTo(MAX_TRANSLATE_Y / 2);
+    // const { toTop, toMiddle, toBottom } = modalParams;
+    // if (toTop || toMiddle || toBottom) {
+    //   toTop ? scrollTo(MAX_TRANSLATE_Y) : null;
+    //   toMiddle ? scrollTo(MAX_TRANSLATE_Y / 2) : null;
+    //   toBottom ? scrollTo(MAX_TRANSLATE_Y / 3) : null;
+    // } else {
+    //   scrollTo(MAX_TRANSLATE_Y / 2);
+    // }
   };
 
-  const clearData = () => {
-    context.value = { y: 0 };
-    scrollTo(-SCREEN_HEIGHT / 3);
-  };
+  const toggleModal = useCallback((modalParams = {}) => {
+    "worklet";
+    if (!isActive.value) {
+      initModal(modalParams);
+    } else {
+      context.value = { y: 0 };
+      scrollTo(0);
+    }
+  }, []);
+
+  useImperativeHandle(ref, () => ({ toggleModal, isActive, content }), [
+    toggleModal,
+  ]);
 
   const gesture = Gesture.Pan()
     .onBegin((e) => {
-      console.log(e, "event");
       context.value = { y: translateY?.value };
     })
     .onUpdate((e) => {
@@ -60,9 +77,8 @@ const BottomSheet = ({ children }) => {
     .onEnd(() => {
       try {
         if (translateY.value > -SCREEN_HEIGHT / 3) {
+          context.value = { y: 0 };
           scrollTo(0);
-          clearData();
-          closeModal();
         } else if (translateY.value < -SCREEN_HEIGHT / 1.5) {
           scrollTo(-SCREEN_HEIGHT);
         }
@@ -70,11 +86,6 @@ const BottomSheet = ({ children }) => {
         console.log(error);
       }
     });
-
-  useEffect(() => {
-    initModal();
-    return () => modal.clearData();
-  }, []);
 
   const rBottonStyle = useAnimatedStyle(() => {
     const borderRadius = interpolate(
@@ -91,12 +102,12 @@ const BottomSheet = ({ children }) => {
     <GestureDetector gesture={gesture}>
       <Animated.View style={[styles.bottomContainer, rBottonStyle]}>
         <View style={styles.line}></View>
-        <View>{children}</View>
+        <View>{props.children}</View>
       </Animated.View>
     </GestureDetector>
   );
-  return active.value ? content : null;
-};
+  return content;
+});
 
 const styles = StyleSheet.create({
   bottomContainer: {
@@ -117,4 +128,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default observer(BottomSheet);
+export default BottomSheet;
