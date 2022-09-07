@@ -1,4 +1,4 @@
-import { StyleSheet } from "react-native";
+import { StyleSheet, Text } from "react-native";
 import { View } from "react-native";
 import React, { useState } from "react";
 import AppLoading from "expo-app-loading";
@@ -10,6 +10,7 @@ import ErrorPopupList from "./src/components/error/ErrorPopupList";
 import ModalWrapper from "./src/components/base/ModalWrapper";
 import "react-native-gesture-handler";
 import { PortalProvider } from "./src/components/base/PortalNative";
+import BottomSheet from "./src/components/base/BottomSheet";
 
 const initialApp = async () => {
   await new Promise((resolve) => {
@@ -39,6 +40,9 @@ function App() {
             <ErrorPopupList className="errors" />
             <Routes />
           </ModalWrapper>
+          <BottomSheet>
+            <Text>asdsdfsdf</Text>
+          </BottomSheet>
         </PortalProvider>
       </StoreContext.Provider>
     </View>

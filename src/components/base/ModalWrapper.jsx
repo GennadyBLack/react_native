@@ -7,11 +7,7 @@ const ModalWrapper = ({ children }) => {
   return (
     <GestureHandlerRootView style={{ flex: 1, justifyContent: "flex-end" }}>
       <StatusBar />
-      <View style={styles.containerModal}>
-        {children}
-        <PortalGate gateName={"modal-root"} />
-        {/*<View nativeID="modal-root"></View>*/}
-      </View>
+      <View style={styles.containerModal}>{children}</View>
     </GestureHandlerRootView>
   );
 };

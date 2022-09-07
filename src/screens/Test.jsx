@@ -38,11 +38,8 @@ function Test({ navigation }) {
     // </View>
     //   </Portal>
     <View>
-      <BottomSheet>
-        <Text>asdsdfsdf</Text>
-      </BottomSheet>
-
-      <Button title="open close" onPress={() => modal.setOpen()}></Button>
+      <Button title="open" onPress={() => modal.setOpen()}></Button>
+      <Button title="open close" onPress={() => modal.setClose()}></Button>
     </View>
     // </View>
   );

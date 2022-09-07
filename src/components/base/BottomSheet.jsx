@@ -1,24 +1,17 @@
-import React, { useEffect, useCallback, useContext } from "react";
-import {
-  View,
-  StyleSheet,
-  Dimensions,
-  TouchableOpacity,
-  Text,
-} from "react-native";
+import React, { useEffect, useCallback, useContext, useState } from "react";
+
+import { View, StyleSheet, Dimensions } from "react-native";
 import { Gesture, GestureDetector } from "react-native-gesture-handler";
-import Portal from "./Portal";
 import Animated, {
   Extrapolate,
   interpolate,
   useAnimatedStyle,
+  useDerivedValue,
   useSharedValue,
   withSpring,
-  withTiming,
 } from "react-native-reanimated";
 import useStore from "../../hooks/useStore";
 import { observer } from "mobx-react-lite";
-import { PortalGate } from "./PortalNative";
 import PortalContext from "../../contexts/portalContext";
 
 const { height: SCREEN_HEIGHT } = Dimensions.get("window");
@@ -27,17 +20,19 @@ const MAX_TRANSLATE_Y = -SCREEN_HEIGHT;
 
 const BottomSheet = ({ children }) => {
   const [modal] = useStore("modal");
-  const portal = useContext(PortalContext);
-  const modalOpen = modal.getIsOpen;
-  const modalData = modal.getData;
+
+  const active = useSharedValue(false);
+
+  useEffect(() => {
+    active.value = !modal?.isOpen;
+    console.log(modal?.isOpen, "modal?.isOpen", active.value);
+  }, [modal?.isOpen]);
+
   const modalParams = modal.getParams;
   const translateY = useSharedValue(0);
-  const active = useSharedValue(false);
   const context = useSharedValue({ y: 0 });
 
-  console.log(modalOpen, "modalOpen");
   const scrollTo = useCallback((destination) => {
-    "worklet";
     translateY.value = withSpring(destination, { damping: 50 });
   }, []);
 
@@ -48,7 +43,7 @@ const BottomSheet = ({ children }) => {
       toMiddle ? scrollTo(MAX_TRANSLATE_Y / 2) : null;
       toBottom ? scrollTo(MAX_TRANSLATE_Y / 3) : null;
     } else {
-      scrollTo(MAX_TRANSLATE_Y / 3);
+      scrollTo(MAX_TRANSLATE_Y / 2);
     }
   };
 
@@ -58,6 +53,7 @@ const BottomSheet = ({ children }) => {
   };
 
   const closeModal = useCallback(() => {
+    "worklet";
     modal.setClose();
   }, []);
 
@@ -70,19 +66,22 @@ const BottomSheet = ({ children }) => {
       translateY.value = Math.max(translateY.value, MAX_TRANSLATE_Y);
     })
     .onEnd(() => {
-      if (translateY.value > -SCREEN_HEIGHT / 3) {
-        scrollTo(0);
-        clearData();
-        closeModal();
-      } else if (translateY.value < -SCREEN_HEIGHT / 1.5) {
-        scrollTo(-SCREEN_HEIGHT);
+      try {
+        if (translateY.value > -SCREEN_HEIGHT / 3) {
+          scrollTo(0);
+          clearData();
+          closeModal();
+        } else if (translateY.value < -SCREEN_HEIGHT / 1.5) {
+          scrollTo(-SCREEN_HEIGHT);
+        }
+      } catch (error) {
+        console.log(error);
       }
     });
 
   useEffect(() => {
     initModal();
-
-    // return () => modal.clearData();
+    return () => modal.clearData();
   }, []);
 
   const rBottonStyle = useAnimatedStyle(() => {
@@ -92,26 +91,19 @@ const BottomSheet = ({ children }) => {
       [5, 25],
       Extrapolate.CLAMP
     );
+
     return { borderRadius, transform: [{ translateY: translateY.value }] };
   });
 
-  const content = modalOpen ? (
+  const content = (
     <GestureDetector gesture={gesture}>
       <Animated.View style={[styles.bottomContainer, rBottonStyle]}>
         <View style={styles.line}></View>
         <View>{children}</View>
       </Animated.View>
     </GestureDetector>
-  ) : null;
-
-  useEffect(() => {
-    modalOpen
-      ? portal.teleport("modal-root", content)
-      : portal.destroy("modal-root");
-  }, [modalOpen]);
-
-  return <></>;
-  // return <Portal>{content}</Portal>;
+  );
+  return active.value ? content : null;
 };
 
 const styles = StyleSheet.create({
