@@ -21,19 +21,24 @@ const MAX_TRANSLATE_Y = -SCREEN_HEIGHT;
 const BottomSheet = ({ children }) => {
   const [modal] = useStore("modal");
 
-  const isActive = useSharedValue(false);
+  const active = useSharedValue(false);
+
+  useEffect(() => {
+    active.value = !modal?.isOpen;
+    console.log(modal?.isOpen, "modal?.isOpen", active.value);
+  }, [modal?.isOpen]);
 
   const modalParams = modal.getParams;
   const translateY = useSharedValue(0);
   const context = useSharedValue({ y: 0 });
 
   const scrollTo = useCallback((destination) => {
+    console.log(destination, "scrolling");
     translateY.value = withSpring(destination, { damping: 50 });
   }, []);
 
   const initModal = () => {
     const { toTop, toMiddle, toBottom } = modalParams;
-    isActive.value = true;
     if (toTop || toMiddle || toBottom) {
       toTop ? scrollTo(MAX_TRANSLATE_Y) : null;
       toMiddle ? scrollTo(MAX_TRANSLATE_Y / 2) : null;
@@ -47,6 +52,11 @@ const BottomSheet = ({ children }) => {
     context.value = { y: 0 };
     scrollTo(-SCREEN_HEIGHT / 3);
   };
+
+  const closeModal = useCallback(() => {
+    "worklet";
+    modal.setClose();
+  }, []);
 
   const gesture = Gesture.Pan()
     .onBegin((e) => {

@@ -40,9 +40,6 @@ function App() {
             <ErrorPopupList className="errors" />
             <Routes />
           </ModalWrapper>
-          <BottomSheet>
-            <Text>asdsdfsdf</Text>
-          </BottomSheet>
         </PortalProvider>
       </StoreContext.Provider>
     </View>
