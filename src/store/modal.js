@@ -2,6 +2,7 @@ import { makeAutoObservable, runInAction } from "mobx";
 
 export default class Modal {
   modal = null;
+  content = null;
   scrollFn = null;
   isOpen = false;
   data = null;
@@ -19,6 +20,10 @@ export default class Modal {
     return this.isOpen;
   }
 
+  get getContent() {
+    return this.content;
+  }
+
   setData = (data) => {
     this.data = data;
   };
@@ -29,6 +34,10 @@ export default class Modal {
 
   setScrollFn = (fn) => {
     this.scrollFn = fn;
+  };
+
+  setContent = (content) => {
+    this.content = content;
   };
 
   setOpen = () => {

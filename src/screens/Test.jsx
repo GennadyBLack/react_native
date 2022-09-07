@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { View, Button, Text } from "react-native";
 import { observer } from "mobx-react-lite";
 import useStore from "../hooks/useStore";
@@ -13,6 +13,9 @@ import BottomSheet from "../components/base/BottomSheet";
 
 function Test({ navigation }) {
   const [modal] = useStore("modal");
+  useEffect(() => {
+    modal.setContent(<Text>Ahahaha, kakoi ty loh</Text>);
+  });
   return (
     // <ReEx5 />
     // <ReEx4 />

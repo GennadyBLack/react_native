@@ -24,9 +24,9 @@ const { height: SCREEN_HEIGHT } = Dimensions.get("window");
 
 const MAX_TRANSLATE_Y = -SCREEN_HEIGHT;
 
-const BottomSheet = React.forwardRef((props, ref) => {
+const BottomSheet = ({ children }) => {
   const active = useSharedValue(false);
-
+  const [modal] = useStore("modal");
   const translateY = useSharedValue(0);
   const context = useSharedValue({ y: 0 });
 
@@ -54,7 +54,9 @@ const BottomSheet = React.forwardRef((props, ref) => {
 
   const toggleModal = useCallback((modalParams = {}) => {
     "worklet";
-    if (!isActive.value) {
+    console.log("hello");
+    console.log(isActive());
+    if (!isActive()) {
       initModal(modalParams);
     } else {
       context.value = { y: 0 };
@@ -62,10 +64,12 @@ const BottomSheet = React.forwardRef((props, ref) => {
     }
   }, []);
 
-  useImperativeHandle(ref, () => ({ toggleModal, isActive, content }), [
-    toggleModal,
-  ]);
-
+  // useImperativeHandle(ref, () => ({ toggleModal, isActive, content }), [
+  //   toggleModal,
+  // ]);
+  useEffect(() => {
+    modal.setScrollFn(toggleModal);
+  });
   const gesture = Gesture.Pan()
     .onBegin((e) => {
       context.value = { y: translateY?.value };
@@ -102,12 +106,12 @@ const BottomSheet = React.forwardRef((props, ref) => {
     <GestureDetector gesture={gesture}>
       <Animated.View style={[styles.bottomContainer, rBottonStyle]}>
         <View style={styles.line}></View>
-        <View>{props.children}</View>
+        <View>{modal?.getContent || ""}</View>
       </Animated.View>
     </GestureDetector>
   );
   return content;
-});
+};
 
 const styles = StyleSheet.create({
   bottomContainer: {
@@ -128,4 +132,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default BottomSheet;
+export default observer(BottomSheet);
