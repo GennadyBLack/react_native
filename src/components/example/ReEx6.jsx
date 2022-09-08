@@ -1,5 +1,12 @@
-import React from "react";
-import { StyleSheet, Image, Dimensions, View } from "react-native";
+import React, { useRef } from "react";
+import {
+  StyleSheet,
+  Image,
+  Dimensions,
+  View,
+  ImageBackground,
+} from "react-native";
+import Icon from "../base/Icon";
 import {
   GestureHandlerRootView,
   PinchGestureHandler,
@@ -12,17 +19,30 @@ import Animated, {
 
 const { width: SIZE } = Dimensions.get("window");
 export default function ReEx6() {
+  const doubleTapRef = useRef();
   return (
     <View style={styles.container}>
       <TapGestureHandler
+        waitFor={doubleTapRef}
         onActivated={() => {
           console.log("ALOOOO");
         }}
       >
-        <Image
-          source={{ uri: "https://html5css.ru/css/img_lights.jpg" }}
-          style={styles.image}
-        />
+        <TapGestureHandler
+          maxDelayMs={250}
+          ref={doubleTapRef}
+          numberOfTaps={2}
+          onActivated={() => {
+            console.log("DOUBLE TAP");
+          }}
+        >
+          <ImageBackground
+            source={{ uri: "https://html5css.ru/css/img_lights.jpg" }}
+            style={styles.image}
+          >
+            <Icon source={Icon.sources.base.heartFill} />
+          </ImageBackground>
+        </TapGestureHandler>
       </TapGestureHandler>
     </View>
   );

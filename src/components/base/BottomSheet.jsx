@@ -54,8 +54,6 @@ const BottomSheet = ({ children }) => {
 
   const toggleModal = useCallback((modalParams = {}) => {
     "worklet";
-    console.log("hello");
-    console.log(isActive());
     if (!isActive()) {
       initModal(modalParams);
     } else {
@@ -64,12 +62,10 @@ const BottomSheet = ({ children }) => {
     }
   }, []);
 
-  // useImperativeHandle(ref, () => ({ toggleModal, isActive, content }), [
-  //   toggleModal,
-  // ]);
   useEffect(() => {
     modal.setScrollFn(toggleModal);
   });
+
   const gesture = Gesture.Pan()
     .onBegin((e) => {
       context.value = { y: translateY?.value };
@@ -102,14 +98,14 @@ const BottomSheet = ({ children }) => {
     return { borderRadius, transform: [{ translateY: translateY.value }] };
   });
 
-  const content = (
+  const content = active.value ? (
     <GestureDetector gesture={gesture}>
       <Animated.View style={[styles.bottomContainer, rBottonStyle]}>
         <View style={styles.line}></View>
         <View>{modal?.getContent || ""}</View>
       </Animated.View>
     </GestureDetector>
-  );
+  ) : null;
   return content;
 };
 
