@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useRef, useCallback } from "react";
 import {
   StyleSheet,
   Image,
@@ -7,25 +7,54 @@ import {
   ImageBackground,
 } from "react-native";
 import Icon from "../base/Icon";
-import {
-  GestureHandlerRootView,
-  PinchGestureHandler,
-  TapGestureHandler,
-} from "react-native-gesture-handler";
+import { TapGestureHandler } from "react-native-gesture-handler";
 import Animated, {
-  useAnimatedGestureHandler,
   useAnimatedStyle,
+  withTiming,
+  withSpring,
+  withDelay,
+  useSharedValue,
 } from "react-native-reanimated";
+const AnimatedImage = Animated.createAnimatedComponent(Image);
 
 const { width: SIZE } = Dimensions.get("window");
 export default function ReEx6() {
   const doubleTapRef = useRef();
+
+  const opacity = useSharedValue(true);
+
+  const scale = useSharedValue(0);
+
+  const onDoubleTap = useCallback(() => {
+    scale.value = withSpring(1, undefined, (isFinished) => {
+      if (isFinished) {
+        scale.value = withDelay(500, withSpring(0));
+      }
+    });
+  }, []);
+
+  const onSingleTap = useCallback(() => {
+    opacity.value = withTiming(0, undefined, (isFinished) => {
+      if (isFinished) {
+        opacity.value = withDelay(500, withTiming(1));
+      }
+    });
+  }, []);
+
+  const rTextStyle = useAnimatedStyle(() => ({
+    opacity: opacity.value,
+  }));
+
+  const rStyle = useAnimatedStyle(() => ({
+    transform: [{ scale: Math.max(scale.value, 0) }],
+  }));
+
   return (
     <View style={styles.container}>
       <TapGestureHandler
         waitFor={doubleTapRef}
         onActivated={() => {
-          console.log("ALOOOO");
+          onSingleTap();
         }}
       >
         <TapGestureHandler
@@ -33,15 +62,32 @@ export default function ReEx6() {
           ref={doubleTapRef}
           numberOfTaps={2}
           onActivated={() => {
-            console.log("DOUBLE TAP");
+            onDoubleTap();
           }}
         >
-          <ImageBackground
-            source={{ uri: "https://html5css.ru/css/img_lights.jpg" }}
-            style={styles.image}
-          >
-            <Icon source={Icon.sources.base.heartFill} />
-          </ImageBackground>
+          <Animated.View>
+            <ImageBackground
+              source={{ uri: "https://html5css.ru/css/img_lights.jpg" }}
+              style={styles.image}
+            >
+              <AnimatedImage
+                source={Icon.sources.base.heartFill}
+                style={[
+                  styles.heart,
+                  {
+                    shadowOffset: { width: 0, height: 20 },
+                    shadowOpacity: 0.35,
+                    shadowRadius: 35,
+                  },
+                  rStyle,
+                ]}
+                resizeMode={"center"}
+              />
+            </ImageBackground>
+            <Animated.Text style={[styles.turtles, rTextStyle]}>
+              🐢🐢🐢🐢
+            </Animated.Text>
+          </Animated.View>
         </TapGestureHandler>
       </TapGestureHandler>
     </View>
@@ -58,5 +104,12 @@ const styles = StyleSheet.create({
   image: {
     width: SIZE,
     height: SIZE,
+    alignItems: "center",
+    justifyContent: "center",
   },
+  heart: {
+    width: SIZE / 2,
+    height: SIZE / 2,
+  },
+  turtles: { fontSize: 40, textAlign: "center", marginTop: 30 },
 });

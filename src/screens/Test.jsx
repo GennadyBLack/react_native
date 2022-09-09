@@ -10,6 +10,8 @@ import ReEx3 from "../components/example/ReEx3";
 import ReEx4 from "../components/example/ReEx4";
 import ReEx5 from "../components/example/ReEx5";
 import ReEx6 from "../components/example/ReEx6";
+import ReEx7 from "../components/example/ReEx7";
+import ReEx8 from "../components/example/ReEx8";
 import BottomSheet from "../components/base/BottomSheet";
 
 function Test({ navigation }) {
@@ -18,7 +20,9 @@ function Test({ navigation }) {
   //   modal.setContent(<Text>Ahahaha, kakoi ty loh</Text>);
   // });
   return (
-    <ReEx6 />
+    <ReEx8 />
+    // <ReEx7 />
+    // <ReEx6 />
     // <ReEx5 />
     // <ReEx4 />
     // <ReEx3 />
