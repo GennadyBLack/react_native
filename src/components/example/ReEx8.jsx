@@ -21,18 +21,42 @@ import Animated, {
 const { width } = Dimensions.get("window");
 const PICKER_WIDTH = width * 0.9;
 
-const COLORS = ["red", "purple", "blue", "green", "yellow", "orange", "black"];
+const COLORS = [
+  "red",
+  "purple",
+  "blue",
+  "cyan",
+  "green",
+  "yellow",
+  "orange",
+  "black",
+  "white",
+];
 const BACKGROUND_COLOR = "rgba(0,0,0,0.9)";
 export default function ReEx8() {
+  const pickedColor = useSharedValue(COLORS[0]);
+
+  const rStyle = useAnimatedStyle(() => {
+    return {
+      backgroundColor: pickedColor.value,
+    };
+  });
+
+  const onColorChanged = useCallback((color) => {
+    "worklet";
+    pickedColor.value = color;
+  }, []);
   return (
     <>
-      <View style={styles.topContainer}></View>
+      <Animated.View style={[styles.topContainer, rStyle]}></Animated.View>
       <View style={styles.bottomContainer}>
         <ColorPicker
           colors={COLORS}
           start={{ x: 0, y: 0 }}
           end={{ x: 1, y: 0 }}
           style={styles.gradient}
+          maxWidth={PICKER_WIDTH}
+          onColorChanged={onColorChanged}
         ></ColorPicker>
       </View>
     </>
@@ -48,7 +72,6 @@ const styles = StyleSheet.create({
   },
   topContainer: {
     flex: 3,
-    backgroundColor: "#fff",
   },
   bottomContainer: {
     flex: 1,
