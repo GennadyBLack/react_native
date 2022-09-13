@@ -1,6 +1,6 @@
 import Login from "../screens/Login";
 import Main from "../screens/Main";
-import Profile from "../screens/Profile";
+// import Profile from "../screens/Profile";
 import Register from "../screens/Register";
 import Feed from "../screens/Feed";
 import Test from "../screens/Test";
@@ -36,13 +36,13 @@ export const profileMenuList = (userMunu = []) => {
 };
 
 const availableLinks = [
-  {
-    name: "Profile",
-    component: Profile,
-    auth: true,
-    options: { headerShown: false },
-    required: true,
-  },
+  // {
+  //   name: "Profile",
+  //   component: Profile,
+  //   auth: true,
+  //   options: { headerShown: false },
+  //   required: true,
+  // },
   {
     name: "ProfileMain",
     component: ProfileMain,
@@ -139,12 +139,13 @@ export const linking = {
     /* configuration for matching screens with paths */
     screens: {
       Login: "login",
-      Profile: {
-        path: "profile",
-        screens: {
-          ProfileMain: "profile",
-        },
-      },
+      // Profile: {
+      //   path: "profile",
+      //   screens: {
+      //     ProfileMain: "profile",
+      //   },
+      // },
+      ProfileMain: "profile",
       Main: "main",
       Test: "test",
       Feed: {

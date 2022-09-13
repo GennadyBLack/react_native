@@ -1,33 +1,11 @@
 import React, { useState } from "react";
 import { View, StyleSheet, TextInput } from "react-native";
 import { Card, Title, Paragraph, Button } from "react-native-paper";
-import Animated, {
-  useAnimatedGestureHandler,
-  useAnimatedStyle,
-  useSharedValue,
-} from "react-native-reanimated";
 import Icon from "../base/Icon";
 import MenuToggler from "../menu/MenuToggler";
-import { PinchGestureHandler } from "react-native-gesture-handler";
-
-const AnimatedCardCover = Animated.createAnimatedComponent(Card.Cover);
 
 export default function FeedItem({ feed, onDelete, navigation }) {
   const [showComment, setShowComment] = useState(false);
-  const scale = useSharedValue(1);
-
-  const pinchHandler = useAnimatedGestureHandler({
-    onActive: (event) => {
-      console.log(event, "event");
-      scale.value = event.scale;
-    },
-  });
-
-  const rCover = useAnimatedStyle(() => {
-    return {
-      transform: [{ scale: scale.value }],
-    };
-  });
 
   const menuList = [
     {
@@ -52,18 +30,13 @@ export default function FeedItem({ feed, onDelete, navigation }) {
   ];
 
   return (
-    <View style={{ padding: "30px" }}>
+    <View style={{ padding: 30 }}>
       <Card>
         <Card.Content style={styles.item}>
           <Title>{feed?.title}</Title>
           <Paragraph>{feed?.desc}</Paragraph>
         </Card.Content>
-        <PinchGestureHandler onGestureEvent={pinchHandler}>
-          <AnimatedCardCover
-            style={rCover}
-            source={{ uri: "https://picsum.photos/700" }}
-          />
-        </PinchGestureHandler>
+        <Card.Cover source={{ uri: "https://picsum.photos/700" }} />
         {/*<Card.Cover source={{ uri: feed?.path }} /> Not allowed to load local resource // https://stackoverflow.com/questions/39007243/cannot-open-local-file-chrome-not-allowed-to-load-local-resource*/}
         {showComment ? (
           <>
@@ -84,7 +57,7 @@ export default function FeedItem({ feed, onDelete, navigation }) {
         anchor={
           <Icon
             source={Icon?.sources?.base?.menuDot}
-            style={{ height: "20px", width: "20px" }}
+            style={{ height: 20, width: 20 }}
           />
         }
         items={menuList}
@@ -96,10 +69,11 @@ export default function FeedItem({ feed, onDelete, navigation }) {
 
 const styles = StyleSheet.create({
   item: {
-    width: "90%",
+    // width: "90%",
     // pointerEvents: "none",
-    marginHorizontal: "5%",
-    marginVertical: "1%",
+    marginHorizontal: 10,
+    marginVertical: 10,
+    paddingHorizontal: 15,
   },
   topMenu: {
     zIndex: 100,

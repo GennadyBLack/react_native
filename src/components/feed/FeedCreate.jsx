@@ -38,7 +38,7 @@ export default function FeedCreate({ navigation }) {
       <Button title="Create Feed" onPress={() => create()}></Button>
       <Button
         title="go Back"
-        onPress={() => navigation.navigate("FeedMain")}
+        onPress={() => navigation.navigate("feed")}
       ></Button>
     </View>
   );

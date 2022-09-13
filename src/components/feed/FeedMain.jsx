@@ -20,14 +20,18 @@ export default observer(FeedMain);
 
 function FeedMain({ navigation }) {
   const [feed] = useStore("feed");
-
   const deletePost = async (id) => {
     await feed.delete(id);
     await feed.getAll();
   };
 
   useEffect(() => {
-    feed.getAll();
+    const getAllFeed = async () => {
+      await feed.getAll();
+      console.log(feed.feeds, "feed");
+    };
+
+    getAllFeed();
   }, []);
   const renderItem = ({ item }) => (
     <TouchableOpacity
@@ -57,11 +61,13 @@ function FeedMain({ navigation }) {
                 }
               }}
             ></Button>
-            <FlatList
-              data={feed?.feeds}
-              renderItem={renderItem}
-              keyExtractor={(item) => item.id}
-            />
+            {feed?.feeds && feed?.feeds?.length && (
+              <FlatList
+                data={feed?.feeds}
+                renderItem={renderItem}
+                keyExtractor={(item) => item.id}
+              />
+            )}
             <Button
               icon="camera"
               mode="contained"
