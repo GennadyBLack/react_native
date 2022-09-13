@@ -9,14 +9,22 @@ import ReEx2 from "../components/example/ReEx2";
 import ReEx3 from "../components/example/ReEx3";
 import ReEx4 from "../components/example/ReEx4";
 import ReEx5 from "../components/example/ReEx5";
+import ReEx6 from "../components/example/ReEx6";
+import ReEx7 from "../components/example/ReEx7";
+import ReEx8 from "../components/example/ReEx8";
+import ReEx9 from "../components/example/ReEx9";
 import BottomSheet from "../components/base/BottomSheet";
 
 function Test({ navigation }) {
-  const [modal] = useStore("modal");
-  useEffect(() => {
-    modal.setContent(<Text>Ahahaha, kakoi ty loh</Text>);
-  });
+  // const [modal] = useStore("modal");
+  // useEffect(() => {
+  //   modal.setContent(<Text>Ahahaha, kakoi ty loh</Text>);
+  // });
   return (
+    <ReEx9 />
+    // <ReEx8 />
+    // <ReEx7 />
+    // <ReEx6 />
     // <ReEx5 />
     // <ReEx4 />
     // <ReEx3 />
@@ -40,10 +48,10 @@ function Test({ navigation }) {
     //   <Text onPress={() => console.log("fdfd")}>Salam</Text>
     // </View>
     //   </Portal>
-    <View>
-      <Button title="open" onPress={() => modal.scrollFn()}></Button>
-      <Button title="open close" onPress={() => modal.setClose()}></Button>
-    </View>
+    // <View>
+    //   <Button title="open" onPress={() => modal.scrollFn()}></Button>
+    //   <Button title="open close" onPress={() => modal.setClose()}></Button>
+    // </View>
     // </View>
   );
 }
