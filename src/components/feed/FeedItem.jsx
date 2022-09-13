@@ -52,7 +52,7 @@ export default function FeedItem({ feed, onDelete, navigation }) {
   ];
 
   return (
-    <View style={{ padding: "30px" }}>
+    <View style={{ padding: "30" }}>
       <Card>
         <Card.Content style={styles.item}>
           <Title>{feed?.title}</Title>
@@ -84,7 +84,7 @@ export default function FeedItem({ feed, onDelete, navigation }) {
         anchor={
           <Icon
             source={Icon?.sources?.base?.menuDot}
-            style={{ height: "20px", width: "20px" }}
+            style={{ height: "20", width: "20" }}
           />
         }
         items={menuList}
