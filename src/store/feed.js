@@ -25,7 +25,7 @@ export default class Feed {
         });
       });
     } catch (error) {
-      console.log(error, "error me");
+      console.log(error, "error me getAll");
       this.root.setError(error);
       this.loading = false;
     }
@@ -39,7 +39,7 @@ export default class Feed {
         this.loading = false;
       });
     } catch (error) {
-      console.log(error, "error me");
+      console.log(error, "error me get");
       this.root.setError(error);
       this.loading = false;
     }
@@ -48,9 +48,17 @@ export default class Feed {
   create = async (data) => {
     try {
       this.loading = true;
-      let res = await this.root.api.feed.create(data);
-      currentFeed = res?.data;
-      this.loading = false;
+      let res = await this.root.api.feed
+        .create({
+          ...data,
+          path: this.root.tools.image,
+        })
+        .then((res) => {
+          runInAction(() => {
+            this.currentFeed = res?.data;
+            this.loading = false;
+          });
+        });
     } catch (error) {
       this.root.setError(error);
       this.loading = false;

@@ -28,7 +28,6 @@ function FeedMain({ navigation }) {
   useEffect(() => {
     const getAllFeed = async () => {
       await feed.getAll();
-      console.log(feed.feeds, "feed");
     };
 
     getAllFeed();
@@ -50,7 +49,7 @@ function FeedMain({ navigation }) {
       <>
         {feed?.loading ? null : (
           <>
-            <Text>Feed Main </Text>
+            <Text>Feed Main</Text>
             <Button
               title="Create"
               onPress={() => {
@@ -61,13 +60,11 @@ function FeedMain({ navigation }) {
                 }
               }}
             ></Button>
-            {feed?.feeds && feed?.feeds?.length && (
-              <FlatList
-                data={feed?.feeds}
-                renderItem={renderItem}
-                keyExtractor={(item) => item.id}
-              />
-            )}
+            <FlatList
+              data={feed?.feeds}
+              renderItem={renderItem}
+              keyExtractor={(item) => item.id}
+            />
             <Button
               icon="camera"
               mode="contained"

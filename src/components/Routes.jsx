@@ -32,10 +32,10 @@ function Routes() {
         const state = savedStateString
           ? JSON.parse(savedStateString)
           : undefined;
-
-        if (state !== undefined) {
-          setInitialState(state);
-        }
+        //Расскоментить, чтобы запускать приложение с последней посещенной страницы
+        // if (state !== undefined) {
+        //   setInitialState(state);
+        // }
       } finally {
         setIsReady(true);
       }

@@ -78,7 +78,7 @@ export default class Auth {
       });
       await this.fetchMe();
     } catch (error) {
-      console.log(error, "error me");
+      console.log(error, "error me updateMe");
       // this.root.setError(error);
       this.loading = false;
     }

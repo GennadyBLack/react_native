@@ -19,7 +19,7 @@ export default class Result {
         });
       });
     } catch (error) {
-      console.log(error, "error me");
+      console.log(error, "error me getAll - result");
       this.root.setError(error);
       this.loading = false;
     }
@@ -34,7 +34,7 @@ export default class Result {
         return res;
       });
     } catch (error) {
-      console.log(error, "error me");
+      console.log(error, "error me get- result");
       this.root.setError(error);
       this.loading = false;
     }

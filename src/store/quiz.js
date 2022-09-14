@@ -20,7 +20,7 @@ export default class Quiz {
         });
       });
     } catch (error) {
-      console.log(error, "error me");
+      console.log(error, "error me getAll quiz");
       this.root.setError(error);
       this.loading = false;
     }
@@ -34,7 +34,7 @@ export default class Quiz {
         this.loading = false;
       });
     } catch (error) {
-      console.log(error, "error me");
+      console.log(error, "error me get - quiz");
       this.root.setError(error);
       this.loading = false;
     }
