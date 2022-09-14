@@ -71,12 +71,11 @@ function FeedMain({ navigation }) {
             <Button
               icon="camera"
               mode="contained"
+              title="Create Post"
               onPress={() => {
                 navigation.navigate("feed_create");
               }}
-            >
-              Create Post
-            </Button>
+            ></Button>
           </>
         )}
       </>

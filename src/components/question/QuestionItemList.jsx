@@ -17,10 +17,9 @@ function QuestionItemList({ edit, index, question, onDelete }) {
             style={styles.fab}
             small
             mode="contained"
+            title="-"
             onPress={() => onDelete()}
-          >
-            -
-          </Button>
+          ></Button>
         ) : null}
       </View>
     </>
