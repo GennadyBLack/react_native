@@ -9,6 +9,7 @@ import Animated, {
 import Icon from "../base/Icon";
 import MenuToggler from "../menu/MenuToggler";
 import { PinchGestureHandler } from "react-native-gesture-handler";
+import { apiUrl } from "../../api";
 
 const AnimateImage = Animated.createAnimatedComponent(Image);
 
@@ -59,7 +60,9 @@ export default function FeedItem({ feed, onDelete, navigation }) {
           <Title>{feed?.title}</Title>
           <Paragraph>{feed?.desc}</Paragraph>
         </Card.Content>
-        <AnimateImage source={{ uri: "https://picsum.photos/700" }} />
+        <AnimateImage
+          source={{ uri: `${apiUrl}/files/${feed?.path || "placeholder.png"}` }}
+        />
         {/*<Card.Cover source={{ uri: feed?.path }} /> Not allowed to load local resource // https://stackoverflow.com/questions/39007243/cannot-open-local-file-chrome-not-allowed-to-load-local-resource*/}
         {showComment ? (
           <View>
