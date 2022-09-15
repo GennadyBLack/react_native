@@ -96,6 +96,12 @@ function ProfileMain({ route, navigation }) {
             ></Button>
           ) : null}
         </Card>
+        <Button
+          title="Logout"
+          onPress={() => {
+            auth.logout();
+          }}
+        ></Button>
       </View>
     </Swipe>
   );

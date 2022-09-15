@@ -1,11 +1,12 @@
 import { useState, useEffect } from "react";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 export default (key, initialValue = "") => {
   const [value, setValue] = useState(() => {
-    return localStorage.getItem(key) || initialValue;
+    return AsyncStorage.getItem(key) || initialValue;
   });
 
   useEffect(() => {
-    localStorage.setItem(key, value);
+    AsyncStorage.setItem(key, value);
   }, [value, key]);
 
   return [value, setValue];

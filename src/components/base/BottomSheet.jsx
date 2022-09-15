@@ -25,7 +25,7 @@ const { height: SCREEN_HEIGHT } = Dimensions.get("window");
 
 const MAX_TRANSLATE_Y = -SCREEN_HEIGHT;
 
-const BottomSheet = ({ children }) => {
+const BottomSheet = () => {
   const active = useSharedValue(false);
   const [modal] = useStore("modal");
   const translateY = useSharedValue(0);

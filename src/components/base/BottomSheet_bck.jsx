@@ -20,12 +20,9 @@ const MAX_TRANSLATE_Y = -SCREEN_HEIGHT;
 
 const BottomSheet = ({ children }) => {
   const [modal] = useStore("modal");
-
   const active = useSharedValue(false);
-
   useEffect(() => {
     active.value = !modal?.isOpen;
-    console.log(modal?.isOpen, "modal?.isOpen", active.value);
   }, [modal?.isOpen]);
 
   const modalParams = modal.getParams;
@@ -33,7 +30,6 @@ const BottomSheet = ({ children }) => {
   const context = useSharedValue({ y: 0 });
 
   const scrollTo = useCallback((destination) => {
-    console.log(destination, "scrolling");
     translateY.value = withSpring(destination, { damping: 50 });
   }, []);
 
@@ -60,7 +56,6 @@ const BottomSheet = ({ children }) => {
 
   const gesture = Gesture.Pan()
     .onBegin((e) => {
-      console.log(e, "event");
       context.value = { y: translateY?.value };
     })
     .onUpdate((e) => {

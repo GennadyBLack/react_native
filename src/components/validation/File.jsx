@@ -1,5 +1,5 @@
 import React from "react";
-import { Text } from "react-native-paper";
+import { Text, View } from "react-native-paper";
 import Upload from "./Upload";
 import { Controller } from "react-hook-form";
 import { StyleSheet } from "react-native";

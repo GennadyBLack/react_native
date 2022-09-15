@@ -3,10 +3,14 @@ import { View, Button, Text } from "react-native";
 import { observer } from "mobx-react-lite";
 
 function Test({ navigation }) {
-  // const [modal] = useStore("modal");
-  // useEffect(() => {
-  //   modal.setContent(<Text>Ahahaha, kakoi ty loh</Text>);
-  // });
+  const [modal] = useStore("modal");
+
+  modal.setContent(
+    <View>
+      <Text>Ahahaha, kakoi ty loh</Text>
+    </View>
+  );
+
   return (
     // <ReEx9 />
     // <ReEx8 />
@@ -35,14 +39,14 @@ function Test({ navigation }) {
     //   <Text onPress={() => console.log("fdfd")}>Salam</Text>
     // </View>
     //   </Portal>
-    // <View>
-    //   <Button title="open" onPress={() => modal.scrollFn()}></Button>
-    //   <Button title="open close" onPress={() => modal.setClose()}></Button>
-    // </View>
-    // </View>
     <View>
-      <Text>sdsd</Text>
+      <Button title="open" onPress={() => modal.scrollFn()}></Button>
+      <Button title="open close" onPress={() => modal.setClose()}></Button>
     </View>
+    // </View>
+    // <View>
+    //   <Text>sdsdr</Text>
+    // </View>
   );
 }
 export default observer(Test);

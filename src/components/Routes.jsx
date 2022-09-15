@@ -1,6 +1,6 @@
 // In App.js in a new project
 
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Linking, View } from "react-native";
 import { observer } from "mobx-react-lite";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -20,8 +20,28 @@ function Routes() {
   //state persistence
   const [isReady, setIsReady] = React.useState(__DEV__ ? false : true);
   const [initialState, setInitialState] = React.useState();
+
+  const [routes, setRoutes] = useState([]);
+
   let [auth] = useStore("auth");
-  useEffect(() => {}, [auth.isAuth]);
+  useEffect(() => {
+    //LINKING CONFIG END
+    let mappedLinks = filterMenuLinks(auth?.isAuth, auth?.user?.user?.menu).map(
+      (item, inx) => {
+        console.log(item, "ROUTE ITEM");
+        return (
+          <Screen
+            name={item?.name}
+            component={item?.component}
+            options={item?.options}
+            key={inx}
+          />
+        );
+      }
+    );
+
+    setRoutes(mappedLinks);
+  }, [auth.isAuth]);
   useEffect(() => {
     const restoreState = async () => {
       try {
@@ -53,19 +73,6 @@ function Routes() {
       </View>
     );
   }
-  //LINKING CONFIG END
-  let mappedLinks = filterMenuLinks(auth?.isAuth, auth?.user?.user?.menu).map(
-    (item, inx) => {
-      return (
-        <Screen
-          name={item?.name}
-          component={item?.component}
-          options={item?.options}
-          key={inx}
-        />
-      );
-    }
-  );
 
   return (
     <NavigationContainer
@@ -83,7 +90,7 @@ function Routes() {
         inactiveColor="#3e2465"
         barStyle={{ backgroundColor: "#694fad" }}
       >
-        {mappedLinks}
+        {routes}
       </Navigator>
     </NavigationContainer>
   );

@@ -1,5 +1,6 @@
 import { makeAutoObservable, runInAction } from "mobx";
 import { setToken, getToken, removeToken } from "../helpers/storage";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default class Auth {
   user = null;
@@ -89,8 +90,14 @@ export default class Auth {
   }
 
   logout() {
-    this.user = null;
-    localStorage.setItem("token", null);
+    try {
+      this.user = null;
+      AsyncStorage.setItem("token", null);
+    } catch (error) {
+      this.user = null;
+      AsyncStorage.setItem("token", null);
+      console.log(error, " error - auth logout");
+    }
   }
   constructor(root) {
     makeAutoObservable(this);
