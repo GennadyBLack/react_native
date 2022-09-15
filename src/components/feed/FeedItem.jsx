@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, StyleSheet, TextInput } from "react-native";
+import { View, StyleSheet, TextInput, Text } from "react-native";
 import { Card, Title, Paragraph, Button } from "react-native-paper";
 import Animated, {
   useAnimatedGestureHandler,
@@ -52,7 +52,7 @@ export default function FeedItem({ feed, onDelete, navigation }) {
   ];
 
   return (
-    <View style={{ padding: "30px" }}>
+    <View style={{ padding: 30 }}>
       <Card>
         <Card.Content style={styles.item}>
           <Title>{feed?.title}</Title>
@@ -82,10 +82,11 @@ export default function FeedItem({ feed, onDelete, navigation }) {
       />
       <MenuToggler
         anchor={
-          <Icon
-            source={Icon?.sources?.base?.menuDot}
-            style={{ height: "20px", width: "20px" }}
-          />
+          <Text>alo</Text>
+          // <Icon
+          //   source={Icon?.sources?.base?.menuDot}
+          //   style={{ height: "20px", width: "20px" }}
+          // />
         }
         items={menuList}
         // style={styles.topMenu}

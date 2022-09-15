@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { TextInput, Text, View } from "react-native-paper";
+import { TextInput, Text } from "react-native-paper";
 import { Controller, useFieldArray } from "react-hook-form";
 import { StyleSheet, View, Button } from "react-native";
 import Switch from "./Switch";

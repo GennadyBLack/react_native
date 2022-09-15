@@ -43,11 +43,7 @@ export default function Upload({ value = null, error, onChange, title }) {
     <View>
       <Button title={title ? title : "upload image"} onPress={pickImage} />
       {image ? (
-        <View>
-          {/*<Text>{image}</Text>*/}
-          {/*<Image source={{ uri: image }} style={{ width: 200, height: 200 }} />*/}
-          {image ? <Text>Фото успешно загружено!</Text> : null}
-        </View>
+        <View>{image ? <Text>Фото успешно загружено!</Text> : null}</View>
       ) : null}
     </View>
   );

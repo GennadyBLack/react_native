@@ -1,19 +1,6 @@
 import React, { useEffect } from "react";
 import { View, Button, Text } from "react-native";
 import { observer } from "mobx-react-lite";
-import useStore from "../hooks/useStore";
-import Portal from "../components/base/Portal";
-import CardExample from "../components/example/CardExample";
-import ReEx1 from "../components/example/ReEx1";
-import ReEx2 from "../components/example/ReEx2";
-import ReEx3 from "../components/example/ReEx3";
-import ReEx4 from "../components/example/ReEx4";
-import ReEx5 from "../components/example/ReEx5";
-import ReEx6 from "../components/example/ReEx6";
-import ReEx7 from "../components/example/ReEx7";
-import ReEx8 from "../components/example/ReEx8";
-import ReEx9 from "../components/example/ReEx9";
-import BottomSheet from "../components/base/BottomSheet";
 
 function Test({ navigation }) {
   // const [modal] = useStore("modal");
@@ -21,7 +8,7 @@ function Test({ navigation }) {
   //   modal.setContent(<Text>Ahahaha, kakoi ty loh</Text>);
   // });
   return (
-    <ReEx9 />
+    // <ReEx9 />
     // <ReEx8 />
     // <ReEx7 />
     // <ReEx6 />
@@ -53,6 +40,9 @@ function Test({ navigation }) {
     //   <Button title="open close" onPress={() => modal.setClose()}></Button>
     // </View>
     // </View>
+    <View>
+      <Text>sdsd</Text>
+    </View>
   );
 }
 export default observer(Test);
