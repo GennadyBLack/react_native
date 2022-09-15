@@ -2,13 +2,25 @@ import { makeAutoObservable, runInAction } from "mobx";
 
 export default class Tools {
   image = null;
+  imageName = null;
   loading = false;
   error = null;
 
   uploadImage = async (file) => {
     try {
       this.loading = true;
-      this.image = (await this?.api?.upload(file)).data;
+      this.imageName = (await this?.api?.upload(file)).data;
+    } catch (error) {
+      console.log(error, "error file");
+      this.root.setError(error);
+      this.loading = false;
+    }
+  };
+
+  getImage = async () => {
+    try {
+      this.loading = true;
+      this.image = await this?.api?.get(this.imageName);
     } catch (error) {
       console.log(error, "error file");
       this.root.setError(error);

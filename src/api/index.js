@@ -38,4 +38,4 @@ const api = (axios) => {
 };
 
 export default api(axiosInstance);
-export { axiosInstance };
+export { axiosInstance, apiUrl };

@@ -51,7 +51,7 @@ export default class Feed {
       let res = await this.root.api.feed
         .create({
           ...data,
-          path: this.root.tools.image,
+          path: this.root.tools.imageName,
         })
         .then((res) => {
           runInAction(() => {
@@ -78,7 +78,10 @@ export default class Feed {
   update = async (id, data) => {
     try {
       this.loading = true;
-      await this.root.api.feed.update(id, { data });
+      await this.root.api.feed.update(id, {
+        ...data,
+        path: this.root.tools.imageName,
+      });
       this.loading = false;
     } catch (error) {
       console.error(error);
