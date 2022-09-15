@@ -7,22 +7,20 @@ export default observer(QuestionItemList);
 
 function QuestionItemList({ edit, index, question, onDelete }) {
   return (
-    <>
-      <View style={styles.question_list__item}>
-        <Text>
-          {index}.{question?.title}
-        </Text>
-        {edit ? (
-          <Button
-            style={styles.fab}
-            small
-            mode="contained"
-            title="-"
-            onPress={() => onDelete()}
-          ></Button>
-        ) : null}
-      </View>
-    </>
+    <View style={styles.question_list__item}>
+      <Text>
+        {index}.{question?.title}
+      </Text>
+      {edit ? (
+        <Button
+          style={styles.fab}
+          small
+          mode="contained"
+          title="-"
+          onPress={() => onDelete()}
+        ></Button>
+      ) : null}
+    </View>
   );
 }
 

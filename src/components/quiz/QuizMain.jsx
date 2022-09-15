@@ -19,7 +19,7 @@ function QuizMain({ navigation, route }) {
     quiz.get(route?.params?.id);
   }, [result?.result?.id]);
   return (
-    <>
+    <View>
       {quiz?.quiz && (
         <Tabulator
           lastFunction={() => redirectToResultPage(route?.params?.id)}
@@ -29,6 +29,6 @@ function QuizMain({ navigation, route }) {
           resetTab
         />
       )}
-    </>
+    </View>
   );
 }

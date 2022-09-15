@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, StyleSheet, TextInput, Image, Text } from "react-native";
+import { View, StyleSheet, TextInput } from "react-native";
 import { Card, Title, Paragraph, Button } from "react-native-paper";
 import Animated, {
   useAnimatedGestureHandler,
@@ -10,7 +10,7 @@ import Icon from "../base/Icon";
 import MenuToggler from "../menu/MenuToggler";
 import { PinchGestureHandler } from "react-native-gesture-handler";
 
-const AnimateImage = Animated.createAnimatedComponent(Image);
+const AnimatedCardCover = Animated.createAnimatedComponent(Card.Cover);
 
 export default function FeedItem({ feed, onDelete, navigation }) {
   const [showComment, setShowComment] = useState(false);
@@ -52,20 +52,24 @@ export default function FeedItem({ feed, onDelete, navigation }) {
   ];
 
   return (
-    <View style={{ padding: 30 }}>
-      <Text>{JSON.stringify(feed)}</Text>
+    <View style={{ padding: "30px" }}>
       <Card>
         <Card.Content style={styles.item}>
           <Title>{feed?.title}</Title>
           <Paragraph>{feed?.desc}</Paragraph>
         </Card.Content>
-        <AnimateImage source={{ uri: "https://picsum.photos/700" }} />
+        <PinchGestureHandler onGestureEvent={pinchHandler}>
+          <AnimatedCardCover
+            style={rCover}
+            source={{ uri: "https://picsum.photos/700" }}
+          />
+        </PinchGestureHandler>
         {/*<Card.Cover source={{ uri: feed?.path }} /> Not allowed to load local resource // https://stackoverflow.com/questions/39007243/cannot-open-local-file-chrome-not-allowed-to-load-local-resource*/}
         {showComment ? (
-          <>
+          <View>
             <TextInput placeholder="Оставьте свой комментарий"></TextInput>
             <Button title="Отправить" />
-          </>
+          </View>
         ) : null}
         <Card.Actions></Card.Actions>
       </Card>
@@ -80,7 +84,7 @@ export default function FeedItem({ feed, onDelete, navigation }) {
         anchor={
           <Icon
             source={Icon?.sources?.base?.menuDot}
-            style={{ height: 20, width: 20 }}
+            style={{ height: "20px", width: "20px" }}
           />
         }
         items={menuList}
@@ -92,11 +96,10 @@ export default function FeedItem({ feed, onDelete, navigation }) {
 
 const styles = StyleSheet.create({
   item: {
-    // width: "90%",
+    width: "90%",
     // pointerEvents: "none",
-    marginHorizontal: 10,
-    marginVertical: 10,
-    paddingHorizontal: 15,
+    marginHorizontal: "5%",
+    marginVertical: "1%",
   },
   topMenu: {
     zIndex: 100,

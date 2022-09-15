@@ -1,5 +1,6 @@
 import React from "react";
 import Switch from "../validation/Switch";
+import { View } from "react-native";
 
 export default function MenuSwicher({ data, onChange }) {
   const mappedSwitchArray = () => {
@@ -16,5 +17,5 @@ export default function MenuSwicher({ data, onChange }) {
       });
     }
   };
-  return <>{mappedSwitchArray()}</>;
+  return <View>{mappedSwitchArray()}</View>;
 }

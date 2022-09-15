@@ -76,30 +76,28 @@ function QuizList({ navigation }) {
       {/*    { id: 4, title: "ohohoh", desc: "kudasai" },*/}
       {/*  ])}*/}
       {/*/>*/}
-      <>
-        {quiz?.loading ? null : (
-          <>
-            <Text>quiz Main </Text>
-            <Button
-              title="Create"
-              onPress={() => {
-                navigation.navigate("quiz_create");
-              }}
-            ></Button>
-            <FlatList
-              data={quiz?.quiz_list}
-              renderItem={renderItem}
-              keyExtractor={(item) => item.id}
-            />
-            <FAB
-              style={styles.fab}
-              small
-              icon="plus"
-              onPress={() => navigation.navigate("quiz_create")}
-            />
-          </>
-        )}
-      </>
+      {quiz?.loading ? null : (
+        <View>
+          <Text>quiz Main </Text>
+          <Button
+            title="Create"
+            onPress={() => {
+              navigation.navigate("quiz_create");
+            }}
+          ></Button>
+          <FlatList
+            data={quiz?.quiz_list}
+            renderItem={renderItem}
+            keyExtractor={(item) => item.id}
+          />
+          <FAB
+            style={styles.fab}
+            small
+            icon="plus"
+            onPress={() => navigation.navigate("quiz_create")}
+          />
+        </View>
+      )}
     </View>
   );
 }

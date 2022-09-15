@@ -1,7 +1,7 @@
 import React from "react";
 import { TextInput, Text } from "react-native-paper";
 import { Controller } from "react-hook-form";
-import { StyleSheet } from "react-native";
+import { StyleSheet, View } from "react-native";
 
 export default function Input({
   name,
@@ -14,7 +14,7 @@ export default function Input({
   return (
     <Controller
       render={({ field: { value, onChange }, fieldState }) => (
-        <>
+        <View>
           <TextInput
             error={fieldState?.error?.message}
             value={value || ""}
@@ -26,7 +26,7 @@ export default function Input({
             }}
           />
           <Text style={styles.error}>{fieldState?.error?.message}</Text>
-        </>
+        </View>
       )}
       rules={rules}
       control={control}

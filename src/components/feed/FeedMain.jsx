@@ -46,36 +46,37 @@ function FeedMain({ navigation }) {
   );
   return (
     <View style={styles.wrap}>
-      <>
-        {feed?.loading ? null : (
-          <>
-            <Text>Feed Main</Text>
-            <Button
-              title="Create"
-              onPress={() => {
-                try {
-                  navigation?.navigate("feed_create");
-                } catch (error) {
-                  console.log(error);
-                }
-              }}
-            ></Button>
+      {feed?.loading ? null : (
+        <View>
+          <Text>Feed Main </Text>
+          <Button
+            title="Create"
+            onPress={() => {
+              try {
+                navigation?.navigate("feed_create");
+              } catch (error) {
+                console.log(error);
+              }
+            }}
+          ></Button>
+          {feed?.feeds && feed?.feeds?.length && (
             <FlatList
               data={feed?.feeds}
               renderItem={renderItem}
               keyExtractor={(item) => item.id}
             />
-            <Button
-              icon="camera"
-              mode="contained"
-              title="Create Post"
-              onPress={() => {
-                navigation.navigate("feed_create");
-              }}
-            ></Button>
-          </>
-        )}
-      </>
+          )}
+          <Button
+            icon="camera"
+            mode="contained"
+            onPress={() => {
+              navigation.navigate("feed_create");
+            }}
+          >
+            Create Post
+          </Button>
+        </View>
+      )}
     </View>
   );
 }

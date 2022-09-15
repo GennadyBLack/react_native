@@ -30,14 +30,14 @@ function FeedEdit({ route, navigation }) {
       <Card>
         <Card.Content>
           {!isEdit ? (
-            <>
+            <View>
               <Title>
                 {feed?.currentFeed?.title || "Название отсутствует"}
               </Title>
               <Paragraph>
                 {feed?.currentFeed?.desc || "Описание отсутствует"}
               </Paragraph>
-            </>
+            </View>
           ) : null}
           {isEdit ? (
             <Form onSubmit={submit} defaultValues={feed?.currentFeed}>

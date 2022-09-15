@@ -1,6 +1,6 @@
 import * as React from "react";
 import { Switch as S } from "react-native-paper";
-import { Text } from "react-native";
+import { Text, View } from "react-native";
 
 const Switch = ({ onChange, value, initVal = false, label }) => {
   const [isSwitchOn, setIsSwitchOn] = React.useState(() => {
@@ -19,10 +19,10 @@ const Switch = ({ onChange, value, initVal = false, label }) => {
   };
 
   return (
-    <>
+    <View>
       {label && <Text>{label}</Text>}
       <S value={isSwitchOn} onValueChange={onToggleSwitch} />
-    </>
+    </View>
   );
 };
 

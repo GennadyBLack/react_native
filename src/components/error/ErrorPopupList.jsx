@@ -29,7 +29,7 @@ function ErrorPopupList() {
     </View>
   ) : null;
 
-  return <>{mappedErrors}</>;
+  return <View>{mappedErrors}</View>;
 }
 
 const styles = StyleSheet.create({

@@ -14,13 +14,13 @@ export default function QuizQuestionItem({ data, next }) {
     : null;
 
   return (
-    <>
-      {mappedAnswers}{" "}
+    <View>
+      {mappedAnswers}
       <Button
         onPress={() => navigation.navigate("register")}
         title="VADIM IS GAY"
       ></Button>
-    </>
+    </View>
   );
 }
 
@@ -59,25 +59,23 @@ function Answer({ answer, next }) {
   };
 
   return (
-    <>
-      <TouchableOpacity
-        onPress={async () => {
-          await setQuiestionResult(answer);
-          await next();
+    <TouchableOpacity
+      onPress={async () => {
+        await setQuiestionResult(answer);
+        await next();
+      }}
+    >
+      <View
+        style={{
+          height: 70,
+          backgroundColor: "white",
+          margin: 10,
+          justifyContent: "center",
+          alignItems: "center",
         }}
       >
-        <View
-          style={{
-            height: 70,
-            backgroundColor: "white",
-            margin: 10,
-            justifyContent: "center",
-            alignItems: "center",
-          }}
-        >
-          <Text>{answer?.title}</Text>
-        </View>
-      </TouchableOpacity>
-    </>
+        <Text>{answer?.title}</Text>
+      </View>
+    </TouchableOpacity>
   );
 }

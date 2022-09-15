@@ -64,7 +64,7 @@ function QuizEdit({ route, navigation }) {
   return (
     <View style={styles.wrap}>
       {!isEdit ? (
-        <>
+        <View>
           <Title>{quiz?.quiz?.title || "Название отсутствует"}</Title>
           <Text>
             {quiz?.quiz?.questions?.length
@@ -72,10 +72,10 @@ function QuizEdit({ route, navigation }) {
               : "no questions yet"}
           </Text>
           <Paragraph>{quiz?.quiz?.desc || "Описание отсутствует"}</Paragraph>
-        </>
+        </View>
       ) : null}
       {isEdit ? (
-        <>
+        <View>
           <Form onSubmit={submit} defaultValues={quiz?.quiz}>
             <Form.Input
               placeholder="title"
@@ -117,7 +117,7 @@ function QuizEdit({ route, navigation }) {
             keyExtractor={(item) => item.id}
           />
           <QuestionModal />
-        </>
+        </View>
       ) : null}
 
       {!isEdit ? (

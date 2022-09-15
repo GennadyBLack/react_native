@@ -36,15 +36,15 @@ function ProfileMain({ route, navigation }) {
         <Card>
           <Card.Content>
             {!isEdit ? (
-              <>
+              <View>
                 <Title>{user?.username || "Name отсутствует"}</Title>
                 <Paragraph>
                   {user?.description || "Описание отсутствует"}
                 </Paragraph>
-              </>
+              </View>
             ) : null}
             {isEdit ? (
-              <>
+              <View>
                 <Form onSubmit={submit} defaultValues={user}>
                   <Form.Input
                     name="username"
@@ -75,13 +75,7 @@ function ProfileMain({ route, navigation }) {
                     }}
                   />
                   <Form.File name="avatar" title="Загрузить фото профиля" />
-                  {/* {user?.menu
-                  ? user?.menu?.map((item) => {
-                      if (item) {
-                        return <Text>{item}</Text>;
-                      }
-                    })
-                  : null} */}
+
                   <Switch />
                 </Form>
                 <MenuSwicher
@@ -90,7 +84,7 @@ function ProfileMain({ route, navigation }) {
                     onMenuChange(e, l);
                   }}
                 />
-              </>
+              </View>
             ) : null}
           </Card.Content>
           <Card.Cover source={{ uri: user?.avatar }} />

@@ -1,5 +1,6 @@
 import React, { useContext, useState } from "react";
 import PortalContext from "../../contexts/portalContext";
+import { View } from "react-native";
 
 export const PortalProvider = ({ children }) => {
   const [gates, setGates] = useState({});
@@ -29,9 +30,9 @@ export const PortalGate = ({ gateName, children }) => {
   // console.log(value.gates, "gates");
 
   return (
-    <>
+    <View>
       {value.gates[gateName]}
       {children}
-    </>
+    </View>
   );
 };

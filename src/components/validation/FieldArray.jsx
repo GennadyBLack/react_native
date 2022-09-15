@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { TextInput, Text } from "react-native-paper";
+import { TextInput, Text, View } from "react-native-paper";
 import { Controller, useFieldArray } from "react-hook-form";
 import { StyleSheet, View, Button } from "react-native";
 import Switch from "./Switch";
@@ -28,7 +28,7 @@ export default function FieldArray({
     <View key={item.id} style={styles.answerWrap}>
       <Controller
         render={({ field: { value, onChange }, fieldState }) => (
-          <>
+          <View>
             <TextInput
               error={fieldState?.error?.message}
               label={label || ""}
@@ -43,7 +43,7 @@ export default function FieldArray({
               }}
             />
             <Text style={styles.error}>{fieldState?.error?.message}</Text>
-          </>
+          </View>
         )}
         rules={rules}
         control={control}
@@ -64,7 +64,7 @@ export default function FieldArray({
   );
   const items = fields.map((item, index) => field(item, index));
   return (
-    <>
+    <View>
       <h1>Hello Boy</h1>
       {items}
       <Button
@@ -77,10 +77,9 @@ export default function FieldArray({
             id: new Date().getTime(),
           });
           setSwitches([...switches, { id: switches.length + 1, value: false }]);
-          console.log(switches);
         }}
       />
-    </>
+    </View>
   );
 }
 

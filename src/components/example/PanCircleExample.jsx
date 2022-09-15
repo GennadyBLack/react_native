@@ -89,9 +89,7 @@ export default function PanCircleExample() {
       <Animated.View style={[styles.circle, greenStyle]}></Animated.View>
       <Animated.View style={[styles.circle, redStyle]}></Animated.View>
       <GestureDetector gesture={gesture}>
-        <>
-          <Animated.View style={[styles.circle, bStyle]}></Animated.View>
-        </>
+        <Animated.View style={[styles.circle, bStyle]}></Animated.View>
       </GestureDetector>
     </View>
   );

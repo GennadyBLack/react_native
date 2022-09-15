@@ -44,14 +44,12 @@ export default function Tabulator({
   // }, [route.params]);
 
   return (
-    <>
-      <View className={customClass}>
-        {Header && tabs?.length && <Header data={tabs[currentTab]} />}
-        {Content && tabs?.length && (
-          <Content data={tabs[currentTab]} next={setTab} />
-        )}
-        {Btns && <Btns />}
-      </View>
-    </>
+    <View className={customClass}>
+      {Header && tabs?.length && <Header data={tabs[currentTab]} />}
+      {Content && tabs?.length && (
+        <Content data={tabs[currentTab]} next={setTab} />
+      )}
+      {Btns && <Btns />}
+    </View>
   );
 }

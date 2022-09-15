@@ -47,8 +47,7 @@ export default function ReEx8() {
     pickedColor.value = color;
   }, []);
   return (
-    <>
-      <Animated.View style={[styles.topContainer, rStyle]}></Animated.View>
+    <Animated.View style={[styles.topContainer, rStyle]}>
       <View style={styles.bottomContainer}>
         <ColorPicker
           colors={COLORS}
@@ -59,7 +58,7 @@ export default function ReEx8() {
           onColorChanged={onColorChanged}
         ></ColorPicker>
       </View>
-    </>
+    </Animated.View>
   );
 }
 

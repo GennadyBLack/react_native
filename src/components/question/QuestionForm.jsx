@@ -33,29 +33,27 @@ function QuestionForm({ navigation, hideModal }) {
 
   return (
     <View style={styles.wrap}>
-      <>
-        <Form onSubmit={submit}>
-          <Form.Input
-            style={styles.mb2}
-            name="question"
-            mode="outlined"
-            label="Введите вопрос"
-            rules={{
-              required: {
-                value: true,
-                message: "Это поле обязательно для заполнения чудик",
-              },
-              min: { value: 3, message: "Больше 3" },
-            }}
-          />
-          <FieldArray
-            name="answers"
-            appendBtn="Добавить ответ"
-            label="Верный ответ"
-            switchAction={setRightId}
-          />
-        </Form>
-      </>
+      <Form onSubmit={submit}>
+        <Form.Input
+          style={styles.mb2}
+          name="question"
+          mode="outlined"
+          label="Введите вопрос"
+          rules={{
+            required: {
+              value: true,
+              message: "Это поле обязательно для заполнения чудик",
+            },
+            min: { value: 3, message: "Больше 3" },
+          }}
+        />
+        <FieldArray
+          name="answers"
+          appendBtn="Добавить ответ"
+          label="Верный ответ"
+          switchAction={setRightId}
+        />
+      </Form>
     </View>
   );
 }
