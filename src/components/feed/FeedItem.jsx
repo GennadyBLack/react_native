@@ -81,14 +81,14 @@ export default function FeedItem({ feed, onDelete, navigation }) {
       />
       <MenuToggler
         anchor={
-          <Text>alo</Text>
-          // <Icon
-          //   source={Icon?.sources?.base?.menuDot}
-          //   style={{ height: "20px", width: "20px" }}
-          // />
+          // <Text>alo</Text>
+          <Icon
+            source={Icon?.sources?.base?.menuDot}
+            style={{ height: "20px", width: "20px" }}
+          />
         }
         items={menuList}
-        // style={styles.topMenu}
+        style={styles.topMenu}
       />
     </View>
   );
