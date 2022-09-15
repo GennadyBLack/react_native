@@ -36,26 +36,26 @@ export const profileMenuList = (userMunu = []) => {
 };
 
 const availableLinks = [
-  {
-    name: "Profile",
-    component: Profile,
-    auth: true,
-    options: { headerShown: false },
-    required: true,
-  },
+  // {
+  //   name: "Profile",
+  //   component: Profile,
+  //   auth: true,
+  //   options: { headerShown: false },
+  //   required: true,
+  // },
   {
     name: "ProfileMain",
     component: ProfileMain,
     auth: true,
     options: { headerShown: false },
-    required: false,
+    required: true,
   },
   {
     name: "Test",
     component: Test,
     auth: true,
     options: { headerShown: true },
-    required: false,
+    required: true,
   },
   {
     name: "Feed",
@@ -145,7 +145,7 @@ export const linking = {
           ProfileMain: "profile",
         },
       },
-      ProfileMain: "profile",
+      // ProfileMain: "profile",
       Main: "main",
       Test: "test",
       Feed: {

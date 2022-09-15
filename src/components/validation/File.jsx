@@ -1,8 +1,8 @@
 import React from "react";
-import { Text, View } from "react-native-paper";
+import { Text } from "react-native-paper";
 import Upload from "./Upload";
 import { Controller } from "react-hook-form";
-import { StyleSheet } from "react-native";
+import { StyleSheet, View } from "react-native";
 
 export default function File({ name, label, control, rules, ...rest }) {
   return (

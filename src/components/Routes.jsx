@@ -12,7 +12,6 @@ import useStore from "../hooks/useStore";
 import { Text, StyleSheet } from "react-native";
 import filterMenuLinks, { linking } from "../helpers/menuHelper";
 
-export default observer(Routes);
 const PERSISTENCE_KEY = "NAVIGATION_STATE_V1";
 const { Screen, Navigator } = createBottomTabNavigator();
 
@@ -25,10 +24,10 @@ function Routes() {
 
   let [auth] = useStore("auth");
   useEffect(() => {
+    console.log("was changed");
     //LINKING CONFIG END
     let mappedLinks = filterMenuLinks(auth?.isAuth, auth?.user?.user?.menu).map(
       (item, inx) => {
-        console.log(item, "ROUTE ITEM");
         return (
           <Screen
             name={item?.name}
@@ -39,7 +38,7 @@ function Routes() {
         );
       }
     );
-
+    console.log(mappedLinks, "mappedLinks");
     setRoutes(mappedLinks);
   }, [auth.isAuth]);
   useEffect(() => {
@@ -99,3 +98,4 @@ function Routes() {
 const styles = StyleSheet.create({
   wrap: {},
 });
+export default observer(Routes);

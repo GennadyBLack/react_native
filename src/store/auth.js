@@ -92,6 +92,7 @@ export default class Auth {
   logout() {
     try {
       this.user = null;
+      this.logged = false;
       AsyncStorage.setItem("token", null);
     } catch (error) {
       this.user = null;
