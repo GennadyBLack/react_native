@@ -18,6 +18,7 @@ import Animated, {
 } from "react-native-reanimated";
 import useStore from "../../hooks/useStore";
 import { observer } from "mobx-react-lite";
+import { PortalGate } from "./PortalNative";
 import PortalContext from "../../contexts/portalContext";
 
 const { height: SCREEN_HEIGHT } = Dimensions.get("window");
