@@ -9,6 +9,27 @@ export const setToken = async (value) => {
   }
 };
 
+export const setInStorage = async (key, value) => {
+  try {
+    if (!value) return;
+    await AsyncStorage.setItem(key, value);
+  } catch (e) {
+    console.log(e, "item set in storage");
+  }
+};
+
+export const getFromStorage = async (key) => {
+  try {
+    const value = await AsyncStorage.getItem(key);
+    if (value !== null || value !== "null") {
+      return value;
+    }
+    return null;
+  } catch (e) {
+    console.log(e);
+  }
+};
+
 export const getToken = async () => {
   try {
     const value = await AsyncStorage.getItem("token");

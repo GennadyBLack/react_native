@@ -25,7 +25,7 @@ const { height: SCREEN_HEIGHT } = Dimensions.get("window");
 
 const MAX_TRANSLATE_Y = -SCREEN_HEIGHT;
 
-const BottomSheet = ({ children }) => {
+const BottomSheet = ({ children, onOpacityChange }) => {
   const active = useSharedValue(false);
   const [modal] = useStore("modal");
   const translateY = useSharedValue(0);
@@ -43,6 +43,7 @@ const BottomSheet = ({ children }) => {
 
   const initModal = (modalParams) => {
     scrollTo(MAX_TRANSLATE_Y / 2);
+    onOpacityChange(0.1);
     // const { toTop, toMiddle, toBottom } = modalParams;
     // if (toTop || toMiddle || toBottom) {
     //   toTop ? scrollTo(MAX_TRANSLATE_Y) : null;
@@ -84,8 +85,10 @@ const BottomSheet = ({ children }) => {
         if (translateY.value > -SCREEN_HEIGHT / 3) {
           context.value = { y: 0 };
           scrollTo(0);
+          onOpacityChange(1);
         } else if (translateY.value < -SCREEN_HEIGHT / 1.5) {
           scrollTo(-SCREEN_HEIGHT);
+          onOpacityChange(0.1);
         }
       } catch (error) {
         console.log(error);

@@ -1,5 +1,10 @@
 import { makeAutoObservable, runInAction } from "mobx";
-import { setToken, getToken, removeToken } from "../helpers/storage";
+import {
+  setToken,
+  getToken,
+  removeToken,
+  setInStorage,
+} from "../helpers/storage";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default class Auth {
@@ -24,19 +29,19 @@ export default class Auth {
       });
     } catch (error) {
       await removeToken();
-
       this.root.setError(error, "auth fetch me");
       this.loading = false;
     }
   };
+
   login = async (data) => {
     try {
       this.loading = true;
-
       await this.root.api.auth.login(data).then(async (res) =>
         runInAction(async () => {
           if (res?.data?.token) {
             await setToken(res?.data?.token);
+            await setInStorage("last_login", `${new Date()}`);
             await this.fetchMe();
           }
         })
@@ -46,6 +51,7 @@ export default class Auth {
     } catch (error) {
       this.root.setError(error);
       this.loading = false;
+      removeToken();
     }
   };
 
@@ -93,10 +99,10 @@ export default class Auth {
     try {
       this.user = null;
       this.logged = false;
-      AsyncStorage.setItem("token", null);
+      removeToken();
     } catch (error) {
       this.user = null;
-      AsyncStorage.setItem("token", null);
+      removeToken();
       console.log(error, " error - auth logout");
     }
   }

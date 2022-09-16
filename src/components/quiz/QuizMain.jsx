@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Button, Text } from "react-native";
+import { Button, Text, View } from "react-native";
 import { observer } from "mobx-react-lite";
 import useStore from "../../hooks/useStore";
 import Tabulator from "../Tabulator";
@@ -18,6 +18,7 @@ function QuizMain({ navigation, route }) {
   useEffect(() => {
     quiz.get(route?.params?.id);
   }, [result?.result?.id]);
+
   return (
     <View>
       {quiz?.quiz && (

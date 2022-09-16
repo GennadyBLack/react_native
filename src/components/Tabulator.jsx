@@ -26,7 +26,6 @@ export default function Tabulator({
       if (resetTab) {
         setCurrentTab(0);
       }
-
       return;
     }
 
