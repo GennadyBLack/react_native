@@ -70,14 +70,14 @@ export default function FeedItem({ feed, onDelete, navigation }) {
           <Title>{feed?.title}</Title>
           <Paragraph>{feed?.desc}</Paragraph>
         </Card.Content>
-        <PinchGestureHandler onGestureEvent={(e) => console.log(e)}>
-          <AnimateImage
-            style={styles.image}
-            source={{
-              uri: `${apiUrl}/files/${feed?.path || "placeholder.png"}`,
-            }}
-          />
-        </PinchGestureHandler>
+        {/*<PinchGestureHandler onGestureEvent={(e) => console.log(e)}>*/}
+        {/*  <AnimateImage*/}
+        {/*    style={styles.image}*/}
+        {/*    source={{*/}
+        {/*      uri: `${apiUrl}/files/${feed?.path || "placeholder.png"}`,*/}
+        {/*    }}*/}
+        {/*  />*/}
+        {/*</PinchGestureHandler>*/}
         {/*<Card.Cover source={{ uri: feed?.path }} /> Not allowed to load local resource // https://stackoverflow.com/questions/39007243/cannot-open-local-file-chrome-not-allowed-to-load-local-resource*/}
         {showComment ? (
           <View>

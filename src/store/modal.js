@@ -1,4 +1,5 @@
 import { makeAutoObservable, runInAction } from "mobx";
+import { Text } from "react-native";
 
 export default class Modal {
   modal = null;
@@ -21,7 +22,7 @@ export default class Modal {
   }
 
   get getContent() {
-    return this.content;
+    return this.content || <Text>Заглушка</Text>;
   }
 
   setData = (data) => {

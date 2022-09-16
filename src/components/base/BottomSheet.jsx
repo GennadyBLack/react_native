@@ -18,14 +18,14 @@ import Animated, {
 } from "react-native-reanimated";
 import useStore from "../../hooks/useStore";
 import { observer } from "mobx-react-lite";
-import { PortalGate } from "./PortalNative";
 import PortalContext from "../../contexts/portalContext";
+import { toJS } from "mobx";
 
 const { height: SCREEN_HEIGHT } = Dimensions.get("window");
 
 const MAX_TRANSLATE_Y = -SCREEN_HEIGHT;
 
-const BottomSheet = () => {
+const BottomSheet = ({ children }) => {
   const active = useSharedValue(false);
   const [modal] = useStore("modal");
   const translateY = useSharedValue(0);
@@ -33,9 +33,7 @@ const BottomSheet = () => {
 
   const scrollTo = useCallback((destination) => {
     "worklet";
-    console.log(destination, "dest");
     active.value = destination !== 0;
-    console.log(active.value, "active.value");
     translateY.value = withSpring(destination, { damping: 50 });
   }, []);
 
@@ -45,7 +43,6 @@ const BottomSheet = () => {
 
   const initModal = (modalParams) => {
     scrollTo(MAX_TRANSLATE_Y / 2);
-    console.log("scrolling");
     // const { toTop, toMiddle, toBottom } = modalParams;
     // if (toTop || toMiddle || toBottom) {
     //   toTop ? scrollTo(MAX_TRANSLATE_Y) : null;
@@ -58,6 +55,8 @@ const BottomSheet = () => {
 
   const toggleModal = useCallback((modalParams = {}) => {
     "worklet";
+    console.log("hello");
+    console.log(isActive());
     if (!isActive()) {
       initModal(modalParams);
     } else {
@@ -66,10 +65,12 @@ const BottomSheet = () => {
     }
   }, []);
 
+  // useImperativeHandle(ref, () => ({ toggleModal, isActive, content }), [
+  //   toggleModal,
+  // ]);
   useEffect(() => {
     modal.setScrollFn(toggleModal);
   });
-
   const gesture = Gesture.Pan()
     .onBegin((e) => {
       context.value = { y: translateY?.value };
@@ -102,17 +103,14 @@ const BottomSheet = () => {
     return { borderRadius, transform: [{ translateY: translateY.value }] };
   });
 
-  const content = active.value ? (
+  const content = (
     <GestureDetector gesture={gesture}>
-      <Animated.View
-        style={[styles.bottomContainer, rBottonStyle]}
-        nativeID="bottom-SHEET"
-      >
+      <Animated.View style={[styles.bottomContainer, rBottonStyle]}>
         <View style={styles.line}></View>
-        <View>{modal?.getContent || ""}</View>
+        <View>{toJS(modal?.getContent)}</View>
       </Animated.View>
     </GestureDetector>
-  ) : null;
+  );
   return content;
 };
 
@@ -120,11 +118,10 @@ const styles = StyleSheet.create({
   bottomContainer: {
     height: SCREEN_HEIGHT,
     width: "100%",
-    backgroundColor: "blue",
+    backgroundColor: "white",
     position: "absolute",
     top: SCREEN_HEIGHT,
     borderRadius: 25,
-    zIndex: 1000,
   },
   line: {
     width: 75,
