@@ -1,5 +1,12 @@
 import React, { useState } from "react";
-import { View, StyleSheet, TextInput, Image, Text } from "react-native";
+import {
+  View,
+  StyleSheet,
+  TextInput,
+  Image,
+  Text,
+  Dimensions,
+} from "react-native";
 import { Card, Title, Paragraph, Button } from "react-native-paper";
 import Animated, {
   useAnimatedGestureHandler,
@@ -11,8 +18,10 @@ import MenuToggler from "../menu/MenuToggler";
 import { PinchGestureHandler } from "react-native-gesture-handler";
 import { apiUrl } from "../../api";
 
+const Cover = Card.Cover;
+// const AnimatedCover = Animated.createAnimatedComponent(Cover);
 const AnimateImage = Animated.createAnimatedComponent(Image);
-
+const { width: SIZE } = Dimensions.get("window");
 export default function FeedItem({ feed, onDelete, navigation }) {
   const [showComment, setShowComment] = useState(false);
   const scale = useSharedValue(1);
@@ -54,15 +63,21 @@ export default function FeedItem({ feed, onDelete, navigation }) {
 
   return (
     <View style={{ padding: 30 }}>
-      <Text>{JSON.stringify(feed)}</Text>
+      {/*<Text>{JSON.stringify(feed)}</Text>*/}
+
       <Card>
         <Card.Content style={styles.item}>
           <Title>{feed?.title}</Title>
           <Paragraph>{feed?.desc}</Paragraph>
         </Card.Content>
-        <AnimateImage
-          source={{ uri: `${apiUrl}/files/${feed?.path || "placeholder.png"}` }}
-        />
+        <PinchGestureHandler onGestureEvent={(e) => console.log(e)}>
+          <AnimateImage
+            style={styles.image}
+            source={{
+              uri: `${apiUrl}/files/${feed?.path || "placeholder.png"}`,
+            }}
+          />
+        </PinchGestureHandler>
         {/*<Card.Cover source={{ uri: feed?.path }} /> Not allowed to load local resource // https://stackoverflow.com/questions/39007243/cannot-open-local-file-chrome-not-allowed-to-load-local-resource*/}
         {showComment ? (
           <View>
@@ -72,7 +87,6 @@ export default function FeedItem({ feed, onDelete, navigation }) {
         ) : null}
         <Card.Actions></Card.Actions>
       </Card>
-
       <Button
         onPress={setShowComment.bind(null, !showComment)}
         mode="contained"
@@ -84,7 +98,7 @@ export default function FeedItem({ feed, onDelete, navigation }) {
           // <Text>alo</Text>
           <Icon
             source={Icon?.sources?.base?.menuDot}
-            style={{ height: "20px", width: "20px" }}
+            style={{ height: 20, width: 20 }}
           />
         }
         items={menuList}
@@ -110,5 +124,9 @@ const styles = StyleSheet.create({
   },
   actions: {
     // display: "flex",
+  },
+  image: {
+    width: SIZE,
+    heigth: SIZE,
   },
 });

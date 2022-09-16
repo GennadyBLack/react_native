@@ -62,7 +62,7 @@ const availableLinks = [
     component: Feed,
     auth: true,
     options: { headerShown: false },
-    required: false,
+    required: true,
   },
   {
     name: "FeedEdit",

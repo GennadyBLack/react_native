@@ -33,7 +33,9 @@ const BottomSheet = () => {
 
   const scrollTo = useCallback((destination) => {
     "worklet";
+    console.log(destination, "dest");
     active.value = destination !== 0;
+    console.log(active.value, "active.value");
     translateY.value = withSpring(destination, { damping: 50 });
   }, []);
 
@@ -43,6 +45,7 @@ const BottomSheet = () => {
 
   const initModal = (modalParams) => {
     scrollTo(MAX_TRANSLATE_Y / 2);
+    console.log("scrolling");
     // const { toTop, toMiddle, toBottom } = modalParams;
     // if (toTop || toMiddle || toBottom) {
     //   toTop ? scrollTo(MAX_TRANSLATE_Y) : null;
@@ -101,7 +104,10 @@ const BottomSheet = () => {
 
   const content = active.value ? (
     <GestureDetector gesture={gesture}>
-      <Animated.View style={[styles.bottomContainer, rBottonStyle]}>
+      <Animated.View
+        style={[styles.bottomContainer, rBottonStyle]}
+        nativeID="bottom-SHEET"
+      >
         <View style={styles.line}></View>
         <View>{modal?.getContent || ""}</View>
       </Animated.View>
@@ -114,10 +120,11 @@ const styles = StyleSheet.create({
   bottomContainer: {
     height: SCREEN_HEIGHT,
     width: "100%",
-    backgroundColor: "white",
+    backgroundColor: "blue",
     position: "absolute",
     top: SCREEN_HEIGHT,
     borderRadius: 25,
+    zIndex: 1000,
   },
   line: {
     width: 75,

@@ -1,7 +1,6 @@
 import React, { useEffect, useRef } from "react";
 import { View, StyleSheet, Text, StatusBar } from "react-native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
-import { PortalGate, PortalProvider } from "./PortalNative";
 import BottomSheet from "./BottomSheet";
 import useStore from "../../hooks/useStore";
 import { observer } from "mobx-react";
@@ -17,14 +16,11 @@ const ModalWrapper = ({ children }) => {
   // }, []);
   return (
     <GestureHandlerRootView style={{ flex: 1, justifyContent: "flex-end" }}>
-      <PortalProvider>
-        <StatusBar />
-        <View style={styles.containerModal}>
-          {children}</View>
-          <BottomSheet>
-          <Text>asdsdfsdf</Text>
-        </BottomSheet>
-      </PortalProvider>
+      <StatusBar />
+      <View style={styles.containerModal}>{children}</View>
+      <BottomSheet>
+        <Text>asdsdfsdf</Text>
+      </BottomSheet>
     </GestureHandlerRootView>
   );
 };
