@@ -7,7 +7,7 @@ import {
   Text,
   Dimensions,
 } from "react-native";
-import { Card, Title, Paragraph, Button } from "react-native-paper";
+import { Button } from "react-native-paper";
 import Animated, {
   useAnimatedGestureHandler,
   useAnimatedStyle,
@@ -18,24 +18,34 @@ import MenuToggler from "../menu/MenuToggler";
 import { PinchGestureHandler } from "react-native-gesture-handler";
 import { apiUrl } from "../../api";
 
-const Cover = Card.Cover;
 // const AnimatedCover = Animated.createAnimatedComponent(Cover);
 const AnimateImage = Animated.createAnimatedComponent(Image);
-const { width: SIZE } = Dimensions.get("window");
+
+const { height, width } = Dimensions.get("window");
+
 export default function FeedItem({ feed, onDelete, navigation }) {
   const [showComment, setShowComment] = useState(false);
   const scale = useSharedValue(1);
+  const position = useSharedValue("relative");
+  const zIndex = useSharedValue(10);
 
   const pinchHandler = useAnimatedGestureHandler({
     onActive: (event) => {
       console.log(event, "event");
       scale.value = event.scale;
+      position.value = "absolute";
+      zIndex.value = 10000;
+    },
+    onEnd: (event) => {
+      scale.value = 1;
     },
   });
 
   const rCover = useAnimatedStyle(() => {
     return {
       transform: [{ scale: scale.value }],
+      position: position.value,
+      zIndex: zIndex.value,
     };
   });
 
@@ -62,22 +72,22 @@ export default function FeedItem({ feed, onDelete, navigation }) {
   ];
 
   return (
-    <View style={{ padding: 30 }}>
+    <View style={{ padding: 30, overflow: "visible" }}>
       {/*<Text>{JSON.stringify(feed)}</Text>*/}
 
-      <Card>
-        <Card.Content style={styles.item}>
-          <Title>{feed?.title}</Title>
-          <Paragraph>{feed?.desc}</Paragraph>
-        </Card.Content>
-        {/*<PinchGestureHandler onGestureEvent={(e) => console.log(e)}>*/}
-        {/*  <AnimateImage*/}
-        {/*    style={styles.image}*/}
-        {/*    source={{*/}
-        {/*      uri: `${apiUrl}/files/${feed?.path || "placeholder.png"}`,*/}
-        {/*    }}*/}
-        {/*  />*/}
-        {/*</PinchGestureHandler>*/}
+      <View style={styles.card}>
+        <View style={styles.item}>
+          <Text>{feed?.title}</Text>
+          <Text>{feed?.desc}</Text>
+        </View>
+        <PinchGestureHandler onGestureEvent={pinchHandler} style={{ flex: 1 }}>
+          <AnimateImage
+            style={[styles.image, rCover]}
+            source={{
+              uri: `${apiUrl}/files/${feed?.path || "placeholder.png"}`,
+            }}
+          />
+        </PinchGestureHandler>
         {/*<Card.Cover source={{ uri: feed?.path }} /> Not allowed to load local resource // https://stackoverflow.com/questions/39007243/cannot-open-local-file-chrome-not-allowed-to-load-local-resource*/}
         {showComment ? (
           <View>
@@ -85,13 +95,13 @@ export default function FeedItem({ feed, onDelete, navigation }) {
             <Button title="Отправить" />
           </View>
         ) : null}
-        <Card.Actions></Card.Actions>
-      </Card>
+      </View>
       <Button
         onPress={setShowComment.bind(null, !showComment)}
         mode="contained"
         color="green"
         icon="card-text"
+        style={{ zIndex: 1 }}
       />
       <MenuToggler
         anchor={
@@ -109,6 +119,11 @@ export default function FeedItem({ feed, onDelete, navigation }) {
 }
 
 const styles = StyleSheet.create({
+  card: {
+    backgroundColor: "white",
+    width: width - 60,
+    height: height / 2.5,
+  },
   item: {
     // width: "90%",
     // pointerEvents: "none",
@@ -126,7 +141,7 @@ const styles = StyleSheet.create({
     // display: "flex",
   },
   image: {
-    width: SIZE,
-    heigth: SIZE,
+    width: "100%",
+    height: "100%",
   },
 });

@@ -47,7 +47,7 @@ function FeedMain({ navigation }) {
   return (
     <View style={styles.wrap}>
       {feed?.loading ? null : (
-        <View>
+        <View style={{ flex: 1 }}>
           <Text>Feed Main </Text>
           <Button
             title="Create"
@@ -84,5 +84,7 @@ function FeedMain({ navigation }) {
 const styles = StyleSheet.create({
   wrap: {
     height: "100%",
+    width: "100%",
+    flex: 1,
   },
 });

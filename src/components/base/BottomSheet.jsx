@@ -18,7 +18,7 @@ import Animated, {
 } from "react-native-reanimated";
 import useStore from "../../hooks/useStore";
 import { observer } from "mobx-react-lite";
-import PortalContext from "../../contexts/portalContext";
+
 import { toJS } from "mobx";
 
 const { height: SCREEN_HEIGHT } = Dimensions.get("window");
@@ -55,8 +55,8 @@ const BottomSheet = ({ children }) => {
 
   const toggleModal = useCallback((modalParams = {}) => {
     "worklet";
-    console.log("hello");
-    console.log(isActive());
+    // console.log("hello");
+    // console.log(isActive());
     if (!isActive()) {
       initModal(modalParams);
     } else {
