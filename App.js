@@ -10,6 +10,7 @@ import ErrorPopupList from "./src/components/error/ErrorPopupList";
 import ModalWrapper from "./src/components/base/ModalWrapper";
 import "react-native-gesture-handler";
 import * as SplashScreen from "expo-splash-screen";
+import { PortalProvider } from "./src/components/base/PortalNative";
 
 SplashScreen.preventAutoHideAsync();
 function App() {
@@ -49,10 +50,12 @@ function App() {
   return (
     <View style={styles.app_wrapper} onLayout={onLayoutRootView}>
       <StoreContext.Provider value={rootStore}>
-        <ModalWrapper>
-          <ErrorPopupList className="errors" />
-          <Routes />
-        </ModalWrapper>
+        <PortalProvider>
+          <ModalWrapper>
+            <ErrorPopupList className="errors" />
+            <Routes />
+          </ModalWrapper>
+        </PortalProvider>
       </StoreContext.Provider>
     </View>
   );

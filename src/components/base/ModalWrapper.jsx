@@ -10,7 +10,7 @@ import Animated, {
 import { observer } from "mobx-react";
 
 const ModalWrapper = ({ children }) => {
-  const opacity = useSharedValue(0.3);
+  const opacity = useSharedValue(1);
 
   const onOpacityChange = useCallback((value) => {
     "worklet";

@@ -48,17 +48,17 @@ function FeedMain({ navigation }) {
     <View style={styles.wrap}>
       {feed?.loading ? null : (
         <View style={{ flex: 1 }}>
-          <Text>Feed Main </Text>
-          <Button
-            title="Create"
-            onPress={() => {
-              try {
-                navigation?.navigate("feed_create");
-              } catch (error) {
-                console.log(error);
-              }
-            }}
-          ></Button>
+          {/*<Text>Feed Main </Text>*/}
+          {/*<Button*/}
+          {/*  title="Create"*/}
+          {/*  onPress={() => {*/}
+          {/*    try {*/}
+          {/*      navigation?.navigate("feed_create");*/}
+          {/*    } catch (error) {*/}
+          {/*      console.log(error);*/}
+          {/*    }*/}
+          {/*  }}*/}
+          {/*></Button>*/}
           {feed?.feeds && feed?.feeds?.length && (
             <FlatList
               data={feed?.feeds}
@@ -66,15 +66,15 @@ function FeedMain({ navigation }) {
               keyExtractor={(item) => item.id}
             />
           )}
-          <Button
-            icon="camera"
-            mode="contained"
-            onPress={() => {
-              navigation.navigate("feed_create");
-            }}
-          >
-            Create Post
-          </Button>
+          {/*<Button*/}
+          {/*  icon="camera"*/}
+          {/*  mode="contained"*/}
+          {/*  onPress={() => {*/}
+          {/*    navigation.navigate("feed_create");*/}
+          {/*  }}*/}
+          {/*>*/}
+          {/*  Create Post*/}
+          {/*</Button>*/}
         </View>
       )}
     </View>
@@ -86,5 +86,6 @@ const styles = StyleSheet.create({
     height: "100%",
     width: "100%",
     flex: 1,
+    zIndex: 100000,
   },
 });
