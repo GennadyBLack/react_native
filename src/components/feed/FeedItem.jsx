@@ -27,15 +27,18 @@ const { height, width } = Dimensions.get("window");
 
 export default function FeedItem({ feed, onDelete, navigation }) {
   const [showComment, setShowComment] = useState(false);
-  const scale = useSharedValue(1);
+  const scale = useSharedValue(2);
+  const cardHeight = useSharedValue(height / 1.5);
 
   const pinchHandler = useAnimatedGestureHandler({
     onActive: (event) => {
       console.log(event, "event");
       scale.value = event.scale;
+      cardHeight.value = height * event.scale;
     },
     onEnd: (event) => {
       scale.value = withTiming(1);
+      cardHeight.value = height / 1.5;
     },
   });
 
@@ -44,7 +47,11 @@ export default function FeedItem({ feed, onDelete, navigation }) {
       transform: [{ scale: scale.value }],
     };
   });
-
+  const rCard = useAnimatedStyle(() => {
+    return {
+      height: cardHeight.value,
+    };
+  });
   const menuList = [
     {
       permission: ["owner"],
@@ -71,13 +78,18 @@ export default function FeedItem({ feed, onDelete, navigation }) {
     <View style={{ padding: 30 }}>
       {/*<Text>{JSON.stringify(feed)}</Text>*/}
 
-      <View style={styles.card}>
+      <Animated.View style={[styles.card, rCard]}>
         <View style={styles.item}>
           <Text>{feed?.title}</Text>
           <Text>{feed?.desc}</Text>
         </View>
 
-        <Animated.View style={{ flex: 1, zIndex: 1000 }}>
+        <View
+          style={{
+            flex: 1,
+            zIndex: 1000,
+          }}
+        >
           <PinchGestureHandler onGestureEvent={pinchHandler}>
             <AnimateImage
               style={[styles.image, rCover]}
@@ -87,7 +99,7 @@ export default function FeedItem({ feed, onDelete, navigation }) {
               resizeMode="cover"
             />
           </PinchGestureHandler>
-        </Animated.View>
+        </View>
 
         {showComment ? (
           <View>
@@ -102,7 +114,7 @@ export default function FeedItem({ feed, onDelete, navigation }) {
         >
           <Text>Жми</Text>
         </TouchableOpacity>
-      </View>
+      </Animated.View>
 
       {/*<MenuToggler*/}
       {/*  anchor={*/}
@@ -123,7 +135,6 @@ const styles = StyleSheet.create({
   card: {
     backgroundColor: "blue",
     width: width - 60,
-    height: height / 1.5,
   },
   item: {
     // width: "90%",
