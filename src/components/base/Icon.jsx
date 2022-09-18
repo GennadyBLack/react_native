@@ -10,7 +10,8 @@ const Icon = ({ source, style }) => {
     }
     return (
       <Image
-        style={{ ...(style ?? { width: "100", height: "100" }) }}
+        nativeID="icon-id"
+        style={{ ...(style ?? { width: 40, height: 40 }) }}
         source={source}
       />
     );

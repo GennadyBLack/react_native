@@ -35,20 +35,14 @@ export const profileMenuList = (userMunu = []) => {
   //не выводить в профиле чекбокс если ссылка обязательна
 };
 
-const availableLinks = [
-  // {
-  //   name: "Profile",
-  //   component: Profile,
-  //   auth: true,
-  //   options: { headerShown: false },
-  //   required: true,
-  // },
+export const availableLinks = [
   {
     name: "ProfileMain",
     component: ProfileMain,
     auth: true,
     options: { headerShown: false },
     required: true,
+    leftMenu: true,
   },
   {
     name: "Test",
@@ -63,6 +57,7 @@ const availableLinks = [
     auth: true,
     options: { headerShown: false },
     required: true,
+    leftMenu: true,
   },
   {
     name: "FeedEdit",
@@ -77,6 +72,7 @@ const availableLinks = [
     auth: true,
     options: { headerShown: false },
     required: false,
+    leftMenu: true,
   },
   {
     name: "FeedCreate",
@@ -113,6 +109,7 @@ const availableLinks = [
     auth: true,
     options: { headerShown: false },
     required: false,
+    leftMenu: true,
   },
   {
     name: "Login",
@@ -196,4 +193,5 @@ let filterMenuLinks = (auth = false, user_links = []) => {
     }
   });
 };
+
 export default filterMenuLinks;

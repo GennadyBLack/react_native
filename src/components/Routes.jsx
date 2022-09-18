@@ -24,7 +24,6 @@ function Routes() {
 
   let [auth] = useStore("auth");
   useEffect(() => {
-    console.log("was changed");
     //LINKING CONFIG END
     let mappedLinks = filterMenuLinks(auth?.isAuth, auth?.user?.user?.menu).map(
       (item, inx) => {
@@ -38,9 +37,9 @@ function Routes() {
         );
       }
     );
-    console.log(mappedLinks, "mappedLinks");
     setRoutes(mappedLinks);
   }, [auth.isAuth]);
+
   useEffect(() => {
     const restoreState = async () => {
       try {

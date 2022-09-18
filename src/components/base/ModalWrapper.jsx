@@ -8,6 +8,7 @@ import Animated, {
   useSharedValue,
 } from "react-native-reanimated";
 import { observer } from "mobx-react";
+import LeftMenu from "./LeftMenu";
 
 const ModalWrapper = ({ children }) => {
   const opacity = useSharedValue(1);
@@ -26,6 +27,7 @@ const ModalWrapper = ({ children }) => {
       <Animated.View style={[styles.containerModal, mainWrappStyle]}>
         {children}
       </Animated.View>
+      <LeftMenu />
       <BottomSheet onOpacityChange={onOpacityChange}></BottomSheet>
     </GestureHandlerRootView>
   );
@@ -37,6 +39,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#111",
     justifyContent: "center",
     color: "white",
+
     // position: "initial",
   },
 });

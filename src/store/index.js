@@ -9,6 +9,7 @@ import apis from "../api/api";
 import Result from "./result";
 import Modal from "./modal";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import Menu from "./menu";
 
 export default class store {
   errors = [];
@@ -53,5 +54,6 @@ export default class store {
     this.question = new Question(this);
     this.answer = new Answer(this);
     this.result = new Result(this);
+    this.menu = new Menu(this);
   }
 }
