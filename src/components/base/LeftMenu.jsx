@@ -4,6 +4,10 @@ import { View, Text, Dimensions, StyleSheet, Button } from "react-native";
 import useStore from "../../hooks/useStore";
 import { useNavigation } from "@react-navigation/native";
 import Icon from "./Icon";
+import { Ionicons } from "@expo/vector-icons";
+//https://icons.expo.fyi/
+import { AntDesign } from "@expo/vector-icons";
+
 import Animated, {
   useAnimatedGestureHandler,
   useAnimatedStyle,
@@ -22,6 +26,7 @@ const LeftMenu = (props) => {
 
   useEffect(() => {}, []);
   const active = useSharedValue(false);
+  // console.log(menu.filteredRoutes, "menu.filteredRoutes.length");
   const translateX = useDerivedValue(() => {
     return active.value ? withSpring(0) : withSpring(-SCREEN_WIDTH / 1.5);
   });
@@ -39,38 +44,43 @@ const LeftMenu = (props) => {
       transform: [{ translateX: translateX.value }],
     };
   });
+
   return (
     <Animated.View style={[styles.left_menu_wrapper, rStyle]}>
-      <TapGestureHandler onGestureEvent={menuToggler}>
-        <View
-          style={{
-            position: "absolute",
-            top: 10,
-            right: -50,
-          }}
-        >
-          {active.value ? (
-            <Icon source={Icon.sources.base.menu_on} />
-          ) : (
-            <Icon source={Icon.sources.base.menu_off} />
-          )}
-        </View>
-      </TapGestureHandler>
-      <View>
-        {menu.leftRoutes.map((item) => {
+      {menu?.leftRoutes.length ? (
+        <TapGestureHandler onGestureEvent={menuToggler}>
+          <View
+            style={{
+              position: "absolute",
+              top: 10,
+              right: -50,
+            }}
+          >
+            {active.value ? (
+              <AntDesign name="closecircle" size={40} color="black" />
+            ) : (
+              <Ionicons name="menu" size={40} color="black" />
+            )}
+          </View>
+        </TapGestureHandler>
+      ) : null}
+      <Animated.View>
+        {menu.leftRoutes.map((item, idx) => {
           return (
-            <Button
-              title={item?.name}
-              onPress={() => {
+            <TapGestureHandler
+              onGestureEvent={(...args) => {
                 navigation.navigate(item?.name);
+                menuToggler(...args);
               }}
-            ></Button>
+              key={idx}
+            >
+              <View style={styles.menu_link}>
+                <Text>{item?.name}</Text>
+              </View>
+            </TapGestureHandler>
           );
         })}
-        <Button title="Log out" onPress={auth.logout}>
-          {" "}
-        </Button>
-      </View>
+      </Animated.View>
     </Animated.View>
   );
 };
@@ -82,6 +92,11 @@ const styles = StyleSheet.create({
     height: SCREEN_HEIGHT,
     backgroundColor: "#EEE",
     position: "absolute",
+  },
+  menu_link: {
+    // backgroundColor:,
+    padding: 10,
+    // fontSize: 20,
   },
 });
 export default observer(LeftMenu);

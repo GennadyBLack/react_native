@@ -10,7 +10,7 @@ export default class Menu {
   activeRoute = null;
 
   get leftRoutes() {
-    return this.all_routes.filter((item) => {
+    return this.filteredRoutes.filter((item) => {
       return item.leftMenu;
     });
   }
@@ -20,7 +20,7 @@ export default class Menu {
   get filteredRoutes() {
     return this.all_routes.filter((item) => {
       const auth = this.root.auth.isAuth;
-      const user_links = this.root.auth.user.user.menu;
+      const user_links = this?.root?.auth?.user?.user?.menu;
       try {
         //к роуту нужен доступ и пользователь зашел //
         //TODO fix this condition + fix error chenge link in profile
