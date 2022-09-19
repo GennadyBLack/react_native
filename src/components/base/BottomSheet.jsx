@@ -95,7 +95,11 @@ const BottomSheet = ({ children, onOpacityChange }) => {
       Extrapolate.CLAMP
     );
 
-    return { borderRadius, transform: [{ translateY: translateY.value }] };
+    return {
+      borderRadius,
+      shadowOpacity: active.value ? 1 : 0,
+      transform: [{ translateY: translateY.value }],
+    };
   });
 
   const content = (
@@ -119,7 +123,7 @@ const styles = StyleSheet.create({
     borderRadius: 25,
     shadowColor: "#000",
     shadowOffset: { width: 0, height: 20 },
-    shadowOpacity: 1,
+    // shadowOpacity: 1,
     shadowRadius: 40,
     elevation: 10,
   },

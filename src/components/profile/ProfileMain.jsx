@@ -5,7 +5,6 @@ import useStore from "../../hooks/useStore";
 import { Card, Title, Paragraph } from "react-native-paper";
 import Form from "../validation/Form";
 import prepareEdit from "../../helpers/editHelper";
-import Swipe from "../Swipe";
 import Switch from "../validation/Switch";
 import MenuSwicher from "./MenuSwicher";
 import { profileMenuList } from "../../helpers/menuHelper";
@@ -31,79 +30,77 @@ function ProfileMain({ route, navigation }) {
     await auth?.updateMe({ menu: userLinks });
   };
   return (
-    <Swipe>
-      <View style={styles.wrap}>
-        <Card>
-          <Card.Content>
-            {!isEdit ? (
-              <View>
-                <Title>{user?.username || "Name отсутствует"}</Title>
-                <Paragraph>
-                  {user?.description || "Описание отсутствует"}
-                </Paragraph>
-              </View>
-            ) : null}
-            {isEdit ? (
-              <View>
-                <Form onSubmit={submit} defaultValues={user}>
-                  <Form.Input
-                    name="username"
-                    rules={{
-                      required: {
-                        value: true,
-                        message: "Это поле обязательно для заполнения чудик",
-                      },
-                      max: { value: 3, message: "Больше 3" },
-                    }}
-                  />
-                  <Form.Input
-                    name="email"
-                    rules={{
-                      required: {
-                        value: true,
-                        message: "Это поле обязательно для заполнения чудик",
-                      },
-                    }}
-                  />
-                  <Form.Input
-                    name="description"
-                    rules={{
-                      required: {
-                        value: true,
-                        message: "Это поле обязательно для заполнения чудик",
-                      },
-                    }}
-                  />
-                  <Form.File name="avatar" title="Загрузить фото профиля" />
-
-                  <Switch />
-                </Form>
-                <MenuSwicher
-                  data={profileMenuList(user?.menu)}
-                  onChange={(e, l) => {
-                    onMenuChange(e, l);
+    <View style={styles.wrap}>
+      <Card>
+        <Card.Content>
+          {!isEdit ? (
+            <View>
+              <Title>{user?.username || "Name отсутствует"}</Title>
+              <Paragraph>
+                {user?.description || "Описание отсутствует"}
+              </Paragraph>
+            </View>
+          ) : null}
+          {isEdit ? (
+            <View>
+              <Form onSubmit={submit} defaultValues={user}>
+                <Form.Input
+                  name="username"
+                  rules={{
+                    required: {
+                      value: true,
+                      message: "Это поле обязательно для заполнения чудик",
+                    },
+                    max: { value: 3, message: "Больше 3" },
                   }}
                 />
-              </View>
-            ) : null}
-          </Card.Content>
-          <Card.Cover source={{ uri: user?.avatar }} />
+                <Form.Input
+                  name="email"
+                  rules={{
+                    required: {
+                      value: true,
+                      message: "Это поле обязательно для заполнения чудик",
+                    },
+                  }}
+                />
+                <Form.Input
+                  name="description"
+                  rules={{
+                    required: {
+                      value: true,
+                      message: "Это поле обязательно для заполнения чудик",
+                    },
+                  }}
+                />
+                <Form.File name="avatar" title="Загрузить фото профиля" />
 
-          {!isEdit ? (
-            <Button
-              title="Редактировать"
-              onPress={setIsEdit.bind(null, !isEdit)}
-            ></Button>
+                <Switch />
+              </Form>
+              <MenuSwicher
+                data={profileMenuList(user?.menu)}
+                onChange={(e, l) => {
+                  onMenuChange(e, l);
+                }}
+              />
+            </View>
           ) : null}
-        </Card>
-        <Button
-          title="Logout"
-          onPress={() => {
-            auth.logout();
-          }}
-        ></Button>
-      </View>
-    </Swipe>
+        </Card.Content>
+        <Card.Cover source={{ uri: user?.avatar }} />
+
+        {!isEdit ? (
+          <Button
+            title="Редактировать"
+            onPress={setIsEdit.bind(null, !isEdit)}
+          ></Button>
+        ) : null}
+      </Card>
+      <Button
+        title="Logout"
+        onPress={() => {
+          auth.logout();
+        }}
+      ></Button>
+    </View>
   );
 }
 const styles = StyleSheet.create({

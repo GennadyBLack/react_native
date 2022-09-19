@@ -13,11 +13,6 @@ import LeftMenu from "./LeftMenu";
 const ModalWrapper = ({ children, props }) => {
   const opacity = useSharedValue(1);
 
-  const onOpacityChange = useCallback((value) => {
-    "worklet";
-    opacity.value = value;
-  }, []);
-
   const mainWrappStyle = useAnimatedStyle(() => {
     return { opacity: opacity.value };
   });
@@ -28,7 +23,7 @@ const ModalWrapper = ({ children, props }) => {
         {children}
       </Animated.View>
       <LeftMenu />
-      <BottomSheet onOpacityChange={onOpacityChange}></BottomSheet>
+      <BottomSheet></BottomSheet>
     </GestureHandlerRootView>
   );
 };
