@@ -5,6 +5,7 @@ import { Linking, View } from "react-native";
 import { observer } from "mobx-react-lite";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { NavigationContainer } from "@react-navigation/native";
+import ModalWrapper from "./base/ModalWrapper";
 
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
@@ -82,14 +83,16 @@ function Routes() {
         AsyncStorage.setItem(PERSISTENCE_KEY, JSON.stringify(state))
       }
     >
-      <Navigator
-        initialRouteName="Main"
-        activeColor="#f0edf6"
-        inactiveColor="#3e2465"
-        barStyle={{ backgroundColor: "#694fad" }}
-      >
-        {routes}
-      </Navigator>
+      <ModalWrapper>
+        <Navigator
+          initialRouteName="Main"
+          activeColor="#f0edf6"
+          inactiveColor="#3e2465"
+          barStyle={{ backgroundColor: "#694fad" }}
+        >
+          {routes}
+        </Navigator>
+      </ModalWrapper>
     </NavigationContainer>
   );
 }

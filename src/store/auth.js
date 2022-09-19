@@ -106,6 +106,7 @@ export default class Auth {
       console.log(error, " error - auth logout");
     }
   }
+
   constructor(root) {
     makeAutoObservable(this);
     this.root = root;

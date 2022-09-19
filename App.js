@@ -7,10 +7,8 @@ import store from "./src/store/index";
 import StoreContext from "./src/contexts/store";
 const rootStore = new store();
 import ErrorPopupList from "./src/components/error/ErrorPopupList";
-import ModalWrapper from "./src/components/base/ModalWrapper";
 import "react-native-gesture-handler";
 import * as SplashScreen from "expo-splash-screen";
-import { PortalProvider } from "./src/components/base/PortalNative";
 
 SplashScreen.preventAutoHideAsync();
 function App() {
@@ -34,7 +32,6 @@ function App() {
   }, []);
   const onLayoutRootView = useCallback(async () => {
     if (isReady) {
-      console.log("Ready");
       // This tells the splash screen to hide immediately! If we call this after
       // `setAppIsReady`, then we may see a blank screen while the app is
       // loading its initial state and rendering its first pixels. So instead,
@@ -50,12 +47,8 @@ function App() {
   return (
     <View style={styles.app_wrapper} onLayout={onLayoutRootView}>
       <StoreContext.Provider value={rootStore}>
-        <PortalProvider>
-          <ModalWrapper>
-            <ErrorPopupList className="errors" />
-            <Routes />
-          </ModalWrapper>
-        </PortalProvider>
+        <ErrorPopupList className="errors" />
+        <Routes />
       </StoreContext.Provider>
     </View>
   );

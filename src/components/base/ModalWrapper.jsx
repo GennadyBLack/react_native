@@ -10,7 +10,7 @@ import Animated, {
 import { observer } from "mobx-react";
 import LeftMenu from "./LeftMenu";
 
-const ModalWrapper = ({ children }) => {
+const ModalWrapper = ({ children, props }) => {
   const opacity = useSharedValue(1);
 
   const onOpacityChange = useCallback((value) => {

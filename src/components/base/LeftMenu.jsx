@@ -1,7 +1,8 @@
 import React, { useCallback, useEffect } from "react";
 import { observer } from "mobx-react-lite";
-import { View, Text, Dimensions, StyleSheet } from "react-native";
+import { View, Text, Dimensions, StyleSheet, Button } from "react-native";
 import useStore from "../../hooks/useStore";
+import { useNavigation } from "@react-navigation/native";
 import Icon from "./Icon";
 import Animated, {
   useAnimatedGestureHandler,
@@ -14,12 +15,12 @@ import { TapGestureHandler } from "react-native-gesture-handler";
 
 const { height: SCREEN_HEIGHT, width: SCREEN_WIDTH } = Dimensions.get("window");
 
-const LeftMenu = () => {
+const LeftMenu = (props) => {
   const [menu] = useStore("menu");
+  const [auth] = useStore("auth");
+  const navigation = useNavigation();
 
-  useEffect(() => {
-    console.log(menu.leftRoutes, "menu");
-  }, []);
+  useEffect(() => {}, []);
   const active = useSharedValue(false);
   const translateX = useDerivedValue(() => {
     return active.value ? withSpring(0) : withSpring(-SCREEN_WIDTH / 1.5);
@@ -56,7 +57,19 @@ const LeftMenu = () => {
         </View>
       </TapGestureHandler>
       <View>
-        <Text>Ytt</Text>
+        {menu.leftRoutes.map((item) => {
+          return (
+            <Button
+              title={item?.name}
+              onPress={() => {
+                navigation.navigate(item?.name);
+              }}
+            ></Button>
+          );
+        })}
+        <Button title="Log out" onPress={auth.logout}>
+          {" "}
+        </Button>
       </View>
     </Animated.View>
   );
