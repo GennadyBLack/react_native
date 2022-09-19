@@ -1,5 +1,5 @@
 import * as React from "react";
-import { View } from "react-native";
+import { View, Text } from "react-native";
 import { Snackbar } from "react-native-paper";
 
 const ErrorPopup = ({ text, onDelete }) => {
@@ -10,16 +10,16 @@ const ErrorPopup = ({ text, onDelete }) => {
 
   return (
     <View style={{ height: 0, width: 350 }}>
-      <Snackbar
+      {/* <Snackbar
         visible={visible}
         onDismiss={onDismissSnackBar}
         action={{
           label: "Undo",
           onPress: () => {},
         }}
-      >
-        {text}
-      </Snackbar>
+      > */}
+      <Text>{text}</Text>
+      {/* </Snackbar> */}
     </View>
   );
 };

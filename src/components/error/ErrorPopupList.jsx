@@ -18,7 +18,7 @@ function ErrorPopupList() {
   };
 
   const mappedErrors = errors.length ? (
-    <View style={styles.error_container}>
+    <View style={styles.error_container} nativeID="error-id">
       {errors.map((item, index) => (
         <ErrorPopup
           key={index}
@@ -34,8 +34,12 @@ function ErrorPopupList() {
 
 const styles = StyleSheet.create({
   error_container: {
+    // flex: 1,
+    width: 100,
+    height: 100,
     position: "absolute",
     zIndex: 2,
+    left: 10,
     bottom: 50,
   },
 });

@@ -2,6 +2,7 @@ import { StyleSheet, Text } from "react-native";
 import { View } from "react-native";
 import React, { useCallback, useEffect, useState } from "react";
 // import AppLoading from "expo-app-loading";
+import * as Network from "expo-network";
 import Routes from "./src/components/Routes";
 import store from "./src/store/index";
 import StoreContext from "./src/contexts/store";
@@ -17,6 +18,13 @@ function App() {
   useEffect(() => {
     const initialApp = async () => {
       try {
+        await Network.getNetworkStateAsync().then((res) => {
+          console.log(rootStore, "rootStore");
+          rootStore.setInternetConnection(res.isInternetReachable);
+          rootStore.setError({
+            message: "Отсутствует подключение к интернету дружочек",
+          });
+        });
         await new Promise((resolve) => {
           let res = rootStore.auth.fetchMe();
           resolve(res, "SuperRes");
@@ -32,6 +40,7 @@ function App() {
   }, []);
   const onLayoutRootView = useCallback(async () => {
     if (isReady) {
+      // console.log(ethernet, "ethernet");
       // This tells the splash screen to hide immediately! If we call this after
       // `setAppIsReady`, then we may see a blank screen while the app is
       // loading its initial state and rendering its first pixels. So instead,

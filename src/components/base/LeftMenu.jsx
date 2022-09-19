@@ -42,6 +42,7 @@ const LeftMenu = (props) => {
   const rStyle = useAnimatedStyle(() => {
     return {
       transform: [{ translateX: translateX.value }],
+      shadowOpacity: active.value ? 1 : 0,
     };
   });
 
@@ -74,12 +75,34 @@ const LeftMenu = (props) => {
               }}
               key={idx}
             >
-              <View style={styles.menu_link}>
-                <Text>{item?.name}</Text>
+              <View
+                style={{
+                  borderBottomColor: "#000",
+                  borderBottomWidth: 1,
+                  padding: 10,
+                }}
+              >
+                <Text style={styles.menu_link}>{item?.name}</Text>
               </View>
             </TapGestureHandler>
           );
         })}
+        <TapGestureHandler
+          onGestureEvent={(...args) => {
+            auth.logout();
+            menuToggler(...args);
+          }}
+        >
+          <View
+            style={{
+              borderBottomColor: "#000",
+              borderBottomWidth: 1,
+              padding: 10,
+            }}
+          >
+            <Text style={styles.menu_link}>Logout</Text>
+          </View>
+        </TapGestureHandler>
       </Animated.View>
     </Animated.View>
   );
@@ -92,11 +115,20 @@ const styles = StyleSheet.create({
     height: SCREEN_HEIGHT,
     backgroundColor: "#EEE",
     position: "absolute",
+    borderTopRightRadius: 10,
+    borderBottomRightRadius: 10,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 20 },
+    shadowOpacity: 1,
+    shadowRadius: 40,
+    elevation: 10,
   },
   menu_link: {
     // backgroundColor:,
-    padding: 10,
+
     // fontSize: 20,
+    fontSize: 15,
+    fontWeight: 700,
   },
 });
 export default observer(LeftMenu);

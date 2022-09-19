@@ -15,6 +15,7 @@ export default class store {
   errors = [];
   main_spiner = false;
   request_stack = [];
+  internet_connection = false;
 
   //stack of ids like ['quiz','questions'] you to add in request_stack and show main spiner if error - delete from stack
   setSpinerValue = (value) => {
@@ -24,10 +25,19 @@ export default class store {
   addInStack = (item) => {
     request_stack.push(item);
   };
+
   removeFromStack = (value) => {
     this.request_stack = this.request_stack.filter((item) => item !== value);
     this.main_spiner = this.request_stack.length === 0;
   };
+
+  setInternetConnection = (value) => {
+    this.internet_connection = value;
+  };
+
+  get getInternet_connection() {
+    return this.internet_connection;
+  }
 
   get getSpiner() {
     return { spiner: this.spiner, stack: request_stack.length };
