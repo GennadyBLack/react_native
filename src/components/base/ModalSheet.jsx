@@ -1,4 +1,4 @@
-import React, { useEffect, useCallback } from "react";
+import React, { useEffect, useCallback, useState } from "react";
 import { View, StyleSheet, Dimensions, Modal } from "react-native";
 import { Gesture, GestureDetector } from "react-native-gesture-handler";
 import Animated, {
@@ -17,7 +17,7 @@ const { height: SCREEN_HEIGHT } = Dimensions.get("window");
 
 const MAX_TRANSLATE_Y = -SCREEN_HEIGHT;
 
-const ModalSheet = ({ visible, children, closeModal }) => {
+const ModalSheet = ({ visible, children, toggle }) => {
   const translateY = useSharedValue(0);
   const context = useSharedValue({ y: 0 });
   const scrollTo = useCallback((destination) => {
@@ -38,8 +38,8 @@ const ModalSheet = ({ visible, children, closeModal }) => {
     // }
   };
   useEffect(() => {
-    initModal();
-  }, []);
+    visible ? scrollTo(MAX_TRANSLATE_Y / 2) : scrollTo(0);
+  }, [visible]);
 
   const gesture = Gesture.Pan()
     .onBegin((e) => {
@@ -54,6 +54,7 @@ const ModalSheet = ({ visible, children, closeModal }) => {
         if (translateY.value > -SCREEN_HEIGHT / 3) {
           context.value = { y: 0 };
           scrollTo(0);
+          toggle();
           // onOpacityChange(1);
         } else if (translateY.value < -SCREEN_HEIGHT / 1.5) {
           scrollTo(-SCREEN_HEIGHT);
@@ -85,7 +86,7 @@ const ModalSheet = ({ visible, children, closeModal }) => {
         transparent={true}
         visible={visible}
         onRequestClose={() => {
-          closeModal();
+          toggle();
         }}
       >
         <GestureDetector gesture={gesture}>
@@ -97,6 +98,14 @@ const ModalSheet = ({ visible, children, closeModal }) => {
       </Modal>
     )
   );
+};
+
+const useModal = () => {
+  const [active, setActive] = useState(false);
+  const toggle = () => {
+    setActive(!active);
+  };
+  return [active, toggle];
 };
 
 const styles = StyleSheet.create({
@@ -122,5 +131,7 @@ const styles = StyleSheet.create({
     borderRadius: 3,
   },
 });
+
+ModalSheet.useModal = useModal;
 
 export default ModalSheet;

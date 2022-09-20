@@ -5,22 +5,16 @@ import useStore from "../hooks/useStore";
 import ModalSheet from "../components/base/ModalSheet";
 
 function Test({ navigation }) {
-  const [modal] = useStore("modal");
-  useEffect(() => {
-    modal.setContent(
-      <View>
-        <Text>Ahahaha, kakoi ty loh</Text>
-      </View>
-    );
-  }, []);
+  const [visible, toggle] = ModalSheet.useModal();
+
+  useEffect(() => {}, []);
 
   return (
     <View>
-      <ModalSheet visible={true}>
+      <ModalSheet visible={visible} toggle={toggle}>
         <Text nativeID="modal-test">asdasdasd</Text>
       </ModalSheet>
-      <Button title="open" onPress={() => modal.scrollFn()}></Button>
-      <Button title="open close" onPress={() => modal.setClose()}></Button>
+      <Button title="open" onPress={() => toggle()}></Button>
     </View>
   );
 }
