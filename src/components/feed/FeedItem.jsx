@@ -32,7 +32,6 @@ export default function FeedItem({ feed, onDelete, navigation }) {
 
   const pinchHandler = useAnimatedGestureHandler({
     onActive: (event) => {
-      console.log(event, "event");
       scale.value = event.scale;
       cardHeight.value = height * event.scale;
     },

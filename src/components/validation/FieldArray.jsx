@@ -54,9 +54,7 @@ export default function FieldArray({
         key={index}
         value={switches[index]}
         onChange={(e) => {
-          console.log(item, item.id);
           switchAction(item.id, e);
-          console.log(switches);
         }}
       />
       <Button type="button" title="Удалить" onPress={() => remove(index)} />

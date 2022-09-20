@@ -19,7 +19,6 @@ function App() {
     const initialApp = async () => {
       try {
         await Network.getNetworkStateAsync().then((res) => {
-          console.log(rootStore, "rootStore");
           rootStore.setInternetConnection(res.isInternetReachable);
           rootStore.setError({
             message: "Отсутствует подключение к интернету дружочек",
@@ -40,7 +39,6 @@ function App() {
   }, []);
   const onLayoutRootView = useCallback(async () => {
     if (isReady) {
-      // console.log(ethernet, "ethernet");
       // This tells the splash screen to hide immediately! If we call this after
       // `setAppIsReady`, then we may see a blank screen while the app is
       // loading its initial state and rendering its first pixels. So instead,

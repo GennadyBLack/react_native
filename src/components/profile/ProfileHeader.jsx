@@ -7,7 +7,6 @@ const ProfileHeader = () => {
   const [auth] = useStore("auth");
 
   const user = auth?.user?.user;
-  console.log(user);
   return (
     <View style={styles.profile_wrapper}>
       <View style={styles.profile_avatar}></View>

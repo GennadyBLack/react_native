@@ -1,9 +1,16 @@
 import React, { useCallback, useEffect } from "react";
 import { observer } from "mobx-react-lite";
-import { View, Text, Dimensions, StyleSheet, Button } from "react-native";
+import {
+  View,
+  Text,
+  Dimensions,
+  StyleSheet,
+  Button,
+  TouchableHighlight,
+  StatusBar,
+} from "react-native";
 import useStore from "../../hooks/useStore";
 import { useNavigation } from "@react-navigation/native";
-import Icon from "./Icon";
 import { Ionicons } from "@expo/vector-icons";
 //https://icons.expo.fyi/
 import { AntDesign } from "@expo/vector-icons";
@@ -16,7 +23,6 @@ import Animated, {
   useSharedValue,
   withSpring,
 } from "react-native-reanimated";
-import { TapGestureHandler } from "react-native-gesture-handler";
 
 const { height: SCREEN_HEIGHT, width: SCREEN_WIDTH } = Dimensions.get("window");
 
@@ -27,18 +33,7 @@ const LeftMenu = () => {
 
   useEffect(() => {}, []);
   const active = useSharedValue(false);
-  console.log(auth, "menu.filteredRoutes.length");
-  const translateX = useDerivedValue(() => {
-    return active.value ? withSpring(0) : withSpring(-SCREEN_WIDTH / 1.5);
-  });
-
-  const menuToggler = useAnimatedGestureHandler({
-    onStart: () => {
-      active.value = !active.value;
-    },
-    onActive: () => {},
-    onEnd: () => {},
-  });
+  const translateX = useSharedValue(-SCREEN_WIDTH / 1.5);
 
   const rStyle = useAnimatedStyle(() => {
     return {
@@ -47,65 +42,76 @@ const LeftMenu = () => {
     };
   });
 
+  const toggleMenu = useCallback(() => {
+    "worklet";
+    active.value = !active.value;
+    active.value
+      ? (translateX.value = 0)
+      : (translateX.value = withSpring(-SCREEN_WIDTH / 1.5));
+  }, []);
+
   return (
     <Animated.View style={[styles.left_menu_wrapper, rStyle]}>
-      {menu?.leftRoutes.length ? (
-        <TapGestureHandler onGestureEvent={menuToggler}>
-          <View
-            style={{
-              position: "absolute",
-              top: 10,
-              right: -50,
+      <StatusBar />
+      {menu?.leftRoutes?.length ? (
+        <View
+          style={{
+            position: "absolute",
+            top: 10,
+            right: -50,
+          }}
+        >
+          <TouchableHighlight
+            onPress={() => {
+              toggleMenu();
             }}
           >
-            {active.value ? (
-              <AntDesign name="closecircle" size={40} color="black" />
-            ) : (
-              <Ionicons name="menu" size={40} color="black" />
-            )}
-          </View>
-        </TapGestureHandler>
-      ) : null}
+            <Animated.View>
+              {active.value ? (
+                <AntDesign name="closecircle" size={40} color="black" />
+              ) : (
+                <Ionicons name="menu" size={40} color="black" />
+              )}
+            </Animated.View>
+          </TouchableHighlight>
+        </View>
+      ) : (
+        <Text>null</Text>
+      )}
       <Animated.View style={{ flex: 1, justifyContent: "space-between" }}>
         <ProfileHeader />
         <View>
-          {menu.leftRoutes.map((item, idx) => {
+          {menu?.leftRoutes.map((item, idx) => {
             return (
-              <TapGestureHandler
-                onGestureEvent={(...args) => {
-                  navigation.navigate(item?.name);
-                  menuToggler(...args);
-                }}
+              <TouchableHighlight
                 key={idx}
+                style={{
+                  borderBottomColor: "#000",
+                  borderBottomWidth: 1,
+                  padding: 10,
+                }}
+                onPress={() => {
+                  navigation.navigate(item?.name);
+                  toggleMenu();
+                }}
               >
-                <View
-                  style={{
-                    borderBottomColor: "#000",
-                    borderBottomWidth: 1,
-                    padding: 10,
-                  }}
-                >
-                  <Text style={styles.menu_link}>{item?.name}</Text>
-                </View>
-              </TapGestureHandler>
+                <Text style={styles.menu_link}>{item?.name}</Text>
+              </TouchableHighlight>
             );
           })}
         </View>
         <View>
-          <TapGestureHandler
-            onGestureEvent={(...args) => {
+          <TouchableHighlight
+            onPress={() => {
               auth.logout();
-              menuToggler(...args);
+              toggleMenu();
+            }}
+            style={{
+              padding: 10,
             }}
           >
-            <View
-              style={{
-                padding: 10,
-              }}
-            >
-              <Text style={styles.menu_link}>Logout</Text>
-            </View>
-          </TapGestureHandler>
+            <Text style={styles.menu_link}>Logout</Text>
+          </TouchableHighlight>
         </View>
       </Animated.View>
     </Animated.View>
@@ -132,7 +138,7 @@ const styles = StyleSheet.create({
 
     // fontSize: 20,
     fontSize: 15,
-    fontWeight: 700,
+    // fontWeight: 700,
   },
 });
 
