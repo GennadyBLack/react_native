@@ -23,7 +23,7 @@ const ModalWrapper = ({ children, props }) => {
         {children}
       </Animated.View>
       <LeftMenu />
-      <BottomSheet></BottomSheet>
+      {/* <BottomSheet></BottomSheet> */}
     </GestureHandlerRootView>
   );
 };
