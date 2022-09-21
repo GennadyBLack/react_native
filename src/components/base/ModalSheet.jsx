@@ -12,6 +12,7 @@ import Animated, {
   useAnimatedStyle,
   useSharedValue,
   withSpring,
+  runOnJS
 } from "react-native-reanimated";
 import useStore from "../../hooks/useStore";
 import { observer } from "mobx-react-lite";
@@ -49,7 +50,7 @@ const ModalSheet = ({ visible, children, toggle }) => {
         if (translateY.value > -SCREEN_HEIGHT / 3) {
           context.value = { y: 0 };
           scrollTo(0);
-          toggle();
+          runOnJS(toggle)();
         } else if (translateY.value < -SCREEN_HEIGHT / 1.5) {
           scrollTo(-SCREEN_HEIGHT);
         }
@@ -87,7 +88,7 @@ const ModalSheet = ({ visible, children, toggle }) => {
         transparent={true}
         visible={visible}
         onRequestClose={() => {
-          toggle();
+          runOnJS(toggle)();
         }}
       >
         <ExampleWithHoc children={children} />
