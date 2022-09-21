@@ -3,6 +3,7 @@ import { View, StyleSheet, Dimensions, Modal } from "react-native";
 import {
   Gesture,
   GestureDetector,
+  gestureHandlerRootHOC,
   GestureHandlerRootView,
 } from "react-native-gesture-handler";
 import Animated, {
@@ -56,6 +57,14 @@ const ModalSheet = ({ visible, children, toggle }) => {
         console.log(error);
       }
     });
+  const ExampleWithHoc = gestureHandlerRootHOC(({ children }) => (
+    <GestureDetector gesture={gesture}>
+      <Animated.View style={[styles.bottomContainer, rBottonStyle]}>
+        <View style={styles.line}></View>
+        <View>{toJS(children)}</View>
+      </Animated.View>
+    </GestureDetector>
+  ));
 
   const rBottonStyle = useAnimatedStyle(() => {
     const borderRadius = interpolate(
@@ -81,12 +90,7 @@ const ModalSheet = ({ visible, children, toggle }) => {
           toggle();
         }}
       >
-        <GestureDetector gesture={gesture}>
-          <Animated.View style={[styles.bottomContainer, rBottonStyle]}>
-            <View style={styles.line}></View>
-            <View>{toJS(children)}</View>
-          </Animated.View>
-        </GestureDetector>
+        <ExampleWithHoc children={children} />
       </Modal>
     )
   );
