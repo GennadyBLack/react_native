@@ -92,7 +92,7 @@ const ModalSheet = ({ visible, children, toggle }) => {
         <GestureDetector gesture={gesture}>
           <Animated.View style={[styles.bottomContainer, rBottonStyle]}>
             <View style={styles.line}></View>
-            <View> {children}</View>
+            <View> {toJS(children)}</View>
           </Animated.View>
         </GestureDetector>
       </Modal>

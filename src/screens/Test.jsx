@@ -12,7 +12,7 @@ function Test({ navigation }) {
   return (
     <View>
       <ModalSheet visible={visible} toggle={toggle}>
-        <Text nativeID="modal-test">asdasdasd</Text>
+        <Text>asdasdasd</Text>
       </ModalSheet>
       <Button title="open" onPress={() => toggle()}></Button>
     </View>

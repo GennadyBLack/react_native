@@ -88,13 +88,13 @@ export const availableLinks = [
     options: { headerShown: false },
     required: false,
   },
-  {
-    name: "FeedEdit",
-    component: FeedEdit,
-    auth: true,
-    options: { headerShown: false },
-    required: false,
-  },
+  // {
+  //   name: "FeedEdit",
+  //   component: FeedEdit,
+  //   auth: true,
+  //   options: { headerShown: false },
+  //   required: false,
+  // },
   {
     name: "Upload",
     component: Upload,
