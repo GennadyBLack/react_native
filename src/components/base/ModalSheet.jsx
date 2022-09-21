@@ -1,6 +1,10 @@
 import React, { useEffect, useCallback, useState } from "react";
 import { View, StyleSheet, Dimensions, Modal } from "react-native";
-import { Gesture, GestureDetector } from "react-native-gesture-handler";
+import {
+  Gesture,
+  GestureDetector,
+  GestureHandlerRootView,
+} from "react-native-gesture-handler";
 import Animated, {
   Extrapolate,
   interpolate,
@@ -25,27 +29,17 @@ const ModalSheet = ({ visible, children, toggle }) => {
     translateY.value = withSpring(destination, { damping: 50 });
   }, []);
 
-  const initModal = (modalParams) => {
-    scrollTo(MAX_TRANSLATE_Y / 2);
-    // onOpacityChange(0.1);
-    // const { toTop, toMiddle, toBottom } = modalParams;
-    // if (toTop || toMiddle || toBottom) {
-    //   toTop ? scrollTo(MAX_TRANSLATE_Y) : null;
-    //   toMiddle ? scrollTo(MAX_TRANSLATE_Y / 2) : null;
-    //   toBottom ? scrollTo(MAX_TRANSLATE_Y / 3) : null;
-    // } else {
-    //   scrollTo(MAX_TRANSLATE_Y / 2);
-    // }
-  };
   useEffect(() => {
     visible ? scrollTo(MAX_TRANSLATE_Y / 2) : scrollTo(0);
   }, [visible]);
 
   const gesture = Gesture.Pan()
     .onBegin((e) => {
+      console.log("aliooo");
       context.value = { y: translateY?.value };
     })
     .onUpdate((e) => {
+      console.log("aliooo");
       translateY.value = e.translationY + context?.value?.y;
       translateY.value = Math.max(translateY.value, MAX_TRANSLATE_Y);
     })
@@ -55,10 +49,8 @@ const ModalSheet = ({ visible, children, toggle }) => {
           context.value = { y: 0 };
           scrollTo(0);
           toggle();
-          // onOpacityChange(1);
         } else if (translateY.value < -SCREEN_HEIGHT / 1.5) {
           scrollTo(-SCREEN_HEIGHT);
-          // onOpacityChange(0.1);
         }
       } catch (error) {
         console.log(error);
@@ -92,7 +84,7 @@ const ModalSheet = ({ visible, children, toggle }) => {
         <GestureDetector gesture={gesture}>
           <Animated.View style={[styles.bottomContainer, rBottonStyle]}>
             <View style={styles.line}></View>
-            <View> {toJS(children)}</View>
+            <View>{toJS(children)}</View>
           </Animated.View>
         </GestureDetector>
       </Modal>
