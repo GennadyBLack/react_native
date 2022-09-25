@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import {View, Text, StyleSheet, Button, ScrollView} from "react-native";
+import {View, Text, StyleSheet, Button, ScrollView, TouchableOpacity} from "react-native";
 import { observer } from "mobx-react-lite";
 import useStore from "../../hooks/useStore";
 import { Card, Title, Paragraph } from "react-native-paper";
@@ -43,67 +43,47 @@ function ProfileMain({ route, navigation }) {
               setIsEdit(false);
             }}
           >
-            <ScrollView nativeID={"spisok-pipisok"} style={{height:'auto'}}>
-              <Form onSubmit={submit} defaultValues={user} nativeID={"form-huerm"}>
-                <Form.Input
-                  name="username"
-                  rules={{
-                    required: {
-                      value: true,
-                      message: "Это поле обязательно для заполнения чудик",
-                    },
-                    max: { value: 3, message: "Больше 3" },
-                  }}
-                />
-                <Form.Input
-                  name="email"
-                  rules={{
-                    required: {
-                      value: true,
-                      message: "Это поле обязательно для заполнения чудик",
-                    },
-                  }}
-                />
-                <Form.Input
-                  name="description"
-                  rules={{
-                    required: {
-                      value: true,
-                      message: "Это поле обязательно для заполнения чудик",
-                    },
-                  }}
-                />
-                <Form.File name="avatar" title="Загрузить фото профиля" />
-
-                <Switch />
-              </Form>
-              <MenuSwicher
-                data={profileMenuList(user?.menu)}
-                onChange={(e, l) => {
-                  onMenuChange(e, l);
-                }}
-              />
-              <Text>KeKUS1</Text>
-              <Text>KeKUS2</Text>
-              <Text>KeKUS3</Text>
-              <Text>KeKUS4</Text>
-              <Text>KeKUS5</Text>
-              <Text>KeKUS6</Text>
-              <Text>KeKUS7</Text>
-              <Text>KeKUS8</Text>
-              <Text>KeKUS9</Text>
-              <Text>KeKUS10</Text>
-              <Text>KeKUS11</Text>
-              <Text>KeKUS12</Text>
-              <Text>KeKUS13</Text>
-              <Text>KeKUS14</Text>
-              <Text>KeKUS15</Text>
-              <Text>KeKUS16</Text>
-              <Text>KeKUS17</Text>
-              <Text>KeKUS18</Text>
-              <Text>KeKUS19</Text>
-              <Text>KeKUS20</Text>
-              <Text>KeKUS21</Text>
+            <ScrollView nativeID={"spisok-pipisok"} style={{flex:1}} contentContainerStyle={{padding: 25}} onScroll={(e)=> console.log(e.nativeEvent.contentOffset.y)} scrollEventThrottle={16}>
+                <TouchableOpacity style={{width:'100%', height: 40, backgroundColor: 'blue', marginVertical: 15}} onPress={console.log('touch')}><Text>Привет</Text></TouchableOpacity>
+                <Text>KeKUS1</Text>
+                <Text>KeKUS2</Text>
+                <Text>KeKUS3</Text>
+                <Text>KeKUS4</Text>
+                <Text>KeKUS5</Text>
+                <Text>KeKUS6</Text>
+                <Text>KeKUS7</Text>
+                <Text>KeKUS8</Text>
+                <Text>KeKUS9</Text>
+                <Text>KeKUS10</Text>
+                <Text>KeKUS11</Text>
+                <Text>KeKUS12</Text>
+                <Text>KeKUS13</Text>
+                <Text>KeKUS14</Text>
+                <Text>KeKUS15</Text>
+                <Text>KeKUS16</Text>
+                <Text>KeKUS17</Text>
+                <Text>KeKUS18</Text>
+                <Text>KeKUS19</Text>
+                <Text>KeKUS20</Text>
+                <Text>KeKUS21</Text>
+                <Text>KeKUS22</Text>
+                <Text>KeKUS23</Text>
+                <Text>KeKUS24</Text>
+                <Text>KeKUS25</Text>
+                <Text>KeKUS26</Text>
+                <Text>KeKUS27</Text>
+                <Text>KeKUS28</Text>
+                <Text>KeKUS29</Text>
+                <Text>KeKUS30</Text>
+                <Text>KeKUS31</Text>
+                <Text>KeKUS32</Text>
+                <Text>KeKUS33</Text>
+                <Text>KeKUS34</Text>
+                <Text>KeKUS35</Text>
+                <Text>KeKUS36</Text>
+                <Text>KeKUS37</Text>
+                <Text>KeKUS38</Text>
+                <Text>KeKUS39</Text>
             </ScrollView>
           </ModalSheet>
 
@@ -130,6 +110,5 @@ const styles = StyleSheet.create({
     margin: "5%",
     paddingTop: 5,
     flex:1,
-    height: 350
   },
 });

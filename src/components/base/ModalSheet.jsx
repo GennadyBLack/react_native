@@ -29,7 +29,7 @@ const ModalSheet = ({ visible, children, toggle, startAt }) => {
   const scrollTo = useCallback((destination) => {
     "worklet";
     translateY.value = withSpring(destination, { damping: 50 });
-    modalHeight.value = SCREEN_HEIGHT + destination
+    modalHeight.value = -destination
   }, []);
 
   const getStartDestination = useCallback(() => {
@@ -46,12 +46,18 @@ const ModalSheet = ({ visible, children, toggle, startAt }) => {
   }, [visible]);
 
   const gesture = Gesture.Pan()
+      .minDistance(15)
+      .onTouchesDown((e)=> {
+        console.log(e, "touch")
+      })
     .onBegin((e) => {
+      console.log(e, "gesture")
       context.value = { y: translateY?.value };
     })
     .onUpdate((e) => {
       translateY.value = e.translationY + context?.value?.y;
       translateY.value = Math.max(translateY.value, MAX_TRANSLATE_Y);
+      modalHeight.value = -translateY.value
     })
     .onEnd(() => {
       try {
@@ -62,8 +68,7 @@ const ModalSheet = ({ visible, children, toggle, startAt }) => {
         } else if (translateY.value < -SCREEN_HEIGHT / 1.5) {
           scrollTo(-SCREEN_HEIGHT);
         }
-        modalHeight.value = -translateY.value
-        console.log(modalHeight.value, "modalHeight");
+        // console.log(modalHeight.value, "modalHeight");
       } catch (error) {
         console.log(error);
       }
@@ -118,16 +123,19 @@ const useModal = () => {
 
 const styles = StyleSheet.create({
   bottomContainer: {
+    // height: 250,
     width: "100%",
     backgroundColor: "white",
     position: "absolute",
     top: SCREEN_HEIGHT,
-    borderRadius: 25,
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 20 },
-    // shadowOpacity: 1,
-    shadowRadius: 40,
+    borderTopRightRadius: 25,
+    borderTopLeftRadius: 25,
+    // borderRadius: 25,
+    // shadowColor: "#000",
+    // shadowOffset: { width: 0, height: 20 },
+    // shadowRadius: 40,
     elevation: 10,
+    flex: 1
   },
   line: {
     width: 75,
