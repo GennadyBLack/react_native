@@ -8,6 +8,7 @@ import prepareEdit from "../../helpers/editHelper";
 import Switch from "../validation/Switch";
 import MenuSwicher from "./MenuSwicher";
 import { profileMenuList } from "../../helpers/menuHelper";
+import ModalSheet from "../base/ModalSheet";
 
 export default observer(ProfileMain);
 
@@ -33,15 +34,17 @@ function ProfileMain({ route, navigation }) {
     <View style={styles.wrap}>
       <Card>
         <Card.Content>
-          {!isEdit ? (
-            <View>
-              <Title>{user?.username || "Name отсутствует"}</Title>
-              <Paragraph>
-                {user?.description || "Описание отсутствует"}
-              </Paragraph>
-            </View>
-          ) : null}
-          {isEdit ? (
+          <View>
+            <Title>{user?.username || "Name отсутствует"}</Title>
+            <Paragraph>{user?.description || "Описание отсутствует"}</Paragraph>
+          </View>
+          <ModalSheet
+            startAt={1.2}
+            visible={isEdit}
+            toggle={() => {
+              setIsEdit(false);
+            }}
+          >
             <View>
               <Form onSubmit={submit} defaultValues={user}>
                 <Form.Input
@@ -83,7 +86,7 @@ function ProfileMain({ route, navigation }) {
                 }}
               />
             </View>
-          ) : null}
+          </ModalSheet>
         </Card.Content>
         <Card.Cover source={{ uri: user?.avatar }} />
 

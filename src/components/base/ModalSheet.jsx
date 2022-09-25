@@ -12,7 +12,7 @@ import Animated, {
   useAnimatedStyle,
   useSharedValue,
   withSpring,
-  runOnJS
+  runOnJS,
 } from "react-native-reanimated";
 import useStore from "../../hooks/useStore";
 import { observer } from "mobx-react-lite";
@@ -23,25 +23,32 @@ const { height: SCREEN_HEIGHT } = Dimensions.get("window");
 
 const MAX_TRANSLATE_Y = -SCREEN_HEIGHT;
 
-const ModalSheet = ({ visible, children, toggle }) => {
+const ModalSheet = ({ visible, children, toggle, startAt }) => {
   const translateY = useSharedValue(0);
   const context = useSharedValue({ y: 0 });
+
   const scrollTo = useCallback((destination) => {
     "worklet";
     translateY.value = withSpring(destination, { damping: 50 });
   }, []);
 
+  const getStartDestination = () => {
+    try {
+      return startAt ? MAX_TRANSLATE_Y / startAt : MAX_TRANSLATE_Y / 2;
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   useEffect(() => {
-    visible ? scrollTo(MAX_TRANSLATE_Y / 2) : scrollTo(0);
+    visible ? scrollTo(getStartDestination()) : scrollTo(0);
   }, [visible]);
 
   const gesture = Gesture.Pan()
     .onBegin((e) => {
-      console.log("aliooo");
       context.value = { y: translateY?.value };
     })
     .onUpdate((e) => {
-      console.log("aliooo");
       translateY.value = e.translationY + context?.value?.y;
       translateY.value = Math.max(translateY.value, MAX_TRANSLATE_Y);
     })
@@ -102,7 +109,7 @@ const useModal = () => {
   const toggle = () => {
     setActive(!active);
   };
-  return [active, toggle];
+  return [active, toggle, SCREEN_HEIGHT];
 };
 
 const styles = StyleSheet.create({
