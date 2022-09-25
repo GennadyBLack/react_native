@@ -15,7 +15,7 @@ import Upload from "../components/validation/Upload";
 export const profileMenuList = (userMunu = []) => {
   try {
     return availableLinks
-      .filter((item) => (item?.required || !item?.auth ? false : true))
+      .filter((item) => (!(item?.required || !item?.auth)))
       .map((item) => {
         if (Array.isArray(userMunu) && userMunu.includes(item?.name)) {
           return {

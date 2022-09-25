@@ -4,7 +4,6 @@ import {
   Gesture,
   GestureDetector,
   gestureHandlerRootHOC,
-  GestureHandlerRootView,
 } from "react-native-gesture-handler";
 import Animated, {
   Extrapolate,
@@ -14,8 +13,7 @@ import Animated, {
   withSpring,
   runOnJS,
 } from "react-native-reanimated";
-import useStore from "../../hooks/useStore";
-import { observer } from "mobx-react-lite";
+
 
 import { toJS } from "mobx";
 
@@ -25,20 +23,23 @@ const MAX_TRANSLATE_Y = -SCREEN_HEIGHT;
 
 const ModalSheet = ({ visible, children, toggle, startAt }) => {
   const translateY = useSharedValue(0);
+  const modalHeight = useSharedValue(SCREEN_HEIGHT);
   const context = useSharedValue({ y: 0 });
 
   const scrollTo = useCallback((destination) => {
     "worklet";
     translateY.value = withSpring(destination, { damping: 50 });
+    modalHeight.value = SCREEN_HEIGHT + destination
   }, []);
 
-  const getStartDestination = () => {
+  const getStartDestination = useCallback(() => {
     try {
       return startAt ? MAX_TRANSLATE_Y / startAt : MAX_TRANSLATE_Y / 2;
     } catch (error) {
       console.log(error);
     }
-  };
+  }, [startAt]);
+
 
   useEffect(() => {
     visible ? scrollTo(getStartDestination()) : scrollTo(0);
@@ -61,6 +62,8 @@ const ModalSheet = ({ visible, children, toggle, startAt }) => {
         } else if (translateY.value < -SCREEN_HEIGHT / 1.5) {
           scrollTo(-SCREEN_HEIGHT);
         }
+        modalHeight.value = -translateY.value
+        console.log(modalHeight.value, "modalHeight");
       } catch (error) {
         console.log(error);
       }
@@ -69,7 +72,7 @@ const ModalSheet = ({ visible, children, toggle, startAt }) => {
     <GestureDetector gesture={gesture}>
       <Animated.View style={[styles.bottomContainer, rBottonStyle]}>
         <View style={styles.line}></View>
-        <View>{toJS(children)}</View>
+        {toJS(children)}
       </Animated.View>
     </GestureDetector>
   ));
@@ -86,6 +89,7 @@ const ModalSheet = ({ visible, children, toggle, startAt }) => {
       borderRadius,
       shadowOpacity: visible ? 1 : 0,
       transform: [{ translateY: translateY.value }],
+      height: modalHeight.value
     };
   });
   return (
@@ -114,7 +118,6 @@ const useModal = () => {
 
 const styles = StyleSheet.create({
   bottomContainer: {
-    height: SCREEN_HEIGHT,
     width: "100%",
     backgroundColor: "white",
     position: "absolute",

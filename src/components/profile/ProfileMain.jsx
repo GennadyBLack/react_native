@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, StyleSheet, Button } from "react-native";
+import {View, Text, StyleSheet, Button, ScrollView} from "react-native";
 import { observer } from "mobx-react-lite";
 import useStore from "../../hooks/useStore";
 import { Card, Title, Paragraph } from "react-native-paper";
@@ -31,22 +31,20 @@ function ProfileMain({ route, navigation }) {
     await auth?.updateMe({ menu: userLinks });
   };
   return (
-    <View style={styles.wrap}>
-      <Card>
-        <Card.Content>
+    <View style={styles.wrap} nativID={"super-wrap"}>
           <View>
             <Title>{user?.username || "Name отсутствует"}</Title>
             <Paragraph>{user?.description || "Описание отсутствует"}</Paragraph>
           </View>
           <ModalSheet
-            startAt={1.2}
+            startAt={3}
             visible={isEdit}
             toggle={() => {
               setIsEdit(false);
             }}
           >
-            <View>
-              <Form onSubmit={submit} defaultValues={user}>
+            <ScrollView nativeID={"spisok-pipisok"} style={{height:'auto'}}>
+              <Form onSubmit={submit} defaultValues={user} nativeID={"form-huerm"}>
                 <Form.Input
                   name="username"
                   rules={{
@@ -85,10 +83,31 @@ function ProfileMain({ route, navigation }) {
                   onMenuChange(e, l);
                 }}
               />
-            </View>
+              <Text>KeKUS1</Text>
+              <Text>KeKUS2</Text>
+              <Text>KeKUS3</Text>
+              <Text>KeKUS4</Text>
+              <Text>KeKUS5</Text>
+              <Text>KeKUS6</Text>
+              <Text>KeKUS7</Text>
+              <Text>KeKUS8</Text>
+              <Text>KeKUS9</Text>
+              <Text>KeKUS10</Text>
+              <Text>KeKUS11</Text>
+              <Text>KeKUS12</Text>
+              <Text>KeKUS13</Text>
+              <Text>KeKUS14</Text>
+              <Text>KeKUS15</Text>
+              <Text>KeKUS16</Text>
+              <Text>KeKUS17</Text>
+              <Text>KeKUS18</Text>
+              <Text>KeKUS19</Text>
+              <Text>KeKUS20</Text>
+              <Text>KeKUS21</Text>
+            </ScrollView>
           </ModalSheet>
-        </Card.Content>
-        <Card.Cover source={{ uri: user?.avatar }} />
+
+        {/*<Card.Cover source={{ uri: user?.avatar }} />*/}
 
         {!isEdit ? (
           <Button
@@ -96,7 +115,6 @@ function ProfileMain({ route, navigation }) {
             onPress={setIsEdit.bind(null, !isEdit)}
           ></Button>
         ) : null}
-      </Card>
       <Button
         title="Logout"
         onPress={() => {
@@ -111,5 +129,7 @@ const styles = StyleSheet.create({
     width: "90%",
     margin: "5%",
     paddingTop: 5,
+    flex:1,
+    height: 350
   },
 });

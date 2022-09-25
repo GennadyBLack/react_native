@@ -24,6 +24,7 @@ import { apiUrl } from "../../api";
 const AnimateImage = Animated.createAnimatedComponent(Image);
 
 const { height, width } = Dimensions.get("window");
+const SIZE = width;
 
 export default function FeedItem({ feed, onDelete, navigation }) {
   const [showComment, setShowComment] = useState(false);
@@ -74,66 +75,59 @@ export default function FeedItem({ feed, onDelete, navigation }) {
   ];
 
   return (
-    <View style={{ padding: 30 }}>
-      {/*<Text>{JSON.stringify(feed)}</Text>*/}
-
-      <Animated.View style={[styles.card, rCard]}>
+      <Animated.View style={[styles.card]}>
+        {/*<Text>{JSON.stringify(feed)}</Text>*/}
         <View style={styles.item}>
           <Text>{feed?.title}</Text>
           <Text>{feed?.desc}</Text>
         </View>
 
-        <View
-          style={{
-            flex: 1,
-            zIndex: 1000,
-          }}
-        >
-          <PinchGestureHandler onGestureEvent={pinchHandler}>
+        <PinchGestureHandler onGestureEvent={pinchHandler}>
+          <Animated.View style={StyleSheet.absoluteFill}>
             <AnimateImage
-              style={[styles.image, rCover]}
-              source={{
-                uri: `${apiUrl}/files/${feed?.path || "placeholder.png"}`,
-              }}
-              resizeMode="cover"
+                style={[styles.image, rCover]}
+                source={{
+                  uri: `${apiUrl}/files/${feed?.path || "placeholder.png"}`,
+                }}
+                resizeMode="cover"
             />
-          </PinchGestureHandler>
-        </View>
+          </Animated.View>
+        </PinchGestureHandler>
 
         {showComment ? (
-          <View>
-            <TextInput placeholder="Оставьте свой комментарий"></TextInput>
-            <Button title="Отправить" />
-          </View>
+            <View>
+              <TextInput placeholder="Оставьте свой комментарий"></TextInput>
+              <Button title="Отправить" />
+            </View>
         ) : null}
-        <TouchableOpacity
-          nativeID="button"
-          onPress={setShowComment.bind(null, !showComment)}
-          style={styles.btn}
-        >
-          <Text>Жми</Text>
-        </TouchableOpacity>
+        {/*<TouchableOpacity*/}
+        {/*    nativeID="button"*/}
+        {/*    onPress={setShowComment.bind(null, !showComment)}*/}
+        {/*    style={styles.btn}*/}
+        {/*>*/}
+        {/*  <Text>Жми</Text>*/}
+        {/*</TouchableOpacity>*/}
+        {/*<MenuToggler*/}
+        {/*  anchor={*/}
+        {/*    // <Text>alo</Text>*/}
+        {/*    <Icon*/}
+        {/*      source={Icon?.sources?.base?.menuDot}*/}
+        {/*      style={{ height: 20, width: 20 }}*/}
+        {/*    />*/}
+        {/*  }*/}
+        {/*  items={menuList}*/}
+        {/*  style={styles.topMenu}*/}
+        {/*/>*/}
       </Animated.View>
-
-      {/*<MenuToggler*/}
-      {/*  anchor={*/}
-      {/*    // <Text>alo</Text>*/}
-      {/*    <Icon*/}
-      {/*      source={Icon?.sources?.base?.menuDot}*/}
-      {/*      style={{ height: 20, width: 20 }}*/}
-      {/*    />*/}
-      {/*  }*/}
-      {/*  items={menuList}*/}
-      {/*  style={styles.topMenu}*/}
-      {/*/>*/}
-    </View>
   );
 }
 
 const styles = StyleSheet.create({
   card: {
     backgroundColor: "blue",
-    width: width - 60,
+    width: SIZE,
+    height: SIZE,
+
   },
   item: {
     // width: "90%",
@@ -152,7 +146,10 @@ const styles = StyleSheet.create({
     // display: "flex",
   },
   image: {
-    flex: 1,
+    ...StyleSheet.absoluteFillObject,
+    width: undefined,
+    height: undefined,
+    resizeMode: "cover",
   },
   btn: {
     zIndex: 0,
