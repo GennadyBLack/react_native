@@ -46,7 +46,7 @@ const ModalSheet = ({ visible, children, toggle, startAt }) => {
   }, [visible]);
 
   const gesture = Gesture.Pan()
-      .minDistance(15)
+      .minDistance(25)
       .onTouchesDown((e)=> {
         console.log(e, "touch")
       })
@@ -135,15 +135,19 @@ const styles = StyleSheet.create({
     // shadowOffset: { width: 0, height: 20 },
     // shadowRadius: 40,
     elevation: 10,
-    flex: 1
+    flex: 1,
+    paddingTop: 35,
+    paddingHorizontal: 25,
   },
   line: {
     width: 75,
     height: 4,
     backgroundColor: "grey",
     alignSelf: "center",
-    marginVertical: 15,
+    // marginVertical: 15,
     borderRadius: 3,
+    position: "absolute",
+    top: 15,
   },
 });
 
