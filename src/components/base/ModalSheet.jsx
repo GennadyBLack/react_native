@@ -1,5 +1,5 @@
 import React, {useEffect, useCallback, useState} from "react";
-import {View, StyleSheet, Dimensions, Modal} from "react-native";
+import {View, StyleSheet, Dimensions, Modal, TouchableWithoutFeedback} from "react-native";
 import {
     Gesture,
     GestureDetector,
@@ -114,9 +114,8 @@ const ModalSheet = ({visible, children, toggle, startAt}) => {
             >
                 <View style={styles.backdrop}>
                     <ExampleWithHoc children={children}/>
+                    {/*<TouchableWithoutFeedback onPress={() => runOnJS(toggle)()} style={{flex: 1, width: '100%', height: '100%'}}></TouchableWithoutFeedback>*/}
                 </View>
-
-
             </Modal>
         )
     );
