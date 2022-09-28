@@ -8,6 +8,8 @@ import {
   Dimensions,
   Pressable,
 } from "react-native";
+import constants from "../helpers/style";
+
 import s from "../helpers/stylehelper";
 import { observer } from "mobx-react-lite";
 import useStore from "../hooks/useStore";
@@ -100,10 +102,12 @@ function Login({ navigation }) {
               setTimeout(() => login(), 200);
             }}
           >
-            <Text style={s.c_green}>Fill</Text>
+            <Text style={{ color: constants.GREEN }}>Fill</Text>
           </Pressable>
           <TouchableOpacity onPress={regisrer}>
-            <Text style={[s.c_green]}>Don`t have an account ?</Text>
+            <Text style={{ color: constants.GREEN }}>
+              Don`t have an account ?
+            </Text>
           </TouchableOpacity>
         </View>
 

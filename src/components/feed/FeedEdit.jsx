@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, StyleSheet, Button } from "react-native";
+import { View, Text, StyleSheet, Button, Pressable } from "react-native";
 import { observer } from "mobx-react-lite";
 import useStore from "../../hooks/useStore";
 import { Card, Paragraph, Title } from "react-native-paper";
 import Upload from "../validation/Upload";
 import Form from "../validation/Form";
 import prepareEdit from "../../helpers/editHelper";
+import s from "../../helpers/stylehelper";
 
 export default observer(FeedEdit);
 
@@ -66,10 +67,9 @@ function FeedEdit({ route, navigation }) {
         </Card.Content>
         <Card.Cover source={{ uri: "https://picsum.photos/700" }} />
         <Upload />
-        <Button
-          title="Редактировать"
-          onPress={setIsEdit.bind(null, !isEdit)}
-        ></Button>
+        <Pressable style={s.button} onPress={setIsEdit.bind(null, !isEdit)}>
+          <Text style={s.buttonText}>Редактировать</Text>
+        </Pressable>
       </Card>
     </View>
   );
