@@ -31,11 +31,11 @@ const ModalSheet = ({ visible, children, toggle, startAt }) => {
   const translateY = useSharedValue(0);
   const modalHeight = useSharedValue(SCREEN_HEIGHT);
   const context = useSharedValue({ y: 0 });
-  const attached = useSharedValue(false);
 
   const scrollTo = useCallback((destination) => {
     "worklet";
     translateY.value = withSpring(destination, { damping: 50 });
+    console.log(translateY.value, "end");
     modalHeight.value = -destination;
   }, []);
 
@@ -73,7 +73,7 @@ const ModalSheet = ({ visible, children, toggle, startAt }) => {
           scrollTo(0);
           runOnJS(toggle)();
         } else if (translateY.value < -SCREEN_HEIGHT / 1.5) {
-          attached.value = true;
+          attached.value = false;
           scrollTo(-SCREEN_HEIGHT);
         }
         // console.log(modalHeight.value, "modalHeight");
@@ -83,12 +83,20 @@ const ModalSheet = ({ visible, children, toggle, startAt }) => {
     });
 
   const ExampleWithHoc = gestureHandlerRootHOC(({ children }) => (
-    <GestureDetector gesture={gesture}>
-      <Animated.View style={[styles.bottomContainer, rBottonStyle]}>
-        <View style={styles.line}></View>
-        {toJS(children)}
-      </Animated.View>
-    </GestureDetector>
+    <View style={{ flex: 1 }}>
+      <TouchableWithoutFeedback
+        onPress={runOnJS(toggle)}
+        nativeID={"touchable-HATACHOUBLE"}
+      >
+        <View style={styles.backdrop}></View>
+      </TouchableWithoutFeedback>
+      <GestureDetector gesture={gesture}>
+        <Animated.View style={[styles.bottomContainer, rBottonStyle]}>
+          <View style={styles.line}></View>
+          {toJS(children)}
+        </Animated.View>
+      </GestureDetector>
+    </View>
   ));
 
   const rBottonStyle = useAnimatedStyle(() => {
@@ -118,10 +126,7 @@ const ModalSheet = ({ visible, children, toggle, startAt }) => {
           runOnJS(toggle)();
         }}
       >
-        <TouchableWithoutFeedback onPress={(e) => console.log(e, "touchable")}>
-          <View style={styles.backdrop}></View>
-        </TouchableWithoutFeedback>
-        <ExampleWithHoc children={children} />
+        <ExampleWithHoc children={children} style={{ flex: 1, height: 350 }} />
       </Modal>
     )
   );
