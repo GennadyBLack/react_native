@@ -22,7 +22,7 @@ const ProfileHeader = () => {
 const styles = StyleSheet.create({
   profile_wrapper: {
     borderTopRightRadius: 10,
-    flexDirection: "colunm",
+    flexDirection: "column",
 
     padding: 10,
     height: 200,
