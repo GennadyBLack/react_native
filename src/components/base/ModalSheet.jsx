@@ -76,12 +76,17 @@ const ModalSheet = ({visible, children, toggle, startAt}) => {
         });
 
     const ExampleWithHoc = gestureHandlerRootHOC(({children}) => (
+        <View style={{flex:1}}>
+            <TouchableWithoutFeedback onPress={runOnJS(toggle)} nativeID={"touchable-HATACHOUBLE"}>
+                <View style={styles.backdrop}></View>
+            </TouchableWithoutFeedback>
             <GestureDetector gesture={gesture}>
-                    <Animated.View style={[styles.bottomContainer, rBottonStyle]}>
-                        <View style={styles.line}></View>
-                        {toJS(children)}
-                    </Animated.View>
-            </GestureDetector>
+            <Animated.View style={[styles.bottomContainer, rBottonStyle]}>
+                <View style={styles.line}></View>
+                {toJS(children)}
+            </Animated.View>
+        </GestureDetector>
+        </View>
 
     ));
 
@@ -113,10 +118,8 @@ const ModalSheet = ({visible, children, toggle, startAt}) => {
                     runOnJS(toggle)();
                 }}
             >
-                <TouchableWithoutFeedback onPress={(e) => console.log(e, "touchable")} >
-                        <View style={styles.backdrop}></View>
-                </TouchableWithoutFeedback>
-                <ExampleWithHoc children={children}/>
+
+                <ExampleWithHoc children={children} style={{flex:1, height: 350}}/>
             </Modal>
         )
     );
