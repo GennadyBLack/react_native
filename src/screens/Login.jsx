@@ -2,16 +2,22 @@ import React, { useState, useEffect } from "react";
 import {
   View,
   Text,
-  Button,
-  Alert,
   StyleSheet,
   TouchableOpacity,
   StatusBar,
+  Dimensions,
+  Pressable,
 } from "react-native";
+import constants from "../helpers/style";
+
+import s from "../helpers/stylehelper";
 import { observer } from "mobx-react-lite";
 import useStore from "../hooks/useStore";
 import { TextInput } from "react-native-paper";
 import * as LocalAuthentication from "expo-local-authentication";
+import Animated from "react-native-reanimated";
+
+const { height, width } = Dimensions.get("window");
 
 export default observer(Login);
 
@@ -32,6 +38,9 @@ function Login({ navigation }) {
     })();
   }, []);
 
+  const regisrer = () => {
+    navigation.navigate("Register");
+  };
   const handle = async () => {
     try {
       const biometricAuth = await LocalAuthentication.authenticateAsync({
@@ -54,53 +63,102 @@ function Login({ navigation }) {
     auth.login(form);
   };
   return (
-    <View>
+    <Animated.View style={[styles.login_wrapper]}>
       <StatusBar style="dark" />
-      <Text>Login {auth?.user?.id}</Text>
-      <TextInput
-        label="Email"
-        value={form?.email}
-        onChangeText={(text) => setText(text, "email")}
-      />
-      <TextInput
-        label="Password"
-        type="password"
-        value={form?.password}
-        onChangeText={(text) => setText(text, "password")}
-      />
-      <Button title="login" onPress={() => login()} color="#841584" />
-      <Button
-        title="reset"
-        onPress={() => navigation.navigate("Profile")}
-        color="#841584"
-      />
-      <Button
-        title="CREDS"
-        onPress={() => {
-          setForm({
-            ...form,
-            password: "tester",
-            email: "tester@mail.ru",
-          });
-          setTimeout(() => login(), 200);
-        }}
-        color="#76b5c5"
-      />
-      <View>
-        {supportBiometric && fingerprint ? (
-          <TouchableOpacity onPress={handle}>
-            <Text style={styles.button}>Go to home</Text>
+      <Text style={styles.welcome}>Welome !</Text>
+      <Animated.View style={[styles.login_content]}>
+        <TextInput
+          label="Email"
+          value={form?.email}
+          onChangeText={(text) => setText(text, "email")}
+          style={{ marginBottom: 20 }}
+        />
+        <TextInput
+          label="Password"
+          type="password"
+          value={form?.password}
+          onChangeText={(text) => setText(text, "password")}
+        />
+        <Pressable
+          onPress={() => login()}
+          style={[s.button, { marginTop: 20 }]}
+        >
+          <Text style={[{ color: "white", fontSize: 15 }]}>Sign In</Text>
+        </Pressable>
+        <View
+          style={{
+            justifyContent: "space-around",
+            flexDirection: "row",
+            marginTop: 20,
+          }}
+        >
+          <Pressable
+            onPress={() => {
+              setForm({
+                ...form,
+                password: "tester",
+                email: "tester@mail.ru",
+              });
+              setTimeout(() => login(), 200);
+            }}
+          >
+            <Text style={{ color: constants.GREEN }}>Fill</Text>
+          </Pressable>
+          <TouchableOpacity onPress={regisrer}>
+            <Text style={{ color: constants.GREEN }}>
+              Don`t have an account ?
+            </Text>
           </TouchableOpacity>
-        ) : (
-          <View>
-            <Text>fingerprint not supported/ allocated</Text>
-          </View>
-        )}
-      </View>
-    </View>
+        </View>
+
+        <View>
+          {supportBiometric && fingerprint ? (
+            <TouchableOpacity onPress={handle}>
+              <Text style={s.button}>Go to home</Text>
+            </TouchableOpacity>
+          ) : (
+            <View>
+              <Text></Text>
+            </View>
+          )}
+        </View>
+      </Animated.View>
+    </Animated.View>
   );
 }
 
 const styles = StyleSheet.create({
-  button: {},
+  login_wrapper: {
+    flex: 1,
+    backgroundColor: "#66bfbf",
+  },
+  login_content: {
+    // flex: 1,
+    // justifyContent: "center",
+    // alignItems: "center",
+    paddingTop: 40,
+    paddingHorizontal: 20,
+    height: height / 1.2,
+    backgroundColor: "#eee",
+    borderTopLeftRadius: 20,
+    borderTopRightRadius: 20,
+  },
+
+  // button: {
+  //   alignItems: "center",
+  //   justifyContent: "center",
+  //   paddingVertical: 12,
+  //   paddingHorizontal: 32,
+  //   borderRadius: 4,
+  //   elevation: 3,
+  //   color: "white",
+  //   backgroundColor: "#66bfbf",
+  //   borderRadius: 20,
+  // },
+  welcome: {
+    paddingTop: height - height / 1.2,
+    fontSize: 40,
+    fontStyle: "normal",
+    color: "white",
+  },
 });
