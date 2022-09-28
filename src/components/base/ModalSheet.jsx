@@ -49,6 +49,7 @@ const ModalSheet = ({visible, children, toggle, startAt}) => {
     const gesture = Gesture.Pan()
         .minDistance(25)
         .onTouchesDown((e) => {
+            console.log(e, "touchDown")
         })
         .onBegin((e) => {
             context.value = {y: translateY?.value};
@@ -112,10 +113,10 @@ const ModalSheet = ({visible, children, toggle, startAt}) => {
                     runOnJS(toggle)();
                 }}
             >
-                <View style={styles.backdrop}>
-                    <ExampleWithHoc children={children}/>
-                    {/*<TouchableWithoutFeedback onPress={() => runOnJS(toggle)()} style={{flex: 1, width: '100%', height: '100%'}}></TouchableWithoutFeedback>*/}
-                </View>
+                <TouchableWithoutFeedback onPress={(e) => console.log(e, "touchable")} >
+                        <View style={styles.backdrop}></View>
+                </TouchableWithoutFeedback>
+                <ExampleWithHoc children={children}/>
             </Modal>
         )
     );
@@ -143,7 +144,7 @@ const styles = StyleSheet.create({
         // shadowOffset: { width: 0, height: 20 },
         // shadowRadius: 40,
         elevation: 10,
-        flex: 1,
+
         paddingTop: 35,
         paddingHorizontal: 25,
     },
@@ -158,8 +159,8 @@ const styles = StyleSheet.create({
         top: 15,
     },
     backdrop: {
-        // ...StyleSheet.absoluteFill,
-        flex: 1,
+        ...StyleSheet.absoluteFill,
+        // flex: 1,
         backgroundColor: "rgba(0,0,0,0.5)",
     }
 });
