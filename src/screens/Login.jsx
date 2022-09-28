@@ -9,8 +9,8 @@ import {
   Pressable,
 } from "react-native";
 import constants from "../helpers/style";
+import s from "../helpers/styleHelper";
 
-import s from "../helpers/stylehelper";
 import { observer } from "mobx-react-lite";
 import useStore from "../hooks/useStore";
 import { TextInput } from "react-native-paper";
@@ -65,7 +65,7 @@ function Login({ navigation }) {
   return (
     <Animated.View style={[styles.login_wrapper]}>
       <StatusBar style="dark" />
-      <Text style={styles.welcome}>Welome !</Text>
+      <Text style={styles.welcome}>Здравствуйте !</Text>
       <Animated.View style={[styles.login_content]}>
         <TextInput
           label="Email"
@@ -74,6 +74,7 @@ function Login({ navigation }) {
           style={{ marginBottom: 20 }}
         />
         <TextInput
+          secureTextEntry
           label="Password"
           type="password"
           value={form?.password}
@@ -83,7 +84,7 @@ function Login({ navigation }) {
           onPress={() => login()}
           style={[s.button, { marginTop: 20 }]}
         >
-          <Text style={[{ color: "white", fontSize: 15 }]}>Sign In</Text>
+          <Text style={[{ color: "white", fontSize: 15 }]}>Войти</Text>
         </Pressable>
         <View
           style={{
@@ -102,12 +103,10 @@ function Login({ navigation }) {
               setTimeout(() => login(), 200);
             }}
           >
-            <Text style={{ color: constants.GREEN }}>Fill</Text>
+            <Text style={{ color: constants.GREEN }}>Заполнить</Text>
           </Pressable>
           <TouchableOpacity onPress={regisrer}>
-            <Text style={{ color: constants.GREEN }}>
-              Don`t have an account ?
-            </Text>
+            <Text style={{ color: constants.GREEN }}>Еще нет аккаунта ?</Text>
           </TouchableOpacity>
         </View>
 

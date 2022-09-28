@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, StyleSheet } from "react-native";
+import { View, StyleSheet, Text } from "react-native";
 
 const Toggler = ({
   children,
@@ -48,7 +48,9 @@ const Toggler = ({
         <View onPress={handleToggle} style={styles.anchor}>
           {anchor}
         </View>
-      ) : null}
+      ) : (
+        <Text></Text>
+      )}
       {useToggle && toggle ? content : null}
     </View>
   );

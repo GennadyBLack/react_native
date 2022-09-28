@@ -46,7 +46,9 @@ function FeedMain({ navigation }) {
   );
   return (
     <View style={styles.wrap}>
-      {feed?.loading ? null : (
+      {feed?.loading ? (
+        <Text></Text>
+      ) : (
         <View style={{ flex: 1 }}>
           {/*<Text>Feed Main </Text>*/}
           {/*<Button*/}

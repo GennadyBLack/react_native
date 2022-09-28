@@ -17,7 +17,7 @@ import Switch from "../validation/Switch";
 import MenuSwicher from "./MenuSwicher";
 import { profileMenuList } from "../../helpers/menuHelper";
 import ModalSheet from "../base/ModalSheet";
-import s from "../../helpers/stylehelper";
+import s from "../../helpers/styleHelper";
 
 export default observer(ProfileMain);
 
@@ -46,7 +46,7 @@ function ProfileMain({ route, navigation }) {
         <Paragraph>{user?.description || "Описание отсутствует"}</Paragraph>
       </View>
       <ModalSheet
-        startAt={3}
+        startAt={1.3}
         visible={isEdit}
         toggle={() => {
           setIsEdit(false);
@@ -98,9 +98,7 @@ function ProfileMain({ route, navigation }) {
           />
         </ScrollView>
       </ModalSheet>
-
       <Card.Cover source={{ uri: user?.avatar }} />
-
       {!isEdit ? (
         <Pressable
           style={[s.button, { marginBottom: 20 }]}
@@ -108,14 +106,15 @@ function ProfileMain({ route, navigation }) {
         >
           <Text style={s.buttonText}>Редактировать</Text>
         </Pressable>
-      ) : null}
+      ) : (
+        <Text></Text>
+      )}
       <Pressable
         style={s.button}
         onPress={() => {
           auth.logout();
         }}
       >
-        {" "}
         <Text style={s.buttonText}>Выйти</Text>
       </Pressable>
     </View>

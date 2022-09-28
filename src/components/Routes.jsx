@@ -6,15 +6,19 @@ import { observer } from "mobx-react-lite";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { NavigationContainer } from "@react-navigation/native";
 import ModalWrapper from "./base/ModalWrapper";
+import constants from "../helpers/style";
 
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
 import useStore from "../hooks/useStore";
 import { Text, StyleSheet } from "react-native";
 import filterMenuLinks, { linking } from "../helpers/menuHelper";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
 const PERSISTENCE_KEY = "NAVIGATION_STATE_V1";
 const { Screen, Navigator } = createBottomTabNavigator();
+
+const Stack = createNativeStackNavigator();
 
 function Routes() {
   //state persistence
@@ -28,8 +32,15 @@ function Routes() {
     //LINKING CONFIG END
     let mappedLinks = filterMenuLinks(auth?.isAuth, auth?.user?.user?.menu).map(
       (item, inx) => {
-        return (
+        return auth.isAuth ? (
           <Screen
+            name={item?.name}
+            component={item?.component}
+            options={item?.options}
+            key={inx}
+          />
+        ) : (
+          <Stack.Screen
             name={item?.name}
             component={item?.component}
             options={item?.options}
@@ -84,14 +95,17 @@ function Routes() {
       }
     >
       <ModalWrapper>
-        <Navigator
-          initialRouteName="Main"
-          activeColor="#f0edf6"
-          inactiveColor="#3e2465"
-          barStyle={{ backgroundColor: "#694fad" }}
-        >
-          {routes}
-        </Navigator>
+        {auth?.isAuth && (
+          <Navigator
+            initialRouteName="Main"
+            activeColor={constants.GREEN}
+            inactiveColor={constants.GREEN}
+            barStyle={{ backgroundColor: "#694fad" }}
+          >
+            {routes}
+          </Navigator>
+        )}
+        {!auth?.isAuth && <Stack.Navigator>{routes}</Stack.Navigator>}
       </ModalWrapper>
     </NavigationContainer>
   );

@@ -6,7 +6,8 @@ import { Card, Paragraph, Title } from "react-native-paper";
 import Upload from "../validation/Upload";
 import Form from "../validation/Form";
 import prepareEdit from "../../helpers/editHelper";
-import s from "../../helpers/stylehelper";
+import s from "../../helpers/styleHelper";
+import ModalSheet from "../base/ModalSheet";
 
 export default observer(FeedEdit);
 
@@ -39,38 +40,49 @@ function FeedEdit({ route, navigation }) {
                 {feed?.currentFeed?.desc || "Описание отсутствует"}
               </Paragraph>
             </View>
-          ) : null}
-          {isEdit ? (
-            <Form onSubmit={submit} defaultValues={feed?.currentFeed}>
-              <Form.Input
-                name="title"
-                rules={{
-                  required: {
-                    value: true,
-                    message: "Это поле обязательно для заполнения чудик",
-                  },
-                  min: { value: 3, message: "Больше 3" },
-                }}
-              />
-              <Form.Input
-                name="desc"
-                rules={{
-                  required: {
-                    value: true,
-                    message: "Это поле обязательно для заполнения чудик",
-                  },
-                  max: { value: 250, message: "меньше 250" },
-                }}
-              />
-            </Form>
-          ) : null}
+          ) : (
+            <Text></Text>
+          )}
         </Card.Content>
         <Card.Cover source={{ uri: "https://picsum.photos/700" }} />
         <Upload />
-        <Pressable style={s.button} onPress={setIsEdit.bind(null, !isEdit)}>
-          <Text style={s.buttonText}>Редактировать</Text>
-        </Pressable>
       </Card>
+      <Pressable
+        style={[s.button, { marginTop: 20 }]}
+        onPress={setIsEdit.bind(null, !isEdit)}
+      >
+        <Text style={s.buttonText}>Редактировать</Text>
+      </Pressable>
+      <ModalSheet
+        visible={isEdit}
+        toggle={() => setIsEdit(false)}
+        startAt={1.2}
+      >
+        <Form onSubmit={submit} defaultValues={feed?.currentFeed}>
+          <Form.Input
+            style={{ marginTop: 20 }}
+            name="title"
+            rules={{
+              required: {
+                value: true,
+                message: "Это поле обязательно для заполнения чудик",
+              },
+              min: { value: 3, message: "Больше 3" },
+            }}
+          />
+          <Form.Input
+            style={{ marginTop: 20 }}
+            name="desc"
+            rules={{
+              required: {
+                value: true,
+                message: "Это поле обязательно для заполнения чудик",
+              },
+              max: { value: 250, message: "меньше 250" },
+            }}
+          />
+        </Form>
+      </ModalSheet>
     </View>
   );
 }

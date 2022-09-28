@@ -28,6 +28,7 @@ import Animated, {
 
 const { height: SCREEN_HEIGHT, width: SCREEN_WIDTH } = Dimensions.get("window");
 
+const deleteVar = 1.3;
 const LeftMenu = () => {
   const [menu] = useStore("menu");
   const [auth] = useStore("auth");
@@ -35,13 +36,13 @@ const LeftMenu = () => {
 
   useEffect(() => {}, []);
   const active = useSharedValue(false);
-  const translateX = useSharedValue(-SCREEN_WIDTH / 1.5 - 1);
+  const translateX = useSharedValue(-SCREEN_WIDTH / deleteVar - 1);
 
   const rStyle = useAnimatedStyle(() => {
     const translateX = interpolate(
       active.value,
       [true, false],
-      [0, -SCREEN_WIDTH / 1.5 - 1],
+      [0, -SCREEN_WIDTH / deleteVar - 1],
       Extrapolate.CLAMP
     );
     return {
@@ -146,7 +147,7 @@ const LeftMenu = () => {
 const styles = StyleSheet.create({
   left_menu_wrapper: {
     flex: 1,
-    width: SCREEN_WIDTH / 1.5,
+    width: SCREEN_WIDTH / deleteVar,
     height: SCREEN_HEIGHT,
     backgroundColor: "#eee",
     position: "absolute",

@@ -19,7 +19,9 @@ function QuestionItemList({ edit, index, question, onDelete }) {
           title="-"
           onPress={() => onDelete()}
         ></Button>
-      ) : null}
+      ) : (
+        <Text></Text>
+      )}
     </View>
   );
 }

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Button, Image, View, Platform } from "react-native";
+import { Button, Image, View, Platform, Text } from "react-native";
 import * as ImagePicker from "expo-image-picker";
 import useStore from "../hooks/useStore";
 
@@ -37,7 +37,7 @@ export default function ImagePickerExample() {
   return (
     <View>
       <Button title="Pick an image from camera roll" onPress={pickImage} />
-      {image ? <Image source={{ uri: image }} /> : null}
+      {image ? <Image source={{ uri: image }} /> : <Text></Text>}
     </View>
   );
 }

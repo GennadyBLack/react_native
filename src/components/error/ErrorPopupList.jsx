@@ -2,7 +2,7 @@ import { observer } from "mobx-react-lite";
 import React, { useEffect } from "react";
 import ErrorPopup from "./ErrorPopup";
 import useStore from "../../hooks/useStore";
-import { StyleSheet, View } from "react-native";
+import { StyleSheet, View, Text } from "react-native";
 
 export default observer(ErrorPopupList);
 
@@ -27,7 +27,9 @@ function ErrorPopupList() {
         />
       ))}
     </View>
-  ) : null;
+  ) : (
+    <Text></Text>
+  );
 
   return <View>{mappedErrors}</View>;
 }

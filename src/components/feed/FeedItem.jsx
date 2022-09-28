@@ -4,10 +4,10 @@ import {
   StyleSheet,
   TextInput,
   Image,
-  Text,
   Dimensions,
   TouchableOpacity,
   Button,
+  Text,
 } from "react-native";
 import Animated, {
   useAnimatedGestureHandler,
@@ -75,50 +75,51 @@ export default function FeedItem({ feed, onDelete, navigation }) {
   ];
 
   return (
-      <Animated.View style={[styles.card]}>
-        {/*<Text>{JSON.stringify(feed)}</Text>*/}
-        <View style={styles.item}>
-          <Text>{feed?.title}</Text>
-          <Text>{feed?.desc}</Text>
+    <Animated.View style={[styles.card]}>
+      <View style={styles.item}>
+        <Text>{feed?.title}</Text>
+        <Text>{feed?.desc}</Text>
+      </View>
+
+      <PinchGestureHandler onGestureEvent={pinchHandler}>
+        <Animated.View style={StyleSheet.absoluteFill}>
+          <AnimateImage
+            style={[styles.image, rCover]}
+            source={{
+              uri: `${apiUrl}/files/${feed?.path || "placeholder.png"}`,
+            }}
+            resizeMode="cover"
+          />
+        </Animated.View>
+      </PinchGestureHandler>
+
+      {showComment ? (
+        <View>
+          <TextInput placeholder="Оставьте свой комментарий"></TextInput>
+          <Button title="Отправить" />
         </View>
-
-        <PinchGestureHandler onGestureEvent={pinchHandler}>
-          <Animated.View style={StyleSheet.absoluteFill}>
-            <AnimateImage
-                style={[styles.image, rCover]}
-                source={{
-                  uri: `${apiUrl}/files/${feed?.path || "placeholder.png"}`,
-                }}
-                resizeMode="cover"
-            />
-          </Animated.View>
-        </PinchGestureHandler>
-
-        {showComment ? (
-            <View>
-              <TextInput placeholder="Оставьте свой комментарий"></TextInput>
-              <Button title="Отправить" />
-            </View>
-        ) : null}
-        {/*<TouchableOpacity*/}
-        {/*    nativeID="button"*/}
-        {/*    onPress={setShowComment.bind(null, !showComment)}*/}
-        {/*    style={styles.btn}*/}
-        {/*>*/}
-        {/*  <Text>Жми</Text>*/}
-        {/*</TouchableOpacity>*/}
-        {/*<MenuToggler*/}
-        {/*  anchor={*/}
-        {/*    // <Text>alo</Text>*/}
-        {/*    <Icon*/}
-        {/*      source={Icon?.sources?.base?.menuDot}*/}
-        {/*      style={{ height: 20, width: 20 }}*/}
-        {/*    />*/}
-        {/*  }*/}
-        {/*  items={menuList}*/}
-        {/*  style={styles.topMenu}*/}
-        {/*/>*/}
-      </Animated.View>
+      ) : (
+        <Text></Text>
+      )}
+      {/*<TouchableOpacity*/}
+      {/*    nativeID="button"*/}
+      {/*    onPress={setShowComment.bind(null, !showComment)}*/}
+      {/*    style={styles.btn}*/}
+      {/*>*/}
+      {/*  <Text>Жми</Text>*/}
+      {/*</TouchableOpacity>*/}
+      {/*<MenuToggler*/}
+      {/*  anchor={*/}
+      {/*    // <Text>alo</Text>*/}
+      {/*    <Icon*/}
+      {/*      source={Icon?.sources?.base?.menuDot}*/}
+      {/*      style={{ height: 20, width: 20 }}*/}
+      {/*    />*/}
+      {/*  }*/}
+      {/*  items={menuList}*/}
+      {/*  style={styles.topMenu}*/}
+      {/*/>*/}
+    </Animated.View>
   );
 }
 
@@ -127,7 +128,6 @@ const styles = StyleSheet.create({
     backgroundColor: "blue",
     width: SIZE,
     height: SIZE,
-
   },
   item: {
     // width: "90%",

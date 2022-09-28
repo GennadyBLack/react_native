@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, StyleSheet } from "react-native";
+import { View, StyleSheet, Text } from "react-native";
 import { Button, Menu, Provider } from "react-native-paper";
 
 const MenuToggler = ({ items, anchor }) => {
@@ -36,7 +36,7 @@ const MenuToggler = ({ items, anchor }) => {
           {items.map((item, idx) => {
             return (
               <View style={{ zIndex: 10000 }}>
-                {item?.icon ?? null}
+                {item?.icon ?? <Text></Text>}
                 <Menu.Item
                   key={idx}
                   title={item.title}

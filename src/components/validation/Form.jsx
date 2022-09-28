@@ -4,7 +4,9 @@ import Input from "./Input";
 import File from "./File";
 import Select from "./Select";
 import Upload from "./Upload";
-import { View, Button, StyleSheet } from "react-native";
+import { View, Button, StyleSheet, Pressable, Text } from "react-native";
+import s from "../../helpers/styleHelper";
+import constants from "../../helpers/style";
 
 function Form({ defaultValues, children, onSubmit }) {
   const methods = useForm({ defaultValues });
@@ -27,7 +29,9 @@ function Form({ defaultValues, children, onSubmit }) {
             })
           : child;
       })}
-      <Button title="save" onPress={handleSubmit(onSubmit)}></Button>
+      <Pressable onPress={handleSubmit(onSubmit)} style={s.button}>
+        <Text style={{ color: constants.LIGHT }}>Сохранить</Text>
+      </Pressable>
     </View>
   );
 }
