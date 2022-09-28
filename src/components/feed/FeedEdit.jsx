@@ -6,7 +6,7 @@ import { Card, Paragraph, Title } from "react-native-paper";
 import Upload from "../validation/Upload";
 import Form from "../validation/Form";
 import prepareEdit from "../../helpers/editHelper";
-import s from "../../helpers/stylehelper";
+import s from "../../helpers/styleHelper"
 
 export default observer(FeedEdit);
 

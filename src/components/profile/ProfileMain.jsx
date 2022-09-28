@@ -17,7 +17,7 @@ import Switch from "../validation/Switch";
 import MenuSwicher from "./MenuSwicher";
 import { profileMenuList } from "../../helpers/menuHelper";
 import ModalSheet from "../base/ModalSheet";
-import s from "../../helpers/stylehelper";
+import s from "../../helpers/styleHelper";
 
 export default observer(ProfileMain);
 
@@ -115,7 +115,6 @@ function ProfileMain({ route, navigation }) {
           auth.logout();
         }}
       >
-        {" "}
         <Text style={s.buttonText}>Выйти</Text>
       </Pressable>
     </View>

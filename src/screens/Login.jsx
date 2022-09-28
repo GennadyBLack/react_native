@@ -10,7 +10,7 @@ import {
 } from "react-native";
 import constants from "../helpers/style";
 
-import s from "../helpers/stylehelper";
+import s from "../helpers/styleHelper";
 import { observer } from "mobx-react-lite";
 import useStore from "../hooks/useStore";
 import { TextInput } from "react-native-paper";
