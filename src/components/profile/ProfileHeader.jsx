@@ -35,6 +35,9 @@ const styles = StyleSheet.create({
     height: 80,
     borderRadius: 40,
   },
-  profile_name: {},
+  profile_name: {
+    fontSize: 30,
+    marginBottom: 10,
+  },
 });
 export default observer(ProfileHeader);

@@ -22,6 +22,7 @@
     "expo-image-picker": "~13.3.1",
     "expo-linear-gradient": "~11.4.0",
     "expo-local-authentication": "~12.3.0",
+    "expo-location": "~14.3.0",
     "expo-network": "^4.3.0",
     "expo-splash-screen": "~0.16.2",
     "expo-status-bar": "~1.4.0",
@@ -33,6 +34,7 @@
     "react-hook-form": "^7.31.3",
     "react-native": "0.69.5",
     "react-native-gesture-handler": "~2.5.0",
+    "react-native-maps": "^0.31.1",
     "react-native-network-logger": "^1.13.0",
     "react-native-paper": "^4.12.1",
     "react-native-paper-grid": "^0.1.12",
@@ -41,6 +43,7 @@
     "react-native-screens": "~3.15.0",
     "react-native-swipe-detect": "^1.0.10",
     "react-native-web": "~0.18.7",
+    "react-native-web-maps": "^0.3.0",
     "webpack-dev-server": "~3.11.0"
   },
   "devDependencies": {

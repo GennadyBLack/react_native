@@ -1,5 +1,11 @@
-import React, {useEffect, useCallback, useState} from "react";
-import {View, StyleSheet, Dimensions, Modal, TouchableWithoutFeedback} from "react-native";
+import React, { useEffect, useCallback, useState } from "react";
+import {
+  View,
+  StyleSheet,
+  Dimensions,
+  Modal,
+  TouchableWithoutFeedback,
+} from "react-native";
 import {
   Gesture,
   GestureDetector,
@@ -21,15 +27,15 @@ const { height: SCREEN_HEIGHT } = Dimensions.get("window");
 
 const MAX_TRANSLATE_Y = -SCREEN_HEIGHT;
 
-const ModalSheet = ({ visible, children, toggle, startAt , forbidClosing}) => {
+const ModalSheet = ({ visible, children, toggle, startAt }) => {
   const translateY = useSharedValue(0);
   const modalHeight = useSharedValue(SCREEN_HEIGHT);
   const context = useSharedValue({ y: 0 });
-
+  const attached = useSharedValue(false);
   const scrollTo = useCallback((destination) => {
     "worklet";
     translateY.value = withSpring(destination, { damping: 50 });
-    // console.log(translateY.value, "end");
+    console.log(translateY.value, "end");
     modalHeight.value = -destination;
   }, []);
 
@@ -41,16 +47,9 @@ const ModalSheet = ({ visible, children, toggle, startAt , forbidClosing}) => {
     }
   }, [startAt]);
 
-    // const onModalClose = useCallback(() => {
-    //   "worklet";
-    //     context.value = {y: 0};
-    //     scrollTo(0);
-    //     runOnJS(toggle)();
-    // }, [])
-
-    useEffect(() => {
-        visible ? scrollTo(getStartDestination()) : scrollTo(0);
-    }, [visible]);
+  useEffect(() => {
+    visible ? scrollTo(getStartDestination()) : scrollTo(0);
+  }, [visible]);
 
   const gesture = Gesture.Pan()
     .minDistance(25)
@@ -64,15 +63,16 @@ const ModalSheet = ({ visible, children, toggle, startAt , forbidClosing}) => {
       translateY.value = e.translationY + context?.value?.y;
       translateY.value = Math.max(translateY.value, MAX_TRANSLATE_Y);
       modalHeight.value = -translateY.value;
-      console.log(translateY?.value, "log");
     })
     .onEnd(() => {
       try {
         if (translateY.value > -SCREEN_HEIGHT / 3) {
+          attached.value = true;
           context.value = { y: 0 };
           scrollTo(0);
           runOnJS(toggle)();
         } else if (translateY.value < -SCREEN_HEIGHT / 1.5) {
+          attached.value = false;
           scrollTo(-SCREEN_HEIGHT);
         }
         // console.log(modalHeight.value, "modalHeight");

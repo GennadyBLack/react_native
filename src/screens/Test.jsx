@@ -3,6 +3,7 @@ import { View, Button, Text } from "react-native";
 import { observer } from "mobx-react-lite";
 import useStore from "../hooks/useStore";
 import ModalSheet from "../components/base/ModalSheet";
+import Map from "../components/base/Map";
 
 function Test({ navigation }) {
   const [visible, toggle] = ModalSheet.useModal();
@@ -11,10 +12,7 @@ function Test({ navigation }) {
 
   return (
     <View>
-      <ModalSheet visible={visible} toggle={toggle}>
-        <Text>asdasdasd</Text>
-      </ModalSheet>
-      <Button title="open" onPress={() => toggle()}></Button>
+      <Map></Map>
     </View>
   );
 }
