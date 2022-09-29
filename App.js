@@ -1,6 +1,10 @@
 import { StyleSheet, Text } from "react-native";
 import { View } from "react-native";
 import React, { useCallback, useEffect, useState } from "react";
+import YaMap from 'react-native-yamap';
+import {MAP_KEY} from "./src/helpers/api_keys";
+
+
 // import AppLoading from "expo-app-loading";
 import * as Network from "expo-network";
 import Routes from "./src/components/Routes";
@@ -10,6 +14,8 @@ const rootStore = new store();
 import ErrorPopupList from "./src/components/error/ErrorPopupList";
 import "react-native-gesture-handler";
 import * as SplashScreen from "expo-splash-screen";
+
+YaMap.init(MAP_KEY);
 
 SplashScreen.preventAutoHideAsync();
 function App() {
