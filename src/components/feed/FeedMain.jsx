@@ -10,8 +10,8 @@ import {
 } from "react-native";
 import { Button } from "react-native-paper";
 
+import FeedItem_old from "./FeedItem_old";
 import FeedItem from "./FeedItem";
-import FeedItemTest from "./FeedItemTest";
 
 import useStore from "../../hooks/useStore";
 
@@ -34,7 +34,7 @@ function FeedMain({ navigation }) {
     getAllFeed();
   }, []);
   const renderItem = ({ item }) => (
-    <FeedItemTest
+    <FeedItem
       feed={item}
       key={item.id}
       onDelete={deletePost}

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { View, Text, FlatList, Button } from "react-native";
 
-import FeedItem from "../components/FeedItem";
+import FeedItem from "../components/FeedItem_old";
 
 export default function Chat() {
   let newF = {
