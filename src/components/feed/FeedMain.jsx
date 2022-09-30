@@ -11,6 +11,7 @@ import {
 import { Button } from "react-native-paper";
 
 import FeedItem from "./FeedItem";
+import FeedItemTest from "./FeedItemTest";
 
 import useStore from "../../hooks/useStore";
 
@@ -33,16 +34,12 @@ function FeedMain({ navigation }) {
     getAllFeed();
   }, []);
   const renderItem = ({ item }) => (
-    <TouchableOpacity
-      onLongPress={() => navigation.navigate("feed_edit", { id: item.id })}
-    >
-      <FeedItem
-        feed={item}
-        key={item.id}
-        onDelete={deletePost}
-        navigation={navigation}
-      />
-    </TouchableOpacity>
+    <FeedItemTest
+      feed={item}
+      key={item.id}
+      onDelete={deletePost}
+      navigation={navigation}
+    />
   );
   return (
     <View style={styles.wrap}>

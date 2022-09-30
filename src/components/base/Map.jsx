@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { View, Text, StyleSheet, Dimensions } from "react-native";
-import MapView, { Marker } from "react-native-maps";
+import MapView, { Marker, Polyline } from "react-native-maps";
 import * as Location from "expo-location";
+import MapViewDirections from "react-native-maps-directions";
+import * as Device from "expo-device";
 const Map = () => {
   const [location, setLocation] = useState({ latitude: null, longitude: null });
   const [errorMsg, setErrorMsg] = useState(null);
@@ -29,7 +31,8 @@ const Map = () => {
       });
     })();
   }, []);
-  return (
+
+  return Device.DeviceType === "PHONE" ? (
     <View style={styles.container}>
       {location.latitude && (
         <MapView
@@ -43,6 +46,7 @@ const Map = () => {
           }}
         >
           <Marker
+            title="You"
             coordinate={location}
             draggable
             onDragEnd={(e) => {
@@ -50,15 +54,26 @@ const Map = () => {
             }}
           />
           <Marker
+            title="where to go"
             coordinate={destination}
             draggable
             onDragEnd={(e) => {
               setDestination(e.nativeEvent.coordinate);
             }}
           />
+          <MapViewDirections
+            origin={location}
+            destination={destination}
+          ></MapViewDirections>
+          <Polyline
+            coordinates={[destination, location]}
+            strokeWidth={5}
+          ></Polyline>
         </MapView>
       )}
     </View>
+  ) : (
+    <Text>Карта на данном устройстве не поддерживается</Text>
   );
 };
 
