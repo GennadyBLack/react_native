@@ -83,10 +83,7 @@ const ModalSheet = ({ visible, children, toggle, startAt }) => {
 
   const ExampleWithHoc = gestureHandlerRootHOC(({ children }) => (
     <View style={{ flex: 1 }}>
-      <TouchableWithoutFeedback
-        onPress={runOnJS(toggle)}
-        nativeID={"touchable-HATACHOUBLE"}
-      >
+      <TouchableWithoutFeedback onPress={runOnJS(toggle)} nativeID={"touchable-HATACHOUBLE"}>
         <View style={styles.backdrop}></View>
       </TouchableWithoutFeedback>
       <GestureDetector gesture={gesture}>
