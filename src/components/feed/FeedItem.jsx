@@ -26,15 +26,15 @@ const FeedItem = ({ feed, navigation }) => {
         <View style={styles.header_info}>
           <View style={styles.author_img}></View>
           <View style={{ marginLeft: 10 }}>
-            <View style={styles.author_name}>Aydar</View>
-            <View style={styles.feed_created_at}>12.02.2022</View>
+            <View style={styles.author_name}><Text>Aydar</Text></View>
+            <View style={styles.feed_created_at}><Text>12.02.2022</Text></View>
           </View>
         </View>
-        <View style={styles.header_menu}>:::</View>
+        <View style={styles.header_menu}><Text>:::</Text></View>
       </View>
       {/* header end */}
       {/* title */}
-      <View style={styles.feed_title}>{feed?.title}</View>
+      <View style={styles.feed_title}><Text>{feed?.title}</Text></View>
       {/* title */}
       {/* image */}
       <View style={styles.feed_image}>
