@@ -58,22 +58,24 @@ function FeedMain({ navigation }) {
           {/*    }*/}
           {/*  }}*/}
           {/*></Button>*/}
-          {feed?.feeds && feed?.feeds?.length && (
-            <FlatList
+          <FlatList
               data={feed?.feeds}
               renderItem={renderItem}
               keyExtractor={(item) => item.id}
-            />
-          )}
-          {/*<Button*/}
-          {/*  icon="camera"*/}
-          {/*  mode="contained"*/}
-          {/*  onPress={() => {*/}
-          {/*    navigation.navigate("feed_create");*/}
-          {/*  }}*/}
-          {/*>*/}
-          {/*  Create Post*/}
-          {/*</Button>*/}
+              nativeID={`FlatList`}
+              style={{zIndex: 10}}
+              contentContainerStyle={{flex:1, overflow:'visible'}}
+          />
+          <TouchableOpacity
+            icon="camera"
+            mode="contained"
+            onPress={() => {
+              navigation.navigate("feed_create");
+            }}
+            style={{width:'100%', height: 50, backgroundColor:'purple', justifyContent:'center', alignItems:'center',zIndex: 1}}
+          >
+            <Text>Create Post</Text>
+          </TouchableOpacity>
         </View>
       )}
     </View>
