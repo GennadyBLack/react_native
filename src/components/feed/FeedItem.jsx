@@ -1,13 +1,13 @@
 import React, { useState } from "react";
-import {View, Text, StyleSheet, Dimensions, Image} from "react-native";
+import { View, Text, StyleSheet, Dimensions, Image } from "react-native";
 import Animated, {
   useAnimatedGestureHandler,
   useAnimatedStyle,
   useSharedValue,
-  withTiming
+  withTiming,
 } from "react-native-reanimated";
-import {PinchGestureHandler} from "react-native-gesture-handler";
-import {apiUrl} from "../../api";
+import { PinchGestureHandler } from "react-native-gesture-handler";
+import { apiUrl } from "../../api";
 import FeedFooterMenu from "./feedComponents/FeedFooterMenu";
 
 const AnimateImage = Animated.createAnimatedComponent(Image);
@@ -41,15 +41,23 @@ const FeedItem = ({ feed, navigation }) => {
         <View style={styles.header_info}>
           <View style={styles.author_img}></View>
           <View style={{ marginLeft: 10 }}>
-            <View style={styles.author_name}><Text>Aydar</Text></View>
-            <View style={styles.feed_created_at}><Text>12.02.2022</Text></View>
+            <View style={styles.author_name}>
+              <Text>Aydar</Text>
+            </View>
+            <View style={styles.feed_created_at}>
+              <Text>12.02.2022</Text>
+            </View>
           </View>
         </View>
-        <View style={styles.header_menu}><Text>:::</Text></View>
+        <View style={styles.header_menu}>
+          <Text>:::</Text>
+        </View>
       </View>
       {/* header end */}
       {/* title */}
-      <View style={styles.feed_title}><Text>{feed?.title}</Text></View>
+      <View style={styles.feed_title}>
+        <Text>{feed?.title}</Text>
+      </View>
       {/* title */}
       {/* image */}
 
@@ -60,17 +68,17 @@ const FeedItem = ({ feed, navigation }) => {
 
       {/*</View>*/}
       <PinchGestureHandler onGestureEvent={pinchHandler}>
-        <Animated.View style={{flex:1, zIndex: 1000}}>
+        <Animated.View style={{ flex: 1, zIndex: 1000 }}>
           <AnimateImage
-              style={[styles.image, rCover]}
-              source={{
-                uri: `${apiUrl}/files/${feed?.path || "placeholder.png"}`,
-              }}
+            style={[styles.image, rCover]}
+            source={{
+              uri: `${apiUrl}/files/${feed?.path || "placeholder.png"}`,
+            }}
           />
         </Animated.View>
       </PinchGestureHandler>
 
-      <FeedFooterMenu id={feed?.id} navigation={navigation}/>
+      <FeedFooterMenu id={feed?.id} navigation={navigation} />
     </Animated.View>
   ) : (
     <Text>no data</Text>
@@ -91,6 +99,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     height: SIZE * 1.3,
     marginBottom: 10,
+    backgroundColor: "white",
   },
   header_info: {
     alignItems: "center",
@@ -101,7 +110,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     flexDirection: "row",
     height: 70,
-    zIndex: 1
+    zIndex: 1,
   },
   author_img: {
     margin: 7,
