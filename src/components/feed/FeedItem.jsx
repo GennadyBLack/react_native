@@ -1,26 +1,46 @@
 import React, { useState } from "react";
-import { View, Pressable, Text, StyleSheet } from "react-native";
-import Animated from "react-native-reanimated";
+import {View, Text, StyleSheet, Dimensions, Image} from "react-native";
+import Animated, {
+  useAnimatedGestureHandler,
+  useAnimatedStyle,
+  useSharedValue,
+  withTiming
+} from "react-native-reanimated";
+import {PinchGestureHandler} from "react-native-gesture-handler";
+import {apiUrl} from "../../api";
+import FeedFooterMenu from "./feedComponents/FeedFooterMenu";
+
+const AnimateImage = Animated.createAnimatedComponent(Image);
+const { height, width } = Dimensions.get("window");
+const SIZE = width;
 
 const FeedItem = ({ feed, navigation }) => {
-  const feed_footer_menu = () => {
-    const menu = [
-      { title: "Like", onPress: () => {}, icon: "" },
-      { title: "Comments", onPress: () => {}, icon: "" },
-      { title: "Share", onPress: () => {}, icon: "" },
-    ];
-    return menu.map((item) => {
-      return (
-        <Pressable onPress={item.onPress}>
-          <View>
-            <Text>{item.title}</Text>
-          </View>
-        </Pressable>
-      );
-    });
-  };
+  const scale = useSharedValue(1);
+  const zIndex = useSharedValue(10);
+  const cardHeight = useSharedValue(height / 1.5);
+  const pinchHandler = useAnimatedGestureHandler({
+    onActive: (event) => {
+      scale.value = event.scale;
+      zIndex.value = 10000
+      cardHeight.value = height * event.scale;
+    },
+    onEnd: (event) => {
+      scale.value = withTiming(1);
+      zIndex.value = 10
+      cardHeight.value = height / 1.5;
+    },
+  });
+
+  const rCover = useAnimatedStyle(() => {
+    return {
+      transform: [{ scale: scale.value }],
+    };
+  });
+
+
+
   return feed ? (
-    <Animated.View style={styles.feed_wrapper}>
+    <Animated.View style={styles.feed_wrapper} nativeID={'FEED-WRAPPER'}>
       {/* header */}
       <View style={styles.feed_header}>
         <View style={styles.header_info}>
@@ -37,12 +57,24 @@ const FeedItem = ({ feed, navigation }) => {
       <View style={styles.feed_title}><Text>{feed?.title}</Text></View>
       {/* title */}
       {/* image */}
-      <View style={styles.feed_image}>
-        {/* image */}
-        {/* footer */}
-      </View>
-      <View style={styles.feed_footer}>{feed_footer_menu()}</View>
-      {/* footer */}
+
+      {/*<View style={styles.feed_image}>*/}
+      {/*  /!* image *!/*/}
+      {/*  /!* footer *!/*/}
+      {/*  */}
+      {/*</View>*/}
+      <PinchGestureHandler onGestureEvent={pinchHandler}>
+        <Animated.View style={{width: SIZE, height: SIZE, zIndex: 10}}>
+          <AnimateImage
+              style={[styles.image, rCover]}
+              source={{
+                uri: `${apiUrl}/files/${feed?.path || "placeholder.png"}`,
+              }}
+              resizeMode="cover"
+          />
+        </Animated.View>
+      </PinchGestureHandler>
+      <FeedFooterMenu style={{zIndex: 1}}/>
     </Animated.View>
   ) : (
     <Text>no data</Text>
@@ -60,7 +92,6 @@ const styles = StyleSheet.create({
     shadowRadius: 40,
     elevation: 10,
     borderRadius: 10,
-    height: 350,
     marginBottom: 10,
   },
   header_info: {
@@ -72,6 +103,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     flexDirection: "row",
     height: 70,
+    zIndex: 1
   },
   author_img: {
     margin: 7,
@@ -102,8 +134,11 @@ const styles = StyleSheet.create({
     backgroundColor: "grey",
     height: 200,
   },
-  feed_footer: {
-    flexDirection: "row",
-    justifyContent: "space-between",
+
+  image: {
+    // ...StyleSheet.absoluteFillObject,
+    width: SIZE,
+    height: SIZE,
+    resizeMode: "cover",
   },
 });
