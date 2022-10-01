@@ -33,6 +33,7 @@ export default function FeedCreate({ navigation }) {
         value={form?.desc}
         onChangeText={(text) => setText(text, "desc")}
         mode="outlined"
+        multiline
       />
       <Upload />
       <Button title="Create Feed" onPress={() => create()}></Button>

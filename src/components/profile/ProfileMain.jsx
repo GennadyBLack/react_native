@@ -79,6 +79,7 @@ function ProfileMain({ route, navigation }) {
             />
             <Form.Input
               name="description"
+              multiline
               rules={{
                 required: {
                   value: true,

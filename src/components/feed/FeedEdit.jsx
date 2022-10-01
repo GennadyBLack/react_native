@@ -73,6 +73,7 @@ function FeedEdit({ route, navigation }) {
           <Form.Input
             style={{ marginTop: 20 }}
             name="desc"
+            multiline
             rules={{
               required: {
                 value: true,

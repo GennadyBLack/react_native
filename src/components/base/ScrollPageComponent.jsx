@@ -1,11 +1,5 @@
 import React, { useEffect } from "react";
-import {
-  Pressable,
-  Text,
-  ScrollView,
-  SafeAreaView,
-  StyleSheet,
-} from "react-native";
+import { Pressable, Text, View, SafeAreaView, StyleSheet } from "react-native";
 import { observer } from "mobx-react-lite";
 import useStore from "../../hooks/useStore";
 import Animated, {
@@ -17,6 +11,7 @@ import Animated, {
 } from "react-native-reanimated";
 
 const ScrollPageComponent = ({
+  header_menu,
   data,
   children,
   header_image,
@@ -42,9 +37,20 @@ const ScrollPageComponent = ({
     <SafeAreaView>
       <Animated.View style={[rHeaderStyle, styles.header]}>
         {header_image ? header_image : <Text>Hi</Text>}
+        <View
+          style={{
+            // backgroundColor: "red",
+            width: "100%",
+            height: 20,
+            position: "absolute",
+            bottom: 0,
+          }}
+        >
+          {header_menu ? header_menu : <Text></Text>}
+        </View>
       </Animated.View>
       <Animated.ScrollView
-        style={data?.wrapper_style ?? {}}
+        style={[data?.wrapper_style ?? {}, styles.content]}
         scrollEventThrottle={16}
         onScroll={scrollHandler}
       >
@@ -60,6 +66,13 @@ const styles = StyleSheet.create({
   header: {
     justifyContent: "center",
     alignItems: "center",
+    marginBottom: -10,
+  },
+  content: {
+    backgroundColor: "#eeeeee",
+    borderTopLeftRadius: 20,
+    borderTopRightRadius: 20,
+    padding: 20,
   },
 });
 export default observer(ScrollPageComponent);

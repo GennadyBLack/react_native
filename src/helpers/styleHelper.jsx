@@ -53,6 +53,7 @@ const mainStyles = {
   cGreen: {
     color: "#66bfbf",
   },
+  title: { fontSize: 30 },
 };
 
 const s = StyleSheet.create(mainStyles);
