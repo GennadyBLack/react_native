@@ -3,6 +3,7 @@ import { View, Text, Button, Pressable, Image } from "react-native";
 import { observer } from "mobx-react-lite";
 import useStore from "../../hooks/useStore";
 import { apiUrl } from "../../api";
+import { AntDesign } from "@expo/vector-icons";
 
 export default observer(FeedCurrent);
 import s from "../../helpers/styleHelper";
@@ -33,6 +34,16 @@ function FeedCurrent({ route, navigation }) {
 
   return (
     <ScrollPageComponent
+      header_menu={
+        <View style={{ flexDirection: "row" }}>
+          <AntDesign name="setting" size={24} color="black" />
+          <AntDesign name="delete" size={24} color="black" />
+          <AntDesign name="hearto" size={24} color="black" />
+          <AntDesign name="heart" size={24} color="black" />
+          <AntDesign name="message1" size={24} color="black" />
+          <AntDesign name="staro" size={24} color="black" />
+        </View>
+      }
       header_image={
         <Image
           style={{ height: "100%", width: "100%" }}

@@ -43,7 +43,7 @@ const ScrollPageComponent = ({
             width: "100%",
             height: 20,
             position: "absolute",
-            bottom: 0,
+            bottom: 20,
           }}
         >
           {header_menu ? header_menu : <Text></Text>}

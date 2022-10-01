@@ -6,6 +6,7 @@ import Animated, {
   useSharedValue,
   withTiming,
 } from "react-native-reanimated";
+import { Entypo } from "@expo/vector-icons";
 import { PinchGestureHandler } from "react-native-gesture-handler";
 import { apiUrl } from "../../api";
 import FeedFooterMenu from "./feedComponents/FeedFooterMenu";
@@ -50,7 +51,7 @@ const FeedItem = ({ feed, navigation }) => {
           </View>
         </View>
         <View style={styles.header_menu}>
-          <Text>:::</Text>
+          <Entypo name="dots-three-vertical" size={18} color="black" />
         </View>
       </View>
       {/* header end */}

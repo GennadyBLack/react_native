@@ -1,22 +1,28 @@
 import { Pressable, Text, View, StyleSheet, Share } from "react-native";
 import React from "react";
+import { AntDesign } from "@expo/vector-icons";
+import { Entypo } from "@expo/vector-icons";
 
 const FeedFooterMenu = ({ id, navigation }) => {
   const menu = [
-    { title: "Like", onPress: () => {}, icon: "" },
+    {
+      title: "Like",
+      onPress: () => {},
+      icon: <AntDesign name="hearto" size={24} color="black" />,
+    },
     {
       title: "Comments",
       onPress: () => {
         navigation.navigate("feed_current", { id });
       },
-      icon: "",
+      icon: <AntDesign name="message1" size={24} color="black" />,
     },
     {
       title: "Share",
       onPress: () => {
         onShare();
       },
-      icon: "",
+      icon: <Entypo name="paper-plane" size={24} color="black" />,
     },
   ];
   const onShare = async () => {
@@ -44,10 +50,12 @@ const FeedFooterMenu = ({ id, navigation }) => {
   return (
     <View style={styles.feed_footer} nativeID={"FEED-FOOTER"}>
       {menu.map((item) => (
-        <Pressable onPress={item.onPress} key={item.title}>
-          <View>
-            <Text>{item.title}</Text>
-          </View>
+        <Pressable
+          onPress={item.onPress}
+          key={item.title}
+          style={{ marginRight: 10 }}
+        >
+          {item.icon}
         </Pressable>
       ))}
     </View>
@@ -56,8 +64,9 @@ const FeedFooterMenu = ({ id, navigation }) => {
 
 const styles = StyleSheet.create({
   feed_footer: {
+    padding: 10,
     flexDirection: "row",
-    justifyContent: "space-between",
+    justifyContent: "flex-end",
     width: "100%",
   },
 });

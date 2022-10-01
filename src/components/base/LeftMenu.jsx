@@ -1,13 +1,12 @@
 import React, { useCallback, useEffect } from "react";
 import { observer } from "mobx-react-lite";
+import { Entypo } from "@expo/vector-icons";
 import {
   View,
   Text,
   Dimensions,
   StyleSheet,
-  Button,
   TouchableHighlight,
-  StatusBar,
 } from "react-native";
 import useStore from "../../hooks/useStore";
 import { useNavigation } from "@react-navigation/native";
@@ -17,11 +16,8 @@ import { AntDesign } from "@expo/vector-icons";
 import ProfileHeader from "../profile/ProfileHeader";
 
 import Animated, {
-  useAnimatedGestureHandler,
   useAnimatedStyle,
-  useDerivedValue,
   useSharedValue,
-  withSpring,
   interpolate,
   Extrapolate,
 } from "react-native-reanimated";
@@ -36,7 +32,6 @@ const LeftMenu = () => {
 
   useEffect(() => {}, []);
   const active = useSharedValue(false);
-  const translateX = useSharedValue(-SCREEN_WIDTH / deleteVar - 1);
 
   const rStyle = useAnimatedStyle(() => {
     const translateX = interpolate(
@@ -84,7 +79,7 @@ const LeftMenu = () => {
           >
             <Animated.View>
               {!active.value && (
-                <Ionicons name="menu" size={40} color="black" />
+                <Entypo name="dots-three-vertical" size={24} color="black" />
               )}
             </Animated.View>
           </TouchableHighlight>
