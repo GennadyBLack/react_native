@@ -60,7 +60,7 @@ const FeedItem = ({ feed, navigation }) => {
 
       {/*</View>*/}
       <PinchGestureHandler onGestureEvent={pinchHandler}>
-        <Animated.View style={{flex:1, zIndex: 10}}>
+        <Animated.View style={{flex:1, zIndex: 1000}}>
           <AnimateImage
               style={[styles.image, rCover]}
               source={{
@@ -70,7 +70,7 @@ const FeedItem = ({ feed, navigation }) => {
         </Animated.View>
       </PinchGestureHandler>
 
-      <FeedFooterMenu style={{zIndex: 1, flex:1}} id={feed?.id} navigation={navigation}/>
+      <FeedFooterMenu id={feed?.id} navigation={navigation}/>
     </Animated.View>
   ) : (
     <Text>no data</Text>
