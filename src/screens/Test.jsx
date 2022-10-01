@@ -29,22 +29,18 @@ function Test({ navigation }) {
     "lorem aposum bro",
   ];
   return (
-    <View>
-      <ScrollPageComponent>
-        {dammy.map((item, idx) => {
-          return (
-            <Text
-              key={idx}
-              style={{ padding: 40, borderColor: "black", borderWidth: 2 }}
-            >
-              {item}
-            </Text>
-          );
-        })}
-      </ScrollPageComponent>
-      {/* <Map></Map> */}
-      {/* <CollapsibleHeader /> */}
-    </View>
+    <ScrollPageComponent>
+      {dammy.map((item, idx) => {
+        return (
+          <Text
+            key={idx}
+            style={{ padding: 40, borderColor: "black", borderWidth: 2 }}
+          >
+            {item}
+          </Text>
+        );
+      })}
+    </ScrollPageComponent>
   );
 }
 export default observer(Test);

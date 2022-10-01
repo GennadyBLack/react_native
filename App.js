@@ -1,5 +1,5 @@
-import { StyleSheet, Text } from "react-native";
-import { View } from "react-native";
+import { StyleSheet, Text, View, StatusBar } from "react-native";
+import {} from "react-native";
 import React, { useCallback, useEffect, useState } from "react";
 
 // import AppLoading from "expo-app-loading";
@@ -11,7 +11,6 @@ const rootStore = new store();
 import ErrorPopupList from "./src/components/error/ErrorPopupList";
 import "react-native-gesture-handler";
 import * as SplashScreen from "expo-splash-screen";
-
 
 SplashScreen.preventAutoHideAsync();
 function App() {
@@ -65,6 +64,7 @@ function App() {
 
 const styles = StyleSheet.create({
   app_wrapper: {
+    marginTop: StatusBar.currentHeight,
     width: "100%",
     height: "100%",
     overflow: "hidden",

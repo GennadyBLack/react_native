@@ -43,40 +43,34 @@ function FeedMain({ navigation }) {
   );
   return (
     <View style={styles.wrap}>
+      <TouchableOpacity
+        icon="camera"
+        mode="contained"
+        onPress={() => {
+          navigation.navigate("feed_create");
+        }}
+        style={{
+          width: "100%",
+          height: 50,
+          backgroundColor: "purple",
+          justifyContent: "center",
+          alignItems: "center",
+          zIndex: 1,
+        }}
+      >
+        <Text>Create Post</Text>
+      </TouchableOpacity>
       {feed?.loading ? (
-        <Text></Text>
+        <Text>Загрузка</Text>
       ) : (
-        <View style={{ flex: 1 }}>
-          {/*<Text>Feed Main </Text>*/}
-          {/*<Button*/}
-          {/*  title="Create"*/}
-          {/*  onPress={() => {*/}
-          {/*    try {*/}
-          {/*      navigation?.navigate("feed_create");*/}
-          {/*    } catch (error) {*/}
-          {/*      console.log(error);*/}
-          {/*    }*/}
-          {/*  }}*/}
-          {/*></Button>*/}
-          <FlatList
-              data={feed?.feeds}
-              renderItem={renderItem}
-              keyExtractor={(item) => item.id}
-              nativeID={`FlatList`}
-              style={{zIndex: 10}}
-              contentContainerStyle={{flex:1, overflow:'visible'}}
-          />
-          <TouchableOpacity
-            icon="camera"
-            mode="contained"
-            onPress={() => {
-              navigation.navigate("feed_create");
-            }}
-            style={{width:'100%', height: 50, backgroundColor:'purple', justifyContent:'center', alignItems:'center',zIndex: 1}}
-          >
-            <Text>Create Post</Text>
-          </TouchableOpacity>
-        </View>
+        <FlatList
+          data={feed?.feeds}
+          renderItem={renderItem}
+          keyExtractor={(item) => item.id}
+          nativeID={`FlatList`}
+          style={{ zIndex: 10 }}
+          contentContainerStyle={{ flex: 1, overflow: "visible" }}
+        />
       )}
     </View>
   );

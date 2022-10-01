@@ -5,6 +5,7 @@ import useStore from "../../hooks/useStore";
 
 export default observer(FeedCurrent);
 import s from "../../helpers/styleHelper";
+import ScrollPageComponent from "../base/ScrollPageComponent";
 
 function FeedCurrent({ route, navigation }) {
   const [feed] = useStore("feed");
@@ -13,7 +14,7 @@ function FeedCurrent({ route, navigation }) {
   }, []);
 
   return (
-    <View>
+    <ScrollPageComponent>
       <Text>{feed?.currentFeed?.title ?? ""}</Text>
       <Text>{feed?.currentFeed?.desc ?? ""}</Text>
       <Pressable
@@ -24,6 +25,6 @@ function FeedCurrent({ route, navigation }) {
       >
         <Text>Редактировать</Text>
       </Pressable>
-    </View>
+    </ScrollPageComponent>
   );
 }

@@ -94,7 +94,7 @@ function Routes() {
         AsyncStorage.setItem(PERSISTENCE_KEY, JSON.stringify(state))
       }
     >
-      <ModalWrapper>
+      <ModalWrapper style={styles.wrap}>
         {auth?.isAuth && (
           <Navigator
             initialRouteName="Main"

@@ -1,9 +1,7 @@
 import React, { useEffect } from "react";
 import {
-  View,
   Pressable,
   Text,
-  Dimensions,
   ScrollView,
   SafeAreaView,
   StyleSheet,
@@ -17,11 +15,14 @@ import Animated, {
   interpolate,
 } from "react-native-reanimated";
 
-const HEADER_MAX = 200,
-  HEADER_MIN = 10;
-const ScrollPageComponent = ({ data, children }) => {
+const ScrollPageComponent = ({
+  data,
+  children,
+  header_image,
+  HEADER_MAX = 250,
+  HEADER_MIN = 0,
+}) => {
   const translateY = useSharedValue(0);
-
   const rHeaderStyle = useAnimatedStyle(() => {
     const height = interpolate(
       translateY.value,
@@ -38,7 +39,7 @@ const ScrollPageComponent = ({ data, children }) => {
   return (
     <SafeAreaView>
       <Animated.View style={[rHeaderStyle, styles.header]}>
-        <Text>Hi</Text>
+        {header_image ? header_image : <Text>Hi</Text>}
       </Animated.View>
       <Animated.ScrollView
         style={data?.wrapper_style ?? {}}
@@ -57,7 +58,6 @@ const styles = StyleSheet.create({
   header: {
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "red",
   },
 });
 export default observer(ScrollPageComponent);
