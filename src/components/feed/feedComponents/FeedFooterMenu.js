@@ -1,12 +1,33 @@
-import {Pressable, Text, View, StyleSheet} from "react-native";
+import {Pressable, Text, View, StyleSheet, Share} from "react-native";
 import React from "react";
 
-const FeedFooterMenu = () => {
+const FeedFooterMenu = ({id, navigation}) => {
     const menu = [
         { title: "Like", onPress: () => {}, icon: "" },
-        { title: "Comments", onPress: () => {}, icon: "" },
-        { title: "Share", onPress: () => {}, icon: "" },
+        { title: "Comments", onPress: () => {navigation.navigate("feed_current", { id })}, icon: "" },
+        { title: "Share", onPress: () => {onShare}, icon: "" },
     ];
+    const onShare = async () => {
+        try {
+            const result = await Share.share({
+                message:
+                    "React Native | A framework for building native apps using React",
+                url: "google.com",
+                title: "see on my nutc",
+            });
+            if (result.action === Share.sharedAction) {
+                if (result.activityType) {
+                    // shared with activity type of result.activityType
+                } else {
+                    // shared
+                }
+            } else if (result.action === Share.dismissedAction) {
+                // dismissed
+            }
+        } catch (error) {
+            alert(error.message);
+        }
+    };
 
     return ( <View style={styles.feed_footer}>
         {menu.map((item) => (
@@ -19,7 +40,6 @@ const FeedFooterMenu = () => {
     </View>)
 
 };
-
 
 const styles = StyleSheet.create({
     feed_footer: {

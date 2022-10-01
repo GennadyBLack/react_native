@@ -1,59 +1,42 @@
 import React, { useState } from "react";
-import { View, Pressable, Text, StyleSheet, Share, Image } from "react-native";
-import Animated from "react-native-reanimated";
-import { apiUrl } from "../../api";
+import {View, Text, StyleSheet, Dimensions, Image, Pressable} from "react-native";
+import Animated, {
+  useAnimatedGestureHandler,
+  useAnimatedStyle,
+  useSharedValue,
+  withTiming
+} from "react-native-reanimated";
+import {PinchGestureHandler} from "react-native-gesture-handler";
+import {apiUrl} from "../../api";
+import FeedFooterMenu from "./feedComponents/FeedFooterMenu";
+
+const AnimateImage = Animated.createAnimatedComponent(Image);
+const { height, width } = Dimensions.get("window");
+const SIZE = width;
 
 const FeedItem = ({ feed, navigation }) => {
-  const onShare = async () => {
-    try {
-      const result = await Share.share({
-        message:
-          "React Native | A framework for building native apps using React",
-        url: "google.com",
-        title: "see on my nutc",
-      });
-      if (result.action === Share.sharedAction) {
-        if (result.activityType) {
-          // shared with activity type of result.activityType
-        } else {
-          // shared
-        }
-      } else if (result.action === Share.dismissedAction) {
-        // dismissed
-      }
-    } catch (error) {
-      alert(error.message);
-    }
-  };
+  const scale = useSharedValue(1);
+  const zIndex = useSharedValue(10);
+  const cardHeight = useSharedValue(height / 1.5);
+  const pinchHandler = useAnimatedGestureHandler({
+    onActive: (event) => {
+      scale.value = event.scale;
+      zIndex.value = 10000
+      cardHeight.value = height * event.scale;
+    },
+    onEnd: (event) => {
+      scale.value = withTiming(1);
+      zIndex.value = 10
+      cardHeight.value = height / 1.5;
+    },
+  });
 
-  const feed_footer_menu = () => {
-    const menu = [
-      { title: "Like", onPress: () => {}, icon: "" },
-      {
-        title: "Comments",
-        onPress: () => {
-          navigation.navigate("feed_current", { id: feed?.id });
-        },
-        icon: "",
-      },
-      {
-        title: "Share",
-        onPress: () => {
-          onShare();
-        },
-        icon: "",
-      },
-    ];
-    return menu.map((item) => {
-      return (
-        <Pressable onPress={item.onPress} key={item.title}>
-          <View>
-            <Text>{item.title}</Text>
-          </View>
-        </Pressable>
-      );
-    });
-  };
+  const rCover = useAnimatedStyle(() => {
+    return {
+      transform: [{ scale: scale.value }],
+    };
+  });
+
   return feed ? (
     <Animated.View style={styles.feed_wrapper}>
       {/* header */}
@@ -72,22 +55,8 @@ const FeedItem = ({ feed, navigation }) => {
       <View style={styles.feed_title}><Text>{feed?.title}</Text></View>
       {/* title */}
       {/* image */}
-      <Pressable
-        style={styles.feed_image}
-        onPress={() => {
-          navigation.navigate("feed_current", { id: feed?.id });
-        }}
-      >
-        <Image
-          style={{ flex: 1 }}
-          source={{ uri: `${apiUrl}/files/${feed?.path || "placeholder.png"}` }}
-        ></Image>
-      </Pressable>
-      {/* image */}
-      {/* footer */}
-      <View style={styles.feed_footer}>{feed_footer_menu()}</View>
-      {/* footer */}
 
+      {/* image */}
       {/*<View style={styles.feed_image}>*/}
       {/*  /!* image *!/*/}
       {/*  /!* footer *!/*/}
@@ -104,7 +73,7 @@ const FeedItem = ({ feed, navigation }) => {
           />
         </Animated.View>
       </PinchGestureHandler>
-      <FeedFooterMenu style={{zIndex: 1}}/>
+      <FeedFooterMenu style={{zIndex: 1}} id={feed?.id} navigation={navigation}/>
     </Animated.View>
   ) : (
     <Text>no data</Text>
@@ -123,8 +92,7 @@ const styles = StyleSheet.create({
     shadowRadius: 40,
     elevation: 10,
     borderRadius: 10,
-    height: 350,
-    zIndex: 999,
+    height: SIZE,
     marginBottom: 10,
   },
   header_info: {
