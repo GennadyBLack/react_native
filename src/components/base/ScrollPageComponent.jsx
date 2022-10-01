@@ -13,6 +13,7 @@ import Animated, {
   useAnimatedScrollHandler,
   useAnimatedStyle,
   interpolate,
+  Extrapolate,
 } from "react-native-reanimated";
 
 const ScrollPageComponent = ({
@@ -27,7 +28,8 @@ const ScrollPageComponent = ({
     const height = interpolate(
       translateY.value,
       [0, HEADER_MAX - HEADER_MIN],
-      [HEADER_MAX, HEADER_MIN]
+      [HEADER_MAX, HEADER_MIN],
+      Extrapolate.CLAMP
     );
     return { height: height };
   });
