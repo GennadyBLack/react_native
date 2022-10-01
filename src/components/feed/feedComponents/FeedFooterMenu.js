@@ -29,7 +29,7 @@ const FeedFooterMenu = ({id, navigation}) => {
         }
     };
 
-    return ( <View style={styles.feed_footer}>
+    return ( <View style={styles.feed_footer} nativeID={'FEED-FOOTER'}>
         {menu.map((item) => (
             <Pressable onPress={item.onPress} key={item.title}>
                 <View>
@@ -45,6 +45,7 @@ const styles = StyleSheet.create({
     feed_footer: {
         flexDirection: "row",
         justifyContent: "space-between",
+        width: '100%'
     },
 })
 

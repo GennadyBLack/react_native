@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import {View, Text, StyleSheet, Dimensions, Image, Pressable} from "react-native";
+import {View, Text, StyleSheet, Dimensions, Image} from "react-native";
 import Animated, {
   useAnimatedGestureHandler,
   useAnimatedStyle,
@@ -16,17 +16,14 @@ const SIZE = width;
 
 const FeedItem = ({ feed, navigation }) => {
   const scale = useSharedValue(1);
-  const zIndex = useSharedValue(10);
   const cardHeight = useSharedValue(height / 1.5);
   const pinchHandler = useAnimatedGestureHandler({
     onActive: (event) => {
       scale.value = event.scale;
-      zIndex.value = 10000
       cardHeight.value = height * event.scale;
     },
     onEnd: (event) => {
       scale.value = withTiming(1);
-      zIndex.value = 10
       cardHeight.value = height / 1.5;
     },
   });
@@ -60,20 +57,20 @@ const FeedItem = ({ feed, navigation }) => {
       {/*<View style={styles.feed_image}>*/}
       {/*  /!* image *!/*/}
       {/*  /!* footer *!/*/}
-      {/*  */}
+
       {/*</View>*/}
       <PinchGestureHandler onGestureEvent={pinchHandler}>
-        <Animated.View style={{width: SIZE, height: SIZE, zIndex: 10}}>
+        <Animated.View style={{flex:1, zIndex: 10}}>
           <AnimateImage
               style={[styles.image, rCover]}
               source={{
                 uri: `${apiUrl}/files/${feed?.path || "placeholder.png"}`,
               }}
-              resizeMode="cover"
           />
         </Animated.View>
       </PinchGestureHandler>
-      <FeedFooterMenu style={{zIndex: 1}} id={feed?.id} navigation={navigation}/>
+
+      <FeedFooterMenu style={{zIndex: 1, flex:1}} id={feed?.id} navigation={navigation}/>
     </Animated.View>
   ) : (
     <Text>no data</Text>
@@ -92,7 +89,7 @@ const styles = StyleSheet.create({
     shadowRadius: 40,
     elevation: 10,
     borderRadius: 10,
-    height: SIZE,
+    height: SIZE * 1.3,
     marginBottom: 10,
   },
   header_info: {
@@ -138,8 +135,8 @@ const styles = StyleSheet.create({
 
   image: {
     // ...StyleSheet.absoluteFillObject,
-    width: SIZE,
-    height: SIZE,
+    width: "100%",
+    height: "100%",
     resizeMode: "cover",
   },
 });

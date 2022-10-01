@@ -46,7 +46,7 @@ function FeedMain({ navigation }) {
       {feed?.loading ? (
         <Text></Text>
       ) : (
-        <View style={{ flex: 1, height: '100%' }}>
+        <View style={{ flex: 1 }}>
           {/*<Text>Feed Main </Text>*/}
           {/*<Button*/}
           {/*  title="Create"*/}
@@ -86,6 +86,5 @@ const styles = StyleSheet.create({
     height: "100%",
     width: "100%",
     flex: 1,
-    zIndex: 100000,
   },
 });

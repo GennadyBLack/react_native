@@ -14,11 +14,11 @@ import Animated, {
   useSharedValue,
   useAnimatedScrollHandler,
   useAnimatedStyle,
-  interpolate,
+  interpolate, Extrapolate,
 } from "react-native-reanimated";
 
 const HEADER_MAX = 200,
-  HEADER_MIN = 10;
+  HEADER_MIN = 30;
 const ScrollPageComponent = ({ data, children }) => {
   const translateY = useSharedValue(0);
 
@@ -26,7 +26,8 @@ const ScrollPageComponent = ({ data, children }) => {
     const height = interpolate(
       translateY.value,
       [0, HEADER_MAX - HEADER_MIN],
-      [HEADER_MAX, HEADER_MIN]
+      [HEADER_MAX, HEADER_MIN],
+        Extrapolate.CLAMP
     );
     return { height: height };
   });
