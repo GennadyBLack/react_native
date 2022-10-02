@@ -1,6 +1,5 @@
 import Login from "../screens/Login";
-import Main from "../screens/Main";
-import Profile from "../screens/Profile";
+
 import Register from "../screens/Register";
 import Feed from "../screens/Feed";
 import Test from "../screens/Test";
@@ -11,11 +10,12 @@ import FeedMain from "../components/feed/FeedMain";
 import FeedCreate from "../components/feed/FeedCreate";
 import FeedCurrent from "../components/feed/FeedCurrent";
 import Upload from "../components/validation/Upload";
+import { getIcon } from "./iconHelper";
 
 export const profileMenuList = (userMunu = []) => {
   try {
     return availableLinks
-      .filter((item) => (!(item?.required || !item?.auth)))
+      .filter((item) => !(item?.required || !item?.auth))
       .map((item) => {
         if (Array.isArray(userMunu) && userMunu.includes(item?.name)) {
           return {
@@ -40,7 +40,11 @@ export const availableLinks = [
     name: "ProfileMain",
     component: ProfileMain,
     auth: true,
-    options: { headerShown: false },
+    options: {
+      headerShown: false,
+      tabBarLabel: "",
+      tabBarIcon: ({ color, size }) => getIcon("user"),
+    },
     required: true,
     leftMenu: true,
   },
@@ -48,14 +52,22 @@ export const availableLinks = [
     name: "Test",
     component: Test,
     auth: true,
-    options: { headerShown: true },
+    options: {
+      headerShown: true,
+      tabBarLabel: "",
+      tabBarIcon: ({ color, size }) => getIcon("list"),
+    },
     required: true,
   },
   {
     name: "Feed",
     component: Feed,
     auth: true,
-    options: { headerShown: false },
+    options: {
+      headerShown: false,
+      tabBarLabel: "",
+      tabBarIcon: ({ color, size }) => getIcon("home"),
+    },
     required: true,
     leftMenu: true,
   },
@@ -107,7 +119,11 @@ export const availableLinks = [
     name: "Quiz",
     component: Quiz,
     auth: true,
-    options: { headerShown: false },
+    options: {
+      headerShown: false,
+      tabBarLabel: "",
+      tabBarIcon: ({ color, size }) => getIcon("question"),
+    },
     required: false,
     leftMenu: true,
   },

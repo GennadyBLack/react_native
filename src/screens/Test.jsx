@@ -6,6 +6,7 @@ import ModalSheet from "../components/base/ModalSheet";
 // import Map from "../components/base/Map";
 // import Testicus from "../components/base/Testicus";
 import ScrollPageComponent from "../components/base/ScrollPageComponent";
+import TabBar from "../components/base/TabBar";
 
 function Test({ navigation }) {
   const [visible, toggle] = ModalSheet.useModal();
@@ -29,18 +30,9 @@ function Test({ navigation }) {
     "lorem aposum bro",
   ];
   return (
-    <ScrollPageComponent>
-      {dammy.map((item, idx) => {
-        return (
-          <Text
-            key={idx}
-            style={{ padding: 40, borderColor: "black", borderWidth: 2 }}
-          >
-            {item}
-          </Text>
-        );
-      })}
-    </ScrollPageComponent>
+    <View style={{ backgroundColor: "red" }}>
+      <TabBar />
+    </View>
   );
 }
 export default observer(Test);
