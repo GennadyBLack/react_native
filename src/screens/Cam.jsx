@@ -28,12 +28,12 @@ export default function Cam() {
     return (
         <View style={styles.container}>
             <Camera style={styles.camera} type={type}>
-                <View style={styles.buttonContainer}>
-                    <TouchableOpacity style={styles.button} onPress={toggleCameraType}>
-                        <Text style={styles.text}>Flip Camera</Text>
-                    </TouchableOpacity>
-                </View>
             </Camera>
+            <View style={styles.buttonContainer}>
+                <TouchableOpacity style={styles.button} onPress={toggleCameraType}>
+                    <Text style={styles.text}>Flip Camera</Text>
+                </TouchableOpacity>
+            </View>
         </View>
     );
 }
@@ -44,10 +44,10 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
     camera: {
-        flex: 1,
+        width: "100%",
+        height: 550,
     },
     buttonContainer: {
-        flex: 1,
         flexDirection: 'row',
         backgroundColor: 'transparent',
         margin: 64,
