@@ -122,7 +122,7 @@ export const availableLinks = [
     options: {
       headerShown: false,
       tabBarLabel: "",
-      tabBarIcon: ({ color, size }) => getIcon("question"),
+      tabBarIcon: ({ color, size }) => getIcon("question", color, size),
     },
     required: false,
     leftMenu: true,
