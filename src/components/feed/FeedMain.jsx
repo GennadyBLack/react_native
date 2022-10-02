@@ -69,7 +69,7 @@ function FeedMain({ navigation }) {
           keyExtractor={(item) => item.id}
           nativeID={`FlatList`}
           style={{ zIndex: 10 }}
-          contentContainerStyle={{ flex: 1, overflow: "visible" }}
+          contentContainerStyle={{overflow: "visible" }}
         />
       )}
     </View>
