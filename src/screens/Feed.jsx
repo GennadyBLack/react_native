@@ -5,6 +5,7 @@ import React from "react";
 import FeedEdit from "../components/feed/FeedEdit";
 import FeedCurrent from "../components/feed/FeedCurrent";
 import ImagePickerExample from "./Upload";
+import Cam from "./Cam";
 // import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
 // const { Navigator, Screen } = createBottomTabNavigator();
@@ -42,6 +43,11 @@ export default function Feed() {
         name="upload"
         component={ImagePickerExample}
         options={{ headerShown: false }}
+      />
+      <Screen
+          name="cam"
+          component={Cam}
+          options={{ headerShown: false }}
       />
     </Navigator>
   );

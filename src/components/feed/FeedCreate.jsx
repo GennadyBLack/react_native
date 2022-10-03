@@ -3,6 +3,7 @@ import { View, Text, Button } from "react-native";
 import { TextInput } from "react-native-paper";
 import useStore from "../../hooks/useStore";
 import Upload from "../validation/Upload";
+import Cam from "../../screens/Cam";
 
 export default function FeedCreate({ navigation }) {
   let [feed] = useStore("feed");
@@ -20,7 +21,7 @@ export default function FeedCreate({ navigation }) {
   };
 
   return (
-    <View>
+    <View style={{flex:1}}>
       <Text>Feed Create </Text>
       <TextInput
         label="Title"
@@ -35,6 +36,11 @@ export default function FeedCreate({ navigation }) {
         mode="outlined"
         multiline
       />
+
+        <Button
+            title="Pick from Camera"
+            onPress={() => navigation.navigate("cam")}
+        ></Button>
       <Upload />
       <Button title="Create Feed" onPress={() => create()}></Button>
       <Button

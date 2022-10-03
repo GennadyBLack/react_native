@@ -10,6 +10,7 @@ import FeedMain from "../components/feed/FeedMain";
 import FeedCreate from "../components/feed/FeedCreate";
 import FeedCurrent from "../components/feed/FeedCurrent";
 import Upload from "../components/validation/Upload";
+import Cam from "../screens/Cam";
 import { getIcon } from "./iconHelper";
 
 export const profileMenuList = (userMunu = []) => {
@@ -58,6 +59,7 @@ export const availableLinks = [
       tabBarIcon: ({ color, size }) => getIcon("list", color, size),
     },
     required: true,
+    leftMenu: true,
   },
   {
     name: "Feed",
@@ -114,6 +116,13 @@ export const availableLinks = [
     options: { headerShown: false },
     required: false,
   },
+  {
+    name: "Cam",
+    component: Cam,
+    auth: true,
+    options: { headerShown: false },
+    required: false,
+  },
 
   {
     name: "Quiz",
@@ -161,6 +170,7 @@ export const linking = {
       // ProfileMain: "profile",
       Main: "main",
       Test: "test",
+      Cam: "cam",
       Feed: {
         path: "feed",
         screens: {
@@ -169,6 +179,7 @@ export const linking = {
           FeedCurrent: "feed_current",
           FeedEdit: "feed_edit",
           Upload: "feed/upload",
+          Cam: 'feed/cam'
         },
       },
       Quiz: {
