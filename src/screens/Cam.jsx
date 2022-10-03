@@ -1,8 +1,8 @@
-import { Camera, CameraType, getSupportedRatiosAsync } from "expo-camera";
-import { useRef, useState } from "react";
+import { Camera, CameraType } from "expo-camera";
+import {useEffect, useRef, useState} from "react";
 import {
   Button,
-  Dimensions,
+  Dimensions, Platform,
   StyleSheet,
   Text,
   TouchableOpacity,
@@ -11,20 +11,49 @@ import {
 
 const { height, width } = Dimensions.get("window");
 const screenRatio = height / width;
+const screenLandscapeRatio =  width / height;
+
 
 export default function Cam() {
   const [type, setType] = useState(CameraType.back);
   const [permission, requestPermission] = Camera.useCameraPermissions();
-  const camera = useRef(null);
+  const [camera, setCamera] = useState(null);
   const [isRatioSet, setIsRatioSet] = useState(false);
 
-  const setCameraReady = async () => {
-    if (!isRatioSet) {
-      await prepareRatio();
-    }
-  };
+  console.log(screenRatio, "screenRatio");
 
-  console.log(avaliableSizes, "avaliable");
+  useEffect(() => {
+    const func = async () => {
+      const camRatio = await camera.getSupportedRatiosAsync();
+      const camRatioDivided = camRatio.map(el => {
+        const ratioArr = el.split(':')
+        return screenRatio - ratioArr[0] / ratioArr[1]
+      })
+      const nearest = Math.min(...camRatioDivided)
+      console.log(nearest, "camRatioDivided");
+
+    }
+    if(camera) {
+        func()
+    }
+  }, [camera])
+
+  // const prepareCamera = () => {
+  //   if(Platform.OS === 'android') {
+  //
+  //   }
+  // }
+
+
+
+  // const setCameraReady = async () => {
+  //   if (!isRatioSet) {
+  //     const ratio = camera?.getR
+  //     setIsRatioSet()
+  //   }
+  // };
+
+  // console.log(avaliableSizes, "avaliable");
   if (!permission) {
     // Camera permissions are still loading
     return <View />;
@@ -53,7 +82,7 @@ export default function Cam() {
       <Camera
         style={styles.camera}
         type={type}
-        ref={(camera) => setCameraReady(camera)}
+        ref={cam => setCamera(cam)}
       ></Camera>
       <View style={styles.buttonContainer}>
         <TouchableOpacity style={styles.button} onPress={toggleCameraType}>

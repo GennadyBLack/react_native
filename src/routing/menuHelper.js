@@ -11,7 +11,7 @@ import FeedCreate from "../components/feed/FeedCreate";
 import FeedCurrent from "../components/feed/FeedCurrent";
 import Upload from "../components/validation/Upload";
 import Cam from "../screens/Cam";
-import { getIcon } from "./iconHelper";
+import {getIcon} from "../helpers/iconHelper";
 
 export const profileMenuList = (userMunu = []) => {
   try {
