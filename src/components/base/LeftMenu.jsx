@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect } from "react";
 import { observer } from "mobx-react-lite";
 import { Entypo } from "@expo/vector-icons";
+
 import {
   View,
   Text,
@@ -10,9 +11,6 @@ import {
 } from "react-native";
 import useStore from "../../hooks/useStore";
 import { useNavigation } from "@react-navigation/native";
-import { Ionicons } from "@expo/vector-icons";
-//https://icons.expo.fyi/
-import { AntDesign } from "@expo/vector-icons";
 import ProfileHeader from "../profile/ProfileHeader";
 
 import Animated, {
@@ -29,8 +27,10 @@ const LeftMenu = () => {
   const [menu] = useStore("menu");
   const [auth] = useStore("auth");
   const navigation = useNavigation();
-
-  useEffect(() => {}, []);
+  const routeState = navigation?.getRootState();
+  useEffect(() => {
+    console.log(navigation?.getRootState(), "navigation");
+  }, []);
   const active = useSharedValue(false);
 
   const rStyle = useAnimatedStyle(() => {

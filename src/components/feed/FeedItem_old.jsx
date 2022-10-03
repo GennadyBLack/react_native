@@ -52,27 +52,6 @@ export default function FeedItem_old({ feed, onDelete, navigation }) {
       height: cardHeight.value,
     };
   });
-  const menuList = [
-    {
-      permission: ["owner"],
-      title: "delete",
-      onPress: (e) => onDelete(feed.id, e),
-      // icon:
-      class: "test",
-    },
-    {
-      permission: ["owner"],
-      title: "edit",
-      onPress: () => {
-        try {
-          navigation.navigate("feed_edit", { id: feed.id });
-        } catch (error) {
-          console.log(error);
-        }
-      },
-      class: "test",
-    },
-  ];
 
   return (
     <Animated.View style={[styles.card]}>

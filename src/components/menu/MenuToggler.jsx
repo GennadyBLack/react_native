@@ -1,67 +1,76 @@
-import React, { useState } from "react";
-import { View, StyleSheet, Text } from "react-native";
-import { Button, Menu, Provider } from "react-native-paper";
+import React, { useState, useRef } from "react";
+import { View, StyleSheet, Text, Pressable } from "react-native";
+import useOnClickOutside from "../../hooks/useClickOutside";
 
 const MenuToggler = ({ items, anchor }) => {
-  const [visible, setVisible] = useState(true);
+  const [visible, setVisible] = useState(false);
   const openMenu = () => setVisible(true);
   const closeMenu = () => setVisible(false);
+  const ref = useRef();
 
   const toggleButton = () => {
     return anchor ? (
-      <Button onPress={openMenu} style={{ zIndex: 10000 }}>
-        {anchor}
-      </Button>
+      <Pressable onPress={openMenu}>{anchor}</Pressable>
     ) : (
-      <Button onPress={openMenu}>Show menu</Button>
+      <Pressable onPress={openMenu}>
+        <Text>Show menu</Text>
+      </Pressable>
     );
   };
+
+  useOnClickOutside(ref, () => closeMenu());
 
   if (!items.length) {
     return <div>no</div>;
   }
   return (
-    <Provider style={styles.index}>
-      <View
-        style={{
-          zIndex: 1000000,
-        }}
-      >
-        <Menu
-          visible={visible}
-          onDismiss={closeMenu}
-          anchor={toggleButton()}
-          style={styles.menu}
-        >
+    <View
+      ref={ref}
+      style={{
+        zIndex: 1000000,
+      }}
+    >
+      {visible ? (
+        <View style={styles.menu}>
           {items.map((item, idx) => {
             return (
               <View style={{ zIndex: 10000 }}>
                 {item?.icon ?? <Text></Text>}
-                <Menu.Item
+                <Pressable
                   key={idx}
-                  title={item.title}
                   onPress={item.onPress}
                   style={styles?.menuItem}
-                />
+                >
+                  <Text> {item?.title}</Text>
+                </Pressable>
               </View>
             );
           })}
-        </Menu>
-      </View>
-    </Provider>
+        </View>
+      ) : (
+        toggleButton()
+      )}
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
   menuItem: {
-    zIndex: 1000,
+    zIndex: 10,
+    padding: 10,
   },
   menu: {
-    zIndex: 1000000000,
+    zIndex: 10000,
     left: "30%",
+    padding: 10,
+    marginRight: 30,
+    borderRadius: 10,
+    borderColor: "#eee",
+    borderWidth: 1,
+    backgroundColor: "white",
   },
   index: {
-    zIndex: 10000,
+    zIndex: 100,
   },
 });
 

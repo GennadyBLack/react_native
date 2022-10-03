@@ -1,7 +1,7 @@
 import React from "react";
-import { TextInput, Text } from "react-native-paper";
+import { TextInput } from "react-native-paper";
 import { Controller } from "react-hook-form";
-import { StyleSheet, View } from "react-native";
+import { StyleSheet, View, Text } from "react-native";
 
 export default function Input({
   name,

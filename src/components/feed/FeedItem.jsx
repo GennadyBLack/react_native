@@ -6,6 +6,7 @@ import Animated, {
   useSharedValue,
   withTiming,
 } from "react-native-reanimated";
+import MenuToggler from "../menu/MenuToggler";
 import { Entypo } from "@expo/vector-icons";
 import { PinchGestureHandler } from "react-native-gesture-handler";
 import { apiUrl } from "../../api";
@@ -16,6 +17,25 @@ const { height, width } = Dimensions.get("window");
 const SIZE = width;
 
 const FeedItem = ({ feed, navigation }) => {
+  const menuList = [
+    {
+      permission: ["owner"],
+      title: "Delete",
+      onPress: (e) => onDelete(feed.id, e),
+    },
+    {
+      permission: ["owner"],
+      title: "Edit",
+      onPress: () => {
+        try {
+          navigation.navigate("feed_edit", { id: feed.id });
+        } catch (error) {
+          console.log(error);
+        }
+      },
+    },
+  ];
+
   const scale = useSharedValue(1);
   const cardHeight = useSharedValue(height / 1.5);
   const pinchHandler = useAnimatedGestureHandler({
@@ -51,7 +71,12 @@ const FeedItem = ({ feed, navigation }) => {
           </View>
         </View>
         <View style={styles.header_menu}>
-          <Entypo name="dots-three-vertical" size={18} color="black" />
+          <MenuToggler
+            items={menuList}
+            anchor={
+              <Entypo name="dots-three-vertical" size={18} color="black" />
+            }
+          ></MenuToggler>
         </View>
       </View>
       {/* header end */}

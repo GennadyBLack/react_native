@@ -1,28 +1,27 @@
 import { Pressable, Text, View, StyleSheet, Share } from "react-native";
 import React from "react";
-import { AntDesign } from "@expo/vector-icons";
-import { Entypo } from "@expo/vector-icons";
+import { getIcon } from "../../../helpers/iconHelper";
 
 const FeedFooterMenu = ({ id, navigation }) => {
   const menu = [
     {
       title: "Like",
       onPress: () => {},
-      icon: <AntDesign name="hearto" size={24} color="black" />,
+      icon: getIcon("hearto"),
     },
     {
       title: "Comments",
       onPress: () => {
         navigation.navigate("feed_current", { id });
       },
-      icon: <AntDesign name="message1" size={24} color="black" />,
+      icon: getIcon("message1"),
     },
     {
       title: "Share",
       onPress: () => {
         onShare();
       },
-      icon: <Entypo name="paper-plane" size={24} color="black" />,
+      icon: getIcon("forward"),
     },
   ];
   const onShare = async () => {

@@ -1,6 +1,6 @@
 import { AntDesign } from "@expo/vector-icons";
 import { Entypo } from "@expo/vector-icons";
-
+//https://icons.expo.fyi/ all icons here
 export const getIcon = (name, color = "black", size = 24) => {
   switch (name) {
     case "rightcircle":
