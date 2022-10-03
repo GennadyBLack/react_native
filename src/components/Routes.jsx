@@ -90,6 +90,7 @@ function Routes() {
       fallback={<Text>Loading...</Text>}
       style={styles.wrap}
       initialState={initialState}
+      barStyle={{ backgroundColor: "#694fad" }}
       onStateChange={(state) =>
         AsyncStorage.setItem(PERSISTENCE_KEY, JSON.stringify(state))
       }
@@ -98,14 +99,17 @@ function Routes() {
         {auth?.isAuth && (
           <Navigator
             initialRouteName="Main"
-            activeColor={constants.GREEN}
+            activeColor="#fff"
+            // activeColor={constants.GREEN}
             inactiveColor={constants.GREEN}
-            barStyle={{ backgroundColor: "#694fad" }}
+            // barStyle={{ backgroundColor: "#694fad" }}
           >
             {routes}
           </Navigator>
         )}
-        {!auth?.isAuth && <Stack.Navigator>{routes}</Stack.Navigator>}
+        {!auth?.isAuth && (
+          <Stack.Navigator activeColor="#fff">{routes}</Stack.Navigator>
+        )}
       </ModalWrapper>
     </NavigationContainer>
   );

@@ -43,7 +43,7 @@ export const availableLinks = [
     options: {
       headerShown: false,
       tabBarLabel: "",
-      tabBarIcon: ({ color, size }) => getIcon("user"),
+      tabBarIcon: ({ color, size }) => getIcon("user", color, size),
     },
     required: true,
     leftMenu: true,
@@ -55,7 +55,7 @@ export const availableLinks = [
     options: {
       headerShown: true,
       tabBarLabel: "",
-      tabBarIcon: ({ color, size }) => getIcon("list"),
+      tabBarIcon: ({ color, size }) => getIcon("list", color, size),
     },
     required: true,
   },
@@ -66,7 +66,7 @@ export const availableLinks = [
     options: {
       headerShown: false,
       tabBarLabel: "",
-      tabBarIcon: ({ color, size }) => getIcon("home"),
+      tabBarIcon: ({ color, size }) => getIcon("home", color, size),
     },
     required: true,
     leftMenu: true,

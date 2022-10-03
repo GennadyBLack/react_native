@@ -2,7 +2,6 @@ import { AntDesign } from "@expo/vector-icons";
 import { Entypo } from "@expo/vector-icons";
 
 export const getIcon = (name, color = "black", size = 24) => {
-  console.log(color, "color");
   switch (name) {
     case "rightcircle":
       return <AntDesign name="rightcircle" size={size} color={color} />;
