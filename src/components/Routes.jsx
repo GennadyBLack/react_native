@@ -5,6 +5,7 @@ import { Linking, View } from "react-native";
 import { observer } from "mobx-react-lite";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { NavigationContainer } from "@react-navigation/native";
+import { linking } from "../routing/deepLinkingHelper";
 import ModalWrapper from "./base/ModalWrapper";
 import constants from "../helpers/style";
 
@@ -12,7 +13,7 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
 import useStore from "../hooks/useStore";
 import { Text, StyleSheet } from "react-native";
-import filterMenuLinks, { linking } from "../helpers/menuHelper";
+import filterMenuLinks from "../routing/menuHelper";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
 const PERSISTENCE_KEY = "NAVIGATION_STATE_V1";

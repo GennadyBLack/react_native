@@ -1,5 +1,5 @@
 import { makeAutoObservable, runInAction } from "mobx";
-import { availableLinks } from "../helpers/menuHelper";
+import { availableLinks } from "../routing/menuHelper";
 
 export default class Menu {
   left_menu = {};

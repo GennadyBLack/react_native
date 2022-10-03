@@ -15,7 +15,7 @@ import Form from "../validation/Form";
 import prepareEdit from "../../helpers/editHelper";
 import Switch from "../validation/Switch";
 import MenuSwicher from "./MenuSwicher";
-import { profileMenuList } from "../../helpers/menuHelper";
+import { profileMenuList } from "../../routing/menuHelper";
 import ModalSheet from "../base/ModalSheet";
 import s from "../../helpers/styleHelper";
 
