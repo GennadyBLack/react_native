@@ -1,6 +1,6 @@
 import React, { useState, useRef } from "react";
 import { View, StyleSheet, Text, Pressable } from "react-native";
-import useOnClickOutside from "../../hooks/useClickOutside";
+// import useOnClickOutside from "../../hooks/useClickOutside";
 
 const MenuToggler = ({ items, anchor }) => {
   const [visible, setVisible] = useState(false);
@@ -18,7 +18,7 @@ const MenuToggler = ({ items, anchor }) => {
     );
   };
 
-  useOnClickOutside(ref, () => closeMenu());
+  // useOnClickOutside(ref, () => closeMenu());
 
   if (!items.length) {
     return <div>no</div>;
@@ -60,7 +60,7 @@ const styles = StyleSheet.create({
     padding: 10,
   },
   menu: {
-    zIndex: 10000,
+    zIndex: 10000000,
     left: "30%",
     padding: 10,
     marginRight: 30,
