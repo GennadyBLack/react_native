@@ -1,11 +1,5 @@
 import { makeAutoObservable, runInAction } from "mobx";
-import { setToken } from "../helpers/storage";
 
-// import { configure } from "mobx";
-
-// configure({
-//   enforceActions: "never",
-// });
 export default class Feed {
   feeds = null;
   currentFeed = null;
@@ -31,10 +25,10 @@ export default class Feed {
     }
   };
 
-  get = async (id) => {
+  get = async (id, config = {}) => {
     try {
       this.loading = true;
-      await this?.root?.api?.feed.get(id).then((res) => {
+      await this?.root?.api?.feed.get(id, config).then((res) => {
         this.currentFeed = res?.data;
         this.loading = false;
       });

@@ -1,5 +1,6 @@
 import Axios from "axios";
 import { getToken } from "../helpers/storage";
+// import { BASE_URL } from "@env";
 // ifconfig -a
 const apiUrl = process.env.BASE_URL || "http://62.217.178.124:8081/api";
 let token = null;

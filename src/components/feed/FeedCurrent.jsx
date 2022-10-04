@@ -4,10 +4,14 @@ import { observer } from "mobx-react-lite";
 import useStore from "../../hooks/useStore";
 import { apiUrl } from "../../api";
 import { AntDesign } from "@expo/vector-icons";
+import FeedComments from "./FeedComments";
 
 export default observer(FeedCurrent);
 import s from "../../helpers/styleHelper";
 import ScrollPageComponent from "../base/ScrollPageComponent";
+import Toggler from "../menu/Toggler";
+import { getIcon } from "../../helpers/iconHelper";
+
 const dammy = [
   "test",
   "hi fried",
@@ -26,22 +30,29 @@ const dammy = [
   "aloha maslo",
   "lorem aposum bro",
 ];
+
 function FeedCurrent({ route, navigation }) {
   const [feed] = useStore("feed");
   useEffect(() => {
-    feed.get(route?.params?.id);
+    feed.get(route?.params?.id, { include: "comments" });
   }, []);
 
   return (
     <ScrollPageComponent
-      header_menu={
-        <View style={{ flexDirection: "row" }}>
-          <AntDesign name="setting" size={24} color="black" />
-          <AntDesign name="delete" size={24} color="black" />
-          <AntDesign name="hearto" size={24} color="black" />
-          <AntDesign name="heart" size={24} color="black" />
-          <AntDesign name="message1" size={24} color="black" />
-          <AntDesign name="staro" size={24} color="black" />
+      footer_menu={
+        <View
+          style={{
+            flexDirection: "row",
+            paddingBottom: 40,
+            justifyContent: "space-around",
+          }}
+        >
+          <Toggler anchor={getIcon("message1")} useToggle>
+            <FeedComments />
+          </Toggler>
+          <Pressable onPress={() => alert("hi")}>{getIcon("heart")}</Pressable>
+
+          <Pressable onPress={() => alert("hi")}>{getIcon("staro")}</Pressable>
         </View>
       }
       header_image={
@@ -64,14 +75,6 @@ function FeedCurrent({ route, navigation }) {
           </Text>
         );
       })}
-      {/* <Pressable
-        style={s.button}
-        onPress={() =>
-          navigation.navigate("feed_edit", { id: feed?.currentFeed?.id })
-        }
-      >
-        <Text>Редактировать</Text>
-      </Pressable> */}
     </ScrollPageComponent>
   );
 }

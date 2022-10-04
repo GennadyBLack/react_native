@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, StyleSheet, Text } from "react-native";
+import { View, StyleSheet, Text, Pressable } from "react-native";
 
 const Toggler = ({
   children,
@@ -10,7 +10,6 @@ const Toggler = ({
   data = {},
 }) => {
   const [toggle, setToggle] = useState(false);
-
   const handleToggle = () => {
     setToggle((val) => !val);
   };
@@ -43,15 +42,15 @@ const Toggler = ({
   const content = list?.length ? _renderList() : _renderChildren();
 
   return (
-    <View>
+    <View style={{ flexDirection: "column" }}>
       {useToggle ? (
-        <View onPress={handleToggle} style={styles.anchor}>
+        <Pressable onPress={handleToggle} style={styles.anchor}>
           {anchor}
-        </View>
+        </Pressable>
       ) : (
         <Text></Text>
       )}
-      {useToggle && toggle ? content : null}
+      {useToggle && toggle ? content : <Text></Text>}
     </View>
   );
 };
