@@ -1,8 +1,9 @@
 import { Camera, CameraType } from "expo-camera";
-import {useEffect, useRef, useState} from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   Button,
-  Dimensions, Platform,
+  Dimensions,
+  Platform,
   StyleSheet,
   Text,
   TouchableOpacity,
@@ -11,8 +12,7 @@ import {
 
 const { height, width } = Dimensions.get("window");
 const screenRatio = height / width;
-const screenLandscapeRatio =  width / height;
-
+const screenLandscapeRatio = width / height;
 
 export default function Cam() {
   const [type, setType] = useState(CameraType.back);
@@ -25,26 +25,36 @@ export default function Cam() {
   useEffect(() => {
     const func = async () => {
       const camRatio = await camera.getSupportedRatiosAsync();
-      const camRatioDivided = camRatio.map(el => {
-        const ratioArr = el.split(':')
-        return screenRatio - ratioArr[0] / ratioArr[1]
-      })
-      const nearest = Math.min(...camRatioDivided)
-      console.log(nearest, "camRatioDivided");
+      const ratioMap = {};
+      const distanceMap = {};
+      let nearestRatio;
+      for (const ratio of camRatio) {
+        const ratioArr = ratio.split(":");
+        const currRatio = ratioArr[0] / ratioArr[1];
+        ratioMap[ratio] = currRatio;
+        const currDif = screenRatio - currRatio;
+        distanceMap[ratio] = currDif;
+        if (!nearestRatio) {
+          nearestRatio = ratio;
+        } else {
+          if (currDif >= 0 && currDif < distanceMap[nearestRatio]) {
+            nearestRatio = ratio;
+          }
+        }
+      }
 
+      console.log(nearestRatio, "nearestRatio");
+    };
+    if (camera) {
+      func();
     }
-    if(camera) {
-        func()
-    }
-  }, [camera])
+  }, [camera]);
 
   // const prepareCamera = () => {
   //   if(Platform.OS === 'android') {
   //
   //   }
   // }
-
-
 
   // const setCameraReady = async () => {
   //   if (!isRatioSet) {
@@ -82,7 +92,7 @@ export default function Cam() {
       <Camera
         style={styles.camera}
         type={type}
-        ref={cam => setCamera(cam)}
+        ref={(cam) => setCamera(cam)}
       ></Camera>
       <View style={styles.buttonContainer}>
         <TouchableOpacity style={styles.button} onPress={toggleCameraType}>
