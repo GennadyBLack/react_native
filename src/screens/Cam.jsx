@@ -9,7 +9,8 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import { useIsFocused } from "@react-navigation/native";
+import { useIsFocused, useNavigation } from "@react-navigation/native";
+import useStore from "../hooks/useStore";
 
 const { height, width } = Dimensions.get("window");
 const screenRatio = height / width;
@@ -18,6 +19,9 @@ const screenLandscapeRatio = width / height;
 const presetRatio = null;
 
 export default function Cam() {
+  const [tools] = useStore("tools");
+  const navigation = useNavigation();
+
   const isFocused = useIsFocused();
   const [type, setType] = useState(CameraType.back);
   const [permission, requestPermission] = Camera.useCameraPermissions();
@@ -63,6 +67,17 @@ export default function Cam() {
     }
   };
   // console.log(avaliableSizes, "avaliable");
+  const takePicture = () => {
+    if (camera) {
+      camera.takePictureAsync({ onPictureSaved });
+    }
+  };
+
+  const onPictureSaved = async (photo) => {
+    console.log(photo);
+    await tools.setCameraImage(photo);
+    navigation.navigate(-1);
+  };
 
   if (!permission) {
     // Camera permissions are still loading
@@ -101,7 +116,7 @@ export default function Cam() {
             <TouchableOpacity style={styles.button} onPress={toggleCameraType}>
               <Text style={styles.text}>Flip Camera</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.button} onPress={toggleCameraType}>
+            <TouchableOpacity style={styles.button} onPress={takePicture}>
               <Text style={styles.text}>Take Photo</Text>
             </TouchableOpacity>
           </View>
