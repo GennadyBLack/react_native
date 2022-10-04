@@ -8,13 +8,20 @@ import { View, Button, StyleSheet, Pressable, Text } from "react-native";
 import s from "../../helpers/styleHelper";
 import constants from "../../helpers/style";
 
-function Form({ defaultValues, children, onSubmit }) {
+function Form({ defaultValues, children, onSubmit, resetForm }) {
   const methods = useForm({ defaultValues });
   const {
+    reset,
     handleSubmit,
     control,
     formState: { errors },
   } = methods;
+
+  const wrap = () => {
+    onSubmit();
+    resetForm ? reset({ defaultValues }) : null;
+  };
+
   return (
     <View style={styles.form}>
       {React.Children.map(children, (child) => {
@@ -29,7 +36,7 @@ function Form({ defaultValues, children, onSubmit }) {
             })
           : child;
       })}
-      <Pressable onPress={handleSubmit(onSubmit)} style={s.button}>
+      <Pressable onPress={handleSubmit(wrap)} style={s.button}>
         <Text style={{ color: constants.LIGHT }}>Сохранить</Text>
       </Pressable>
     </View>

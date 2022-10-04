@@ -44,15 +44,18 @@ function FeedCurrent({ route, navigation }) {
           style={{
             flexDirection: "row",
             paddingBottom: 40,
-            justifyContent: "space-around",
+            justifyContent: "flex-start",
           }}
         >
           <Toggler anchor={getIcon("message1")} useToggle>
-            <FeedComments />
+            <FeedComments
+              id={route?.params?.id}
+              comments={feed?.currentFeed?.comments}
+            />
           </Toggler>
-          <Pressable onPress={() => alert("hi")}>{getIcon("heart")}</Pressable>
+          {/* <Pressable onPress={() => alert("hi")}>{getIcon("heart")}</Pressable>
 
-          <Pressable onPress={() => alert("hi")}>{getIcon("staro")}</Pressable>
+          <Pressable onPress={() => alert("hi")}>{getIcon("staro")}</Pressable> */}
         </View>
       }
       header_image={
@@ -68,13 +71,13 @@ function FeedCurrent({ route, navigation }) {
     >
       <Text style={s.title}>{feed?.currentFeed?.title ?? ""}</Text>
       <Text>{feed?.currentFeed?.desc ?? ""}</Text>
-      {dammy.map((item, idx) => {
+      {/* {dammy.map((item, idx) => {
         return (
           <Text key={idx} style={{ padding: 40 }}>
             {item}
           </Text>
         );
-      })}
+      })} */}
     </ScrollPageComponent>
   );
 }

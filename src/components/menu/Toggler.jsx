@@ -42,7 +42,7 @@ const Toggler = ({
   const content = list?.length ? _renderList() : _renderChildren();
 
   return (
-    <View style={{ flexDirection: "column" }}>
+    <View style={{ flexDirection: "column", flex: 1 }}>
       {useToggle ? (
         <Pressable onPress={handleToggle} style={styles.anchor}>
           {anchor}

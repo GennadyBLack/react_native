@@ -7,5 +7,6 @@ const feed = {
   create: async (data) => api.post("feeds", data),
   update: async (id, data) => api.patch(`feeds/${id}`, data),
   del: async (id) => api.delete(`feeds/${id}`),
+  createComment: async (id, data) => api.post(`feeds/comments/${id}`, data),
 };
 export default feed;

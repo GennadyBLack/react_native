@@ -1,10 +1,15 @@
-import React from "react";
+import React, { useState } from "react";
 import { Pressable, Text, View, ScrollView, StyleSheet } from "react-native";
 import Animated from "react-native-reanimated";
+import apis from "../../api/api";
 
 import Form from "../validation/Form";
 
 const FeedComments = ({ comments, id }) => {
+  const addComment = async (e) => {
+    await apis.feed.createComment(id, { title: e.title });
+  };
+
   const _renderComments = () => {
     return comments?.length > 0 ? (
       comments?.map((item, idx) => <CommentItem item={item} key={idx} />)
@@ -12,12 +17,12 @@ const FeedComments = ({ comments, id }) => {
       <Text>No comments yet</Text>
     );
   };
-  const submit = () => {};
+
   return (
     <Animated.ScrollView>
       {_renderComments()}
       <View>
-        <Form onSubmit={submit}>
+        <Form onSubmit={addComment}>
           <Form.Input
             multiline
             style={{ marginTop: 20 }}
@@ -27,7 +32,6 @@ const FeedComments = ({ comments, id }) => {
                 value: true,
                 message: "Это поле обязательно для заполнения чудик",
               },
-              min: { value: 3, message: "Больше 3" },
             }}
           />
         </Form>
@@ -37,23 +41,35 @@ const FeedComments = ({ comments, id }) => {
 };
 
 const CommentItem = ({ item }) => {
-  <View style={styles.comment_wrap}>
-    <View style={styles.comment_author}></View>
-    <View></View>
-  </View>;
+  return (
+    <View style={styles.comment_wrap}>
+      <View style={styles.comment_author}></View>
+      <View style={{ justifyContent: "flex-start" }}>
+        <Text style={styles.author_name}>{item?.user?.username}</Text>
+        <Text>{item?.title}</Text>
+      </View>
+    </View>
+  );
 };
 
 const styles = StyleSheet.create({
   comment_wrap: {
+    flex: 1,
+    margin: 10,
+    backgroundColor: "white",
     flexDirection: "row",
-    justifyContent: "space-between",
+    // justifyContent: "space-between",
   },
 
   comment_author: {
     width: 60,
     height: 60,
+    marginRight: 20,
     borderRadius: 30,
     backgroundColor: "grey",
+  },
+  author_name: {
+    fontSize: 20,
   },
 });
 export default FeedComments;
