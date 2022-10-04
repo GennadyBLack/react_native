@@ -14,6 +14,8 @@ import { useIsFocused } from "@react-navigation/native";
 const { height, width } = Dimensions.get("window");
 const screenRatio = height / width;
 const screenLandscapeRatio = width / height;
+// const presetRatio = "4:3";
+const presetRatio = null;
 
 export default function Cam() {
   const isFocused = useIsFocused();
@@ -21,12 +23,17 @@ export default function Cam() {
   const [permission, requestPermission] = Camera.useCameraPermissions();
   const [camera, setCamera] = useState(null);
   const [isRatioSet, setIsRatioSet] = useState(false);
+  const [screenHeight, setScreenHeight] = useState(null);
 
-  console.log(screenRatio, "screenRatio");
+  const usePresetRatio = (camRatio) => {
+    if (presetRatio && camRatio.includes(presetRatio)) return presetRatio;
+    return false;
+  };
 
   const prepareCamera = async () => {
     if (Platform.OS === "android") {
       const camRatio = await camera?.getSupportedRatiosAsync();
+      const desiredRatio = usePresetRatio(camRatio);
       const ratioMap = {};
       const distanceMap = {};
       let nearestRatio;
@@ -44,7 +51,8 @@ export default function Cam() {
           }
         }
       }
-      console.log(nearestRatio, "nearestRatio");
+      const calcHeight = width * ratioMap[desiredRatio || nearestRatio];
+      setScreenHeight(calcHeight);
       setIsRatioSet(true);
     }
   };
@@ -84,7 +92,7 @@ export default function Cam() {
       {isFocused && (
         <View style={{ flex: 1 }}>
           <Camera
-            style={styles.camera}
+            style={[styles.camera, { height: screenHeight }]}
             type={type}
             ref={(cam) => setCamera(cam)}
             onCameraReady={setCameraReady}
@@ -92,6 +100,9 @@ export default function Cam() {
           <View style={styles.buttonContainer}>
             <TouchableOpacity style={styles.button} onPress={toggleCameraType}>
               <Text style={styles.text}>Flip Camera</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.button} onPress={toggleCameraType}>
+              <Text style={styles.text}>Take Photo</Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -107,12 +118,12 @@ const styles = StyleSheet.create({
   },
   camera: {
     width: "100%",
-    height: 550,
   },
   buttonContainer: {
+    ...StyleSheet.absoluteFill,
     flexDirection: "row",
     backgroundColor: "transparent",
-    margin: 64,
+    bottom: 50,
   },
   button: {
     flex: 1,
