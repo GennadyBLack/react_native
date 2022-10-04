@@ -14,7 +14,7 @@ export default function FeedCreate({ navigation }) {
   let setText = (e, field) => {
     setForm({ ...form, [field]: e });
   };
-    console.log(tools.cameraImage)
+
   let create = async () => {
     await feed.create(form);
     // feed.getAll();
@@ -24,6 +24,7 @@ export default function FeedCreate({ navigation }) {
     useEffect(() => {
         setImage(tools.cameraImage)
     }, [tools.cameraImage])
+
 
   return (
     <View style={{flex:1}}>
@@ -41,7 +42,8 @@ export default function FeedCreate({ navigation }) {
         mode="outlined"
         multiline
       />
-        {image && (<Image source={{uri: image?.uri}} style={{width: '100%', height: 350}}></Image>)}
+        {image && <Image source={{uri: tools?.cameraImage, cache: "reload"}}
+                style={{width: '100%', height: 350}} key={new Date()}/>}
         <Button
             title="Pick from Camera"
             onPress={() => navigation.navigate("cam")}

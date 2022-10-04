@@ -2,7 +2,7 @@ import { Camera, CameraType } from "expo-camera";
 import { useEffect, useRef, useState } from "react";
 import {
   Button,
-  Dimensions,
+  Dimensions, Image,
   Platform,
   StyleSheet,
   Text,
@@ -28,6 +28,7 @@ export default function Cam() {
   const [camera, setCamera] = useState(null);
   const [isRatioSet, setIsRatioSet] = useState(false);
   const [screenHeight, setScreenHeight] = useState(null);
+  const [photo, setPhoto] = useState(null);
 
   const usePresetRatio = (camRatio) => {
     if (presetRatio && camRatio.includes(presetRatio)) return presetRatio;
@@ -67,16 +68,22 @@ export default function Cam() {
     }
   };
   // console.log(avaliableSizes, "avaliable");
-  const takePicture = () => {
+  const takePicture = async () => {
+    let options = {
+      base64: true,
+      quality: 1,
+      exif: false,
+      onPictureSaved
+    }
     if (camera) {
-      camera.takePictureAsync({ onPictureSaved });
+      await camera.takePictureAsync(options);
     }
   };
 
   const onPictureSaved = async (photo) => {
-    console.log(photo);
-    await tools.setCameraImage(photo);
-    navigation.navigate("feed_create");
+    await tools.setCameraImage(`data:image/jpg;base64,${photo.base64}`);
+    setPhoto(`data:image/jpg;base64,${photo.base64}`)
+    // navigation.navigate("feed_create");
   };
 
   if (!permission) {
@@ -104,7 +111,7 @@ export default function Cam() {
 
   return (
     <View style={styles.container}>
-      {isFocused && (
+      {!photo && isFocused && (
         <View style={{ flex: 1 }}>
           <Camera
             style={[styles.camera, { height: screenHeight }]}
@@ -122,6 +129,8 @@ export default function Cam() {
           </View>
         </View>
       )}
+      {photo && <View style={{ flex: 1 }}><Image source={{uri: tools?.cameraImage, cache: "reload"}}
+                                                             style={{width: '100%', height: 350}} key={new Date()}/></View>}
     </View>
   );
 }
