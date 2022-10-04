@@ -1,59 +1,84 @@
 import { Camera, CameraType } from "expo-camera";
-import {useEffect, useRef, useState} from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   Button,
-  Dimensions, Platform,
+  Dimensions,
+  Platform,
   StyleSheet,
   Text,
   TouchableOpacity,
   View,
 } from "react-native";
+import { useIsFocused, useNavigation } from "@react-navigation/native";
+import useStore from "../hooks/useStore";
 
 const { height, width } = Dimensions.get("window");
 const screenRatio = height / width;
-const screenLandscapeRatio =  width / height;
-
+const screenLandscapeRatio = width / height;
+// const presetRatio = "4:3";
+const presetRatio = null;
 
 export default function Cam() {
+  const [tools] = useStore("tools");
+  const navigation = useNavigation();
+
+  const isFocused = useIsFocused();
   const [type, setType] = useState(CameraType.back);
   const [permission, requestPermission] = Camera.useCameraPermissions();
   const [camera, setCamera] = useState(null);
   const [isRatioSet, setIsRatioSet] = useState(false);
+  const [screenHeight, setScreenHeight] = useState(null);
 
-  console.log(screenRatio, "screenRatio");
+  const usePresetRatio = (camRatio) => {
+    if (presetRatio && camRatio.includes(presetRatio)) return presetRatio;
+    return false;
+  };
 
-  useEffect(() => {
-    const func = async () => {
-      const camRatio = await camera.getSupportedRatiosAsync();
-      const camRatioDivided = camRatio.map(el => {
-        const ratioArr = el.split(':')
-        return screenRatio - ratioArr[0] / ratioArr[1]
-      })
-      const nearest = Math.min(...camRatioDivided)
-      console.log(nearest, "camRatioDivided");
-
+  const prepareCamera = async () => {
+    if (Platform.OS === "android") {
+      const camRatio = await camera?.getSupportedRatiosAsync();
+      const desiredRatio = usePresetRatio(camRatio);
+      const ratioMap = {};
+      const distanceMap = {};
+      let nearestRatio;
+      for (const ratio of camRatio) {
+        const ratioArr = ratio.split(":");
+        const currRatio = ratioArr[0] / ratioArr[1];
+        ratioMap[ratio] = currRatio;
+        const currDif = screenRatio - currRatio;
+        distanceMap[ratio] = currDif;
+        if (!nearestRatio) {
+          nearestRatio = ratio;
+        } else {
+          if (currDif >= 0 && currDif < distanceMap[nearestRatio]) {
+            nearestRatio = ratio;
+          }
+        }
+      }
+      const calcHeight = width * ratioMap[desiredRatio || nearestRatio];
+      setScreenHeight(calcHeight);
+      setIsRatioSet(true);
     }
-    if(camera) {
-        func()
+  };
+
+  const setCameraReady = async () => {
+    if (!isRatioSet) {
+      await prepareCamera();
     }
-  }, [camera])
-
-  // const prepareCamera = () => {
-  //   if(Platform.OS === 'android') {
-  //
-  //   }
-  // }
-
-
-
-  // const setCameraReady = async () => {
-  //   if (!isRatioSet) {
-  //     const ratio = camera?.getR
-  //     setIsRatioSet()
-  //   }
-  // };
-
+  };
   // console.log(avaliableSizes, "avaliable");
+  const takePicture = () => {
+    if (camera) {
+      camera.takePictureAsync({ onPictureSaved });
+    }
+  };
+
+  const onPictureSaved = async (photo) => {
+    console.log(photo);
+    await tools.setCameraImage(photo);
+    navigation.navigate(-1);
+  };
+
   if (!permission) {
     // Camera permissions are still loading
     return <View />;
@@ -79,16 +104,24 @@ export default function Cam() {
 
   return (
     <View style={styles.container}>
-      <Camera
-        style={styles.camera}
-        type={type}
-        ref={cam => setCamera(cam)}
-      ></Camera>
-      <View style={styles.buttonContainer}>
-        <TouchableOpacity style={styles.button} onPress={toggleCameraType}>
-          <Text style={styles.text}>Flip Camera</Text>
-        </TouchableOpacity>
-      </View>
+      {isFocused && (
+        <View style={{ flex: 1 }}>
+          <Camera
+            style={[styles.camera, { height: screenHeight }]}
+            type={type}
+            ref={(cam) => setCamera(cam)}
+            onCameraReady={setCameraReady}
+          ></Camera>
+          <View style={styles.buttonContainer}>
+            <TouchableOpacity style={styles.button} onPress={toggleCameraType}>
+              <Text style={styles.text}>Flip Camera</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.button} onPress={takePicture}>
+              <Text style={styles.text}>Take Photo</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      )}
     </View>
   );
 }
@@ -100,12 +133,12 @@ const styles = StyleSheet.create({
   },
   camera: {
     width: "100%",
-    height: 550,
   },
   buttonContainer: {
+    ...StyleSheet.absoluteFill,
     flexDirection: "row",
     backgroundColor: "transparent",
-    margin: 64,
+    bottom: 50,
   },
   button: {
     flex: 1,

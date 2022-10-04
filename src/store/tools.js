@@ -1,6 +1,7 @@
 import { makeAutoObservable, runInAction } from "mobx";
 
 export default class Tools {
+  cameraImage = null;
   image = null;
   imageName = null;
   loading = false;
@@ -21,6 +22,17 @@ export default class Tools {
     try {
       this.loading = true;
       this.image = await this?.api?.get(this.imageName);
+    } catch (error) {
+      console.log(error, "error file");
+      this.root.setError(error);
+      this.loading = false;
+    }
+  };
+
+  setCameraImage = async (img) => {
+    try {
+      this.loading = true;
+      this.cameraImage = img;
     } catch (error) {
       console.log(error, "error file");
       this.root.setError(error);
