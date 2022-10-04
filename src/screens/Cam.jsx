@@ -76,7 +76,7 @@ export default function Cam() {
   const onPictureSaved = async (photo) => {
     console.log(photo);
     await tools.setCameraImage(photo);
-    navigation.navigate(-1);
+    navigation.navigate("feed_create");
   };
 
   if (!permission) {
