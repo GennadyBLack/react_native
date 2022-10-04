@@ -9,12 +9,14 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
+import { useIsFocused } from "@react-navigation/native";
 
 const { height, width } = Dimensions.get("window");
 const screenRatio = height / width;
 const screenLandscapeRatio = width / height;
 
 export default function Cam() {
+  const isFocused = useIsFocused();
   const [type, setType] = useState(CameraType.back);
   const [permission, requestPermission] = Camera.useCameraPermissions();
   const [camera, setCamera] = useState(null);
@@ -22,9 +24,9 @@ export default function Cam() {
 
   console.log(screenRatio, "screenRatio");
 
-  useEffect(() => {
-    const func = async () => {
-      const camRatio = await camera.getSupportedRatiosAsync();
+  const prepareCamera = async () => {
+    if (Platform.OS === "android") {
+      const camRatio = await camera?.getSupportedRatiosAsync();
       const ratioMap = {};
       const distanceMap = {};
       let nearestRatio;
@@ -42,28 +44,18 @@ export default function Cam() {
           }
         }
       }
-
       console.log(nearestRatio, "nearestRatio");
-    };
-    if (camera) {
-      func();
+      setIsRatioSet(true);
     }
-  }, [camera]);
+  };
 
-  // const prepareCamera = () => {
-  //   if(Platform.OS === 'android') {
-  //
-  //   }
-  // }
-
-  // const setCameraReady = async () => {
-  //   if (!isRatioSet) {
-  //     const ratio = camera?.getR
-  //     setIsRatioSet()
-  //   }
-  // };
-
+  const setCameraReady = async () => {
+    if (!isRatioSet) {
+      await prepareCamera();
+    }
+  };
   // console.log(avaliableSizes, "avaliable");
+
   if (!permission) {
     // Camera permissions are still loading
     return <View />;
@@ -89,16 +81,21 @@ export default function Cam() {
 
   return (
     <View style={styles.container}>
-      <Camera
-        style={styles.camera}
-        type={type}
-        ref={(cam) => setCamera(cam)}
-      ></Camera>
-      <View style={styles.buttonContainer}>
-        <TouchableOpacity style={styles.button} onPress={toggleCameraType}>
-          <Text style={styles.text}>Flip Camera</Text>
-        </TouchableOpacity>
-      </View>
+      {isFocused && (
+        <View style={{ flex: 1 }}>
+          <Camera
+            style={styles.camera}
+            type={type}
+            ref={(cam) => setCamera(cam)}
+            onCameraReady={setCameraReady}
+          ></Camera>
+          <View style={styles.buttonContainer}>
+            <TouchableOpacity style={styles.button} onPress={toggleCameraType}>
+              <Text style={styles.text}>Flip Camera</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      )}
     </View>
   );
 }
