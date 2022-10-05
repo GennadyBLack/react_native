@@ -7,7 +7,7 @@ import Form from "../validation/Form";
 
 const FeedComments = ({ comments, id }) => {
   const addComment = async (e) => {
-    await apis.feed.createComment(id, { title: e.title });
+    await apis.feed.createComment(id, { title: e?.title });
   };
 
   const _renderComments = () => {
@@ -24,6 +24,7 @@ const FeedComments = ({ comments, id }) => {
       <View>
         <Form onSubmit={addComment}>
           <Form.Input
+            mode="outlined"
             multiline
             style={{ marginTop: 20 }}
             name="title"
@@ -41,6 +42,7 @@ const FeedComments = ({ comments, id }) => {
 };
 
 const CommentItem = ({ item }) => {
+  console.log(item);
   return (
     <View style={styles.comment_wrap}>
       <View style={styles.comment_author}></View>
@@ -54,18 +56,20 @@ const CommentItem = ({ item }) => {
 
 const styles = StyleSheet.create({
   comment_wrap: {
+    borderRadius: 5,
     flex: 1,
     margin: 10,
     backgroundColor: "white",
     flexDirection: "row",
+    minHeight: 60,
     // justifyContent: "space-between",
   },
 
   comment_author: {
-    width: 60,
-    height: 60,
+    width: 40,
+    height: 40,
     marginRight: 20,
-    borderRadius: 30,
+    borderRadius: 20,
     backgroundColor: "grey",
   },
   author_name: {

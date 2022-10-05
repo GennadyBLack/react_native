@@ -27,7 +27,10 @@ function ProfileMain({ route, navigation }) {
   const user = auth?.user?.user;
 
   const submit = async (e) => {
+    console.log(e, "EEEE");
     const pre = prepareEdit(e, user);
+
+    console.log(pre, "PREE");
     await auth?.updateMe(pre);
   };
   const onMenuChange = async (e, link) => {
@@ -60,6 +63,7 @@ function ProfileMain({ route, navigation }) {
           <Form onSubmit={submit} defaultValues={user}>
             <Form.Input
               name="username"
+              mode="outlined"
               rules={{
                 required: {
                   value: true,
@@ -70,6 +74,7 @@ function ProfileMain({ route, navigation }) {
             />
             <Form.Input
               name="email"
+              mode="outlined"
               rules={{
                 required: {
                   value: true,
@@ -79,6 +84,7 @@ function ProfileMain({ route, navigation }) {
             />
             <Form.Input
               name="description"
+              mode="outlined"
               multiline
               rules={{
                 required: {
@@ -88,7 +94,6 @@ function ProfileMain({ route, navigation }) {
               }}
             />
             <Form.File name="avatar" title="Загрузить фото профиля" />
-
             <Switch />
           </Form>
           <MenuSwicher

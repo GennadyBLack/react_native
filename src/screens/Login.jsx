@@ -13,47 +13,21 @@ import s from "../helpers/styleHelper";
 import { observer } from "mobx-react-lite";
 import useStore from "../hooks/useStore";
 import { TextInput } from "react-native-paper";
-import * as LocalAuthentication from "expo-local-authentication";
 import Animated from "react-native-reanimated";
-
 const { height, width } = Dimensions.get("window");
+import useFingerPrint from "../hooks/useFingerPring";
 
 export default observer(Login);
 
 function Login({ navigation }) {
-  const [supportBiometric, setSupportBiometric] = useState(false);
-  const [fingerprint, setFingerprint] = useState(false);
   let [auth] = useStore("auth");
   let [form, setForm] = useState({ password: "", email: "" });
-
-  useEffect(() => {
-    (async () => {
-      const compatible = await LocalAuthentication.hasHardwareAsync();
-      setSupportBiometric(compatible);
-      const enroll = await LocalAuthentication.isEnrolledAsync();
-      if (enroll) {
-        setFingerprint(true);
-      }
-    })();
-  }, []);
+  const [content] = useFingerPrint();
 
   const regisrer = () => {
     navigation.navigate("Register");
   };
-  const handle = async () => {
-    try {
-      const biometricAuth = await LocalAuthentication.authenticateAsync({
-        promptMessage: "Login with Biometrics",
-        disableDeviceFallback: true,
-        cancelLabel: "Cancel",
-      });
-      if (biometricAuth.success) {
-        navigation.replace("Home");
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
+
   let setText = (e, field) => {
     setForm({ ...form, [field]: e });
   };
@@ -67,6 +41,7 @@ function Login({ navigation }) {
       <Text style={styles.welcome}>Здравствуйте !</Text>
       <Animated.View style={[styles.login_content]}>
         <TextInput
+          mode="outlined"
           label="Email"
           value={form?.email}
           onChangeText={(text) => setText(text, "email")}
@@ -74,6 +49,7 @@ function Login({ navigation }) {
         />
         <TextInput
           secureTextEntry
+          mode="outlined"
           label="Password"
           type="password"
           value={form?.password}
@@ -108,18 +84,7 @@ function Login({ navigation }) {
             <Text style={{ color: constants.GREEN }}>Еще нет аккаунта ?</Text>
           </TouchableOpacity>
         </View>
-
-        <View>
-          {supportBiometric && fingerprint ? (
-            <TouchableOpacity onPress={handle}>
-              <Text style={s.button}>Go to home</Text>
-            </TouchableOpacity>
-          ) : (
-            <View>
-              <Text></Text>
-            </View>
-          )}
-        </View>
+        {content}
       </Animated.View>
     </Animated.View>
   );

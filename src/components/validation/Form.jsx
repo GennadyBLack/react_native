@@ -36,7 +36,7 @@ function Form({ defaultValues, children, onSubmit, resetForm }) {
             })
           : child;
       })}
-      <Pressable onPress={handleSubmit(wrap)} style={s.button}>
+      <Pressable onPress={handleSubmit(onSubmit)} style={s.button}>
         <Text style={{ color: constants.LIGHT }}>Сохранить</Text>
       </Pressable>
     </View>

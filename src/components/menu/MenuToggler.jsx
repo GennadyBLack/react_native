@@ -34,7 +34,7 @@ const MenuToggler = ({ items, anchor }) => {
         <View style={styles.menu}>
           {items.map((item, idx) => {
             return (
-              <View style={{ zIndex: 10000 }}>
+              <View style={{ zIndex: 10000 }} key={idx}>
                 {item?.icon ?? <Text></Text>}
                 <Pressable
                   key={idx}
