@@ -3,8 +3,8 @@ import { getToken } from "../helpers/storage";
 const baseURL = "http://localhost:8081"; //"http://62.217.178.124:8081";
 const apiUrl =
   // process.env.BASE_URL ||
-  // "http://62.217.178.124:8081/api" ||
-  "http://localhost:8081/api";
+  "http://62.217.178.124:8081/api"
+    // || "http://localhost:8081/api";
 let token = null;
 getToken().then((res) => (token = res));
 const axiosParams = {

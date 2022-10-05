@@ -56,7 +56,10 @@ function Login({ navigation }) {
           onChangeText={(text) => setText(text, "password")}
         />
         <Pressable
-          onPress={() => login()}
+          onPress={() => {
+            console.log('touched')
+            login()
+          }}
           style={[s.button, { marginTop: 20 }]}
         >
           <Text style={[{ color: "white", fontSize: 15 }]}>Войти</Text>

@@ -12,12 +12,14 @@ import {
 } from "react-native";
 import { useIsFocused, useNavigation } from "@react-navigation/native";
 import useStore from "../hooks/useStore";
+import { shareAsync } from 'expo-sharing';
+import * as MediaLibrary from 'expo-media-library';
 
 const { height, width } = Dimensions.get("window");
 const screenRatio = height / width;
 const screenLandscapeRatio = width / height;
-// const presetRatio = "4:3";
-const presetRatio = null;
+const presetRatio = "4:3";
+// const presetRatio = null;
 
 export default function Cam() {
   const [tools] = useStore("tools");
@@ -26,6 +28,7 @@ export default function Cam() {
   const isFocused = useIsFocused();
   const [type, setType] = useState(CameraType.back);
   const [permission, requestPermission] = Camera.useCameraPermissions();
+  const [hasMediaLibraryPermission, setHasMediaLibraryPermission] = useState();
   const [camera, setCamera] = useState(null);
   const [isRatioSet, setIsRatioSet] = useState(false);
   const [screenHeight, setScreenHeight] = useState(null);
@@ -35,6 +38,12 @@ export default function Cam() {
     if (presetRatio && camRatio.includes(presetRatio)) return presetRatio;
     return false;
   };
+  useEffect(() => {
+    (async () => {
+      const mediaLibraryPermission = await MediaLibrary.requestPermissionsAsync();
+      setHasMediaLibraryPermission(mediaLibraryPermission.status === "granted");
+    })()
+  })
 
   const prepareCamera = async () => {
     if (Platform.OS === "android") {
@@ -82,6 +91,7 @@ export default function Cam() {
   };
 
   const onPictureSaved = async (photo) => {
+    await MediaLibrary.saveToLibraryAsync(photo.uri);
     await setPhoto(`data:image/jpg;base64,${photo.base64}`);
     await tools
       .setCameraImage(`data:image/jpg;base64,${photo.base64}`)
