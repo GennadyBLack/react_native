@@ -11,7 +11,7 @@ import Cam from "./Cam";
 // const { Navigator, Screen } = createBottomTabNavigator();
 const { Navigator, Screen } = createNativeStackNavigator();
 
-//screenOptions={{ unmountOnBlur: true }} чтобы навигатор не кэшировал содержимое страницы
+//screenOptions={{ unmountOnBlur: true }} чтобы боттом таб навигатор не кэшировал содержимое страницы
 export default function Feed() {
   return (
     <Navigator
@@ -44,11 +44,7 @@ export default function Feed() {
         component={ImagePickerExample}
         options={{ headerShown: false }}
       />
-      <Screen
-          name="cam"
-          component={Cam}
-          options={{ headerShown: false }}
-      />
+      <Screen name="cam" component={Cam} options={{ headerShown: false }} />
     </Navigator>
   );
 }

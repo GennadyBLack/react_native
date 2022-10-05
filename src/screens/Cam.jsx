@@ -2,7 +2,8 @@ import { Camera, CameraType } from "expo-camera";
 import { useEffect, useRef, useState } from "react";
 import {
   Button,
-  Dimensions, Image,
+  Dimensions,
+  Image,
   Platform,
   StyleSheet,
   Text,
@@ -73,17 +74,18 @@ export default function Cam() {
       base64: true,
       quality: 1,
       exif: false,
-      onPictureSaved
-    }
+      onPictureSaved,
+    };
     if (camera) {
       await camera.takePictureAsync(options);
     }
   };
 
   const onPictureSaved = async (photo) => {
-    await tools.setCameraImage(`data:image/jpg;base64,${photo.base64}`);
-    setPhoto(`data:image/jpg;base64,${photo.base64}`)
-    // navigation.navigate("feed_create");
+    await setPhoto(`data:image/jpg;base64,${photo.base64}`);
+    await tools
+      .setCameraImage(`data:image/jpg;base64,${photo.base64}`)
+      .then(async () => await navigation.navigate("feed_create"));
   };
 
   if (!permission) {
@@ -129,8 +131,15 @@ export default function Cam() {
           </View>
         </View>
       )}
-      {photo && <View style={{ flex: 1 }}><Image source={{uri: tools?.cameraImage, cache: "reload"}}
-                                                             style={{width: '100%', height: 350}} key={new Date()}/></View>}
+      {photo && (
+        <View style={{ flex: 1 }}>
+          <Image
+            source={{ uri: tools?.cameraImage, cache: "reload" }}
+            style={{ width: "100%", height: 350 }}
+            key={new Date()}
+          />
+        </View>
+      )}
     </View>
   );
 }

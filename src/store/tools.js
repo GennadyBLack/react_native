@@ -31,8 +31,14 @@ export default class Tools {
 
   setCameraImage = async (img) => {
     try {
-      this.loading = true;
-      this.cameraImage = img;
+      runInAction(() => {
+        this.loading = true;
+        this.cameraImage = null;
+        this.cameraImage = img;
+        console.log(img.slice(-55, -1), "store img");
+        console.log(img.slice(0, 85), "store img 2");
+        this.loading = false;
+      });
     } catch (error) {
       console.log(error, "error file");
       this.root.setError(error);
