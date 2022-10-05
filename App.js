@@ -1,6 +1,7 @@
 import { StyleSheet, Text, View, StatusBar } from "react-native";
 import {} from "react-native";
 import React, { useCallback, useEffect, useState } from "react";
+import { getToken } from "./src/helpers/storage";
 
 // import AppLoading from "expo-app-loading";
 import * as Network from "expo-network";
@@ -11,6 +12,8 @@ const rootStore = new store();
 import ErrorPopupList from "./src/components/error/ErrorPopupList";
 import "react-native-gesture-handler";
 import * as SplashScreen from "expo-splash-screen";
+import { io } from "socket.io-client";
+import { baseURL } from "./src/api";
 
 SplashScreen.preventAutoHideAsync();
 function App() {
@@ -28,6 +31,25 @@ function App() {
         await new Promise((resolve) => {
           let res = rootStore.auth.fetchMe();
           resolve(res, "SuperRes");
+        });
+        const iniOptions = {
+          reconnection: true,
+          auth: {
+            token: await getToken(),
+          },
+        };
+
+        const socket = io(baseURL, iniOptions);
+        console.log("iniOptions", socket);
+        socket.emit("ping");
+        socket.on("ping", () => {
+          console.log("ping");
+        });
+        socket.on("pong", () => {
+          console.log("pong");
+        });
+        socket.on("connection", () => {
+          console.log("socket was connected succesfull");
         });
       } catch (e) {
         console.error(e);

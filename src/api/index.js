@@ -1,11 +1,9 @@
 import Axios from "axios";
 import { getToken } from "../helpers/storage";
-// import { BASE_URL } from "@env";
-// ifconfig -a
-// const sp = "http://62.217.178.124:8081/api";process.env.BASE_URL ||
+const baseURL = "http://localhost:8081"; //"http://62.217.178.124:8081";
 const apiUrl =
-  process.env.BASE_URL ||
-  "http://62.217.178.124:8081/api" ||
+  // process.env.BASE_URL ||
+  // "http://62.217.178.124:8081/api" ||
   "http://localhost:8081/api";
 let token = null;
 getToken().then((res) => (token = res));
@@ -43,4 +41,4 @@ const api = (axios) => {
 };
 
 export default api(axiosInstance);
-export { axiosInstance, apiUrl };
+export { axiosInstance, apiUrl, baseURL };

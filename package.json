@@ -51,6 +51,7 @@
     "react-native-web": "~0.18.7",
     "react-native-web-maps": "^0.3.0",
     "react-native-yamap": "^4.1.14",
+    "socket.io-client": "^4.5.2",
     "webpack-dev-server": "~3.11.0"
   },
   "devDependencies": {
