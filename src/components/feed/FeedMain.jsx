@@ -35,7 +35,7 @@ const FeedMain = ({ navigation }) => {
   );
   const inputProps = {
     mode: "outlined",
-    style: { height: 40, marginBottom: 20 },
+    style: { height: 40, marginBottom: 20, borderRadius: 20 },
   };
   const wrap_style = { paddingHorizontal: 10 };
   return (

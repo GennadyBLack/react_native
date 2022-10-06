@@ -8,7 +8,7 @@ import { View, Button, StyleSheet, Pressable, Text } from "react-native";
 import s from "../../helpers/styleHelper";
 import constants from "../../helpers/style";
 
-function Form({ defaultValues, children, onSubmit, resetForm }) {
+function Form({ defaultValues, children, onSubmit, resetForm = true }) {
   const methods = useForm({ defaultValues });
   const {
     reset,
@@ -17,9 +17,9 @@ function Form({ defaultValues, children, onSubmit, resetForm }) {
     formState: { errors },
   } = methods;
 
-  const wrap = () => {
-    onSubmit();
-    resetForm ? reset({ defaultValues }) : null;
+  const wrap = async () => {
+    await onSubmit();
+    resetForm ? await reset({ defaultValues }) : null;
   };
 
   return (
@@ -36,7 +36,7 @@ function Form({ defaultValues, children, onSubmit, resetForm }) {
             })
           : child;
       })}
-      <Pressable onPress={handleSubmit(onSubmit)} style={s.button}>
+      <Pressable onPress={handleSubmit(wrap)} style={s.button}>
         <Text style={{ color: constants.LIGHT }}>Сохранить</Text>
       </Pressable>
     </View>
