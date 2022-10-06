@@ -8,10 +8,10 @@ export default class Feed {
   error = null;
   pagination = null;
 
-  getAll = async () => {
+  getAll = async (filters = {}) => {
     try {
       this.loading = true;
-      await this?.root?.api?.feed.getAll({}).then((res) => {
+      await this?.root?.api?.feed.getAll(filters).then((res) => {
         runInAction(() => {
           this.feeds = res?.data?.data;
           this.pagination = res?.data?.paginator;

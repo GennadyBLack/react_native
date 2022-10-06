@@ -4,41 +4,43 @@ import { observer } from "mobx-react-lite";
 import useStore from "../hooks/useStore";
 import ModalSheet from "../components/base/ModalSheet";
 import GridSearchComponent from "../components/grid/GridSearchComiponent";
-
-import ScrollPageComponent from "../components/base/ScrollPageComponent";
-import TabBar from "../components/base/TabBar";
+import GridTest from "../components/grid/GridTest/GridTest";
 import ChatMain from "../components/chat/ChatMain";
-
+import FeedItem from "../components/feed/FeedItem";
 function Test({ navigation }) {
-  const [visible, toggle] = ModalSheet.useModal();
-  useEffect(() => {}, []);
-  const dammy = [
-    "test",
-    "hi fried",
-    "aloha maslo",
-    "lorem aposum bro",
-    "test",
-    "hi fried",
-    "aloha maslo",
-    "lorem aposum bro",
-    "test",
-    "hi fried",
-    "aloha maslo",
-    "lorem aposum bro",
-    "test",
-    "hi fried",
-    "aloha maslo",
-    "lorem aposum bro",
-  ];
-  return (
-    <View>
-      <ChatMain />
-      <GridSearchComponent />
-    </View>
+  const [feed] = useStore("feed");
 
-    // <View style={{ backgroundColor: "red" }}>
-    //   <TabBar />
-    // </View>
+  const getAllFeed = async (search) => {
+    const params = search
+      ? { params: { filter: { title: { iLike: `%${search}%` } } } }
+      : {};
+    await feed.getAll(params);
+  };
+  useEffect(() => {
+    getAllFeed();
+  }, []);
+
+  const deletePost = async (id) => {
+    await feed.delete(id);
+    await feed.getAll();
+  };
+
+  const renderItem = (item) => (
+    <FeedItem
+      feed={item}
+      key={item.id}
+      onDelete={deletePost}
+      navigation={navigation}
+    />
+  );
+  const inputProps = { style: { height: 40, marginBottom: 20 } };
+  return (
+    <GridTest
+      data={feed?.feeds}
+      template={renderItem}
+      onChange={getAllFeed}
+      inputProps={inputProps}
+    />
   );
 }
 export default observer(Test);
