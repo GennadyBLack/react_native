@@ -1,87 +1,52 @@
 import React, { useEffect } from "react";
 
-import {
-  Text,
-  FlatList,
-  ScrollView,
-  TouchableOpacity,
-  StyleSheet,
-  View,
-} from "react-native";
-import { Button } from "react-native-paper";
-
-import FeedItem_old from "./FeedItem_old";
+import { Text, TouchableOpacity, StyleSheet, View } from "react-native";
 import FeedItem from "./FeedItem";
-
 import useStore from "../../hooks/useStore";
-
 import { observer } from "mobx-react-lite";
 
-export default observer(FeedMain);
+import GridTest from "../grid/GridTest/GridTest";
 
-function FeedMain({ navigation }) {
+const FeedMain = ({ navigation }) => {
   const [feed] = useStore("feed");
+
+  const getAllFeed = async (search) => {
+    const params = search
+      ? { params: { filter: { title: { iLike: `%${search}%` } } } }
+      : {};
+    await feed.getAll(params);
+  };
+  useEffect(() => {
+    getAllFeed();
+  }, []);
+
   const deletePost = async (id) => {
-    console.log(id, "ID");
     await feed.delete(id);
     await feed.getAll();
   };
 
-  useEffect(() => {
-    const getAllFeed = async () => {
-      await feed.getAll();
-    };
-
-    getAllFeed();
-  }, []);
-  const renderItem = ({ item }) => (
+  const renderItem = (item) => (
     <FeedItem
       feed={item}
       key={item.id}
-      onDelete={(id) => deletePost(id)}
+      onDelete={deletePost}
       navigation={navigation}
     />
   );
+  const inputProps = {
+    mode: "outlined",
+    style: { height: 40, marginBottom: 20 },
+  };
+  const wrap_style = { paddingHorizontal: 10 };
   return (
-    <View style={styles.wrap}>
-      <TouchableOpacity
-        icon="camera"
-        mode="contained"
-        onPress={() => {
-          navigation.navigate("feed_create");
-        }}
-        style={{
-          width: "100%",
-          height: 50,
-          backgroundColor: "purple",
-          justifyContent: "center",
-          alignItems: "center",
-          zIndex: 1,
-        }}
-      >
-        <Text>Create Post</Text>
-      </TouchableOpacity>
-      {feed?.loading ? (
-        <Text>Загрузка</Text>
-      ) : (
-        <FlatList
-          data={feed?.feeds}
-          renderItem={renderItem}
-          keyExtractor={(item) => item.id}
-          nativeID={`FlatList`}
-          style={{ zIndex: 10 }}
-          contentContainerStyle={{ overflow: "visible" }}
-        />
-      )}
-    </View>
+    <GridTest
+      wrap_style={wrap_style}
+      data={feed?.feeds}
+      template={renderItem}
+      onChange={getAllFeed}
+      inputProps={inputProps}
+    ></GridTest>
   );
-}
-//TODO:поправить скролл
-const styles = StyleSheet.create({
-  wrap: {
-    height: "100%",
-    width: "100%",
-    flex: 1,
-    backgroundColor: "#eee",
-  },
-});
+};
+
+export default observer(FeedMain);

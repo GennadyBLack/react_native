@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, StyleSheet, Button, Pressable } from "react-native";
+import { View, Text, StyleSheet, Pressable, Image } from "react-native";
 import { observer } from "mobx-react-lite";
 import useStore from "../../hooks/useStore";
 import { Card, Paragraph, Title } from "react-native-paper";
@@ -8,6 +8,8 @@ import Form from "../validation/Form";
 import prepareEdit from "../../helpers/editHelper";
 import s from "../../helpers/styleHelper";
 import ModalSheet from "../base/ModalSheet";
+import ScrollPageComponent from "../base/ScrollPageComponent";
+import { apiUrl } from "../../api";
 
 export default observer(FeedEdit);
 
@@ -28,25 +30,23 @@ function FeedEdit({ route, navigation }) {
     // if (Object.keys(pre).length) feed.update(route?.params?.id, pre);
   };
   return (
-    <View style={styles.wrap}>
-      <Card>
-        <Card.Content>
-          {!isEdit ? (
-            <View>
-              <Title>
-                {feed?.currentFeed?.title || "Название отсутствует"}
-              </Title>
-              <Paragraph>
-                {feed?.currentFeed?.desc || "Описание отсутствует"}
-              </Paragraph>
-            </View>
-          ) : (
-            <Text></Text>
-          )}
-        </Card.Content>
-        <Card.Cover source={{ uri: "https://picsum.photos/700" }} />
-        <Upload />
-      </Card>
+    <ScrollPageComponent
+      style={styles.wrap}
+      header_image={
+        <Image
+          style={{ height: "100%", width: "100%" }}
+          source={{
+            uri: `${apiUrl}/files/${
+              feed?.currentFeed?.path || "placeholder.png"
+            }`,
+          }}
+        />
+      }
+    >
+      <Text>{feed?.currentFeed?.title || "Название отсутствует"}</Text>
+
+      <Text>{feed?.currentFeed?.desc || "Описание отсутствует"}</Text>
+
       <Pressable
         style={[s.button, { marginTop: 20 }]}
         onPress={setIsEdit.bind(null, !isEdit)}
@@ -86,7 +86,7 @@ function FeedEdit({ route, navigation }) {
           />
         </Form>
       </ModalSheet>
-    </View>
+    </ScrollPageComponent>
   );
 }
 const styles = StyleSheet.create({

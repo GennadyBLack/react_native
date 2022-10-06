@@ -73,8 +73,7 @@ export default class Feed {
     try {
       this.loading = true;
       await this.root.api.feed.update(id, {
-        ...data,
-        path: this.root.tools.imageName,
+        data: { ...data, path: this.root.tools.imageName },
       });
       this.loading = false;
     } catch (error) {

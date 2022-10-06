@@ -12,25 +12,6 @@ import ScrollPageComponent from "../base/ScrollPageComponent";
 import Toggler from "../menu/Toggler";
 import { getIcon } from "../../helpers/iconHelper";
 
-const dammy = [
-  "test",
-  "hi fried",
-  "aloha maslo",
-  "lorem aposum bro",
-  "test",
-  "hi fried",
-  "aloha maslo",
-  "lorem aposum bro",
-  "test",
-  "hi fried",
-  "aloha maslo",
-  "lorem aposum bro",
-  "test",
-  "hi fried",
-  "aloha maslo",
-  "lorem aposum bro",
-];
-
 function FeedCurrent({ route, navigation }) {
   const [feed] = useStore("feed");
   useEffect(() => {
