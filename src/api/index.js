@@ -1,10 +1,12 @@
 import Axios from "axios";
 import { getToken } from "../helpers/storage";
-const baseURL = "http://localhost:8081"; //"http://62.217.178.124:8081";
-const apiUrl =
-  // process.env.BASE_URL ||
-  // "http://62.217.178.124:8081/api" ||
-  "http://localhost:8081/api";
+
+const prod = true;
+const baseURL = prod ? "http://62.217.178.124:8081" : "http://localhost:8081";
+const apiUrl = prod
+  ? "http://62.217.178.124:8081/api"
+  : "http://localhost:8081/api";
+
 let token = null;
 getToken().then((res) => (token = res));
 const axiosParams = {
