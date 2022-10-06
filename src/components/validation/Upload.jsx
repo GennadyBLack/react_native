@@ -3,7 +3,12 @@ import { Button, Image, View, Platform, Text } from "react-native";
 import * as ImagePicker from "expo-image-picker";
 import useStore from "../../hooks/useStore";
 
-export default function Upload({ value = null, error, onChange, title }) {
+export default function UploadValidation({
+  value = null,
+  error,
+  onChange,
+  title,
+}) {
   const [image, setImage] = useState(() => (value ? value : null));
   const [tools] = useStore("tools");
 
@@ -22,6 +27,7 @@ export default function Upload({ value = null, error, onChange, title }) {
   const pickImage = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.All,
+      base64: true,
       allowsEditing: true,
       aspect: [4, 3],
       quality: 1,

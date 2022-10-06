@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { View, Text, Button, Image } from "react-native";
 import { TextInput } from "react-native-paper";
 import useStore from "../../hooks/useStore";
-import Upload from "../validation/Upload";
+import Upload from "../../screens/Upload";
 import Cam from "../../screens/Cam";
 import { useIsFocused } from "@react-navigation/native";
 
