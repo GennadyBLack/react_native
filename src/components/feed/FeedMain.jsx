@@ -22,6 +22,7 @@ export default observer(FeedMain);
 function FeedMain({ navigation }) {
   const [feed] = useStore("feed");
   const deletePost = async (id) => {
+    console.log(id, "ID");
     await feed.delete(id);
     await feed.getAll();
   };
@@ -37,7 +38,7 @@ function FeedMain({ navigation }) {
     <FeedItem
       feed={item}
       key={item.id}
-      onDelete={deletePost}
+      onDelete={(id) => deletePost(id)}
       navigation={navigation}
     />
   );
@@ -69,7 +70,7 @@ function FeedMain({ navigation }) {
           keyExtractor={(item) => item.id}
           nativeID={`FlatList`}
           style={{ zIndex: 10 }}
-          contentContainerStyle={{overflow: "visible" }}
+          contentContainerStyle={{ overflow: "visible" }}
         />
       )}
     </View>

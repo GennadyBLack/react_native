@@ -16,7 +16,7 @@ const AnimateImage = Animated.createAnimatedComponent(Image);
 const { height, width } = Dimensions.get("window");
 const SIZE = width;
 
-const FeedItem = ({ feed, navigation }) => {
+const FeedItem = ({ feed, onDelete, navigation }) => {
   const menuList = [
     {
       permission: ["owner"],
