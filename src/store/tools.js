@@ -9,6 +9,7 @@ export default class Tools {
 
   uploadImage = async (file) => {
     try {
+      console.log(file, "FILE");
       this.loading = true;
       this.imageName = (await this?.api?.upload(file)).data;
     } catch (error) {

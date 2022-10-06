@@ -17,6 +17,10 @@ export default function FeedCreate({ navigation }) {
   };
 
   let create = async () => {
+    if (tools.cameraImage) {
+      await tools.uploadImage({ uri: tools.cameraImage });
+      await tools.setCameraImage(null);
+    }
     await feed.create(form);
     // feed.getAll();
     navigation.replace("feed");
