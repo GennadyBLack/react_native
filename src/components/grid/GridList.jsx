@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { View, Button } from "react-native-web";
+import { View, Button } from "react-native";
 
 export default function GridList({
   data,

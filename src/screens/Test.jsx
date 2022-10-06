@@ -3,10 +3,11 @@ import { View, Button, Text } from "react-native";
 import { observer } from "mobx-react-lite";
 import useStore from "../hooks/useStore";
 import ModalSheet from "../components/base/ModalSheet";
-// import Map from "../components/base/Map";
-// import Testicus from "../components/base/Testicus";
+import GridSearchComponent from "../components/grid/GridSearchComiponent";
+
 import ScrollPageComponent from "../components/base/ScrollPageComponent";
 import TabBar from "../components/base/TabBar";
+import ChatMain from "../components/chat/ChatMain";
 
 function Test({ navigation }) {
   const [visible, toggle] = ModalSheet.useModal();
@@ -30,9 +31,14 @@ function Test({ navigation }) {
     "lorem aposum bro",
   ];
   return (
-    <View style={{ backgroundColor: "red" }}>
-      <TabBar />
+    <View>
+      <ChatMain />
+      <GridSearchComponent />
     </View>
+
+    // <View style={{ backgroundColor: "red" }}>
+    //   <TabBar />
+    // </View>
   );
 }
 export default observer(Test);

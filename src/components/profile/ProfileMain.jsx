@@ -96,12 +96,12 @@ function ProfileMain({ route, navigation }) {
             <Form.File name="avatar" title="Загрузить фото профиля" />
             <Switch />
           </Form>
-          <MenuSwicher
+          {/* <MenuSwicher
             data={profileMenuList(user?.menu)}
             onChange={(e, l) => {
               onMenuChange(e, l);
             }}
-          />
+          /> */}
         </ScrollView>
       </ModalSheet>
       <Card.Cover source={{ uri: user?.avatar }} />

@@ -42,6 +42,7 @@ function Form({ defaultValues, children, onSubmit, resetForm }) {
     </View>
   );
 }
+
 Form.Input = Input;
 Form.Select = Select;
 Form.Upload = Upload;
