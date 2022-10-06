@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, Pressable, Image } from "react-native";
 import { observer } from "mobx-react-lite";
 import useStore from "../../hooks/useStore";
 import { Card, Paragraph, Title } from "react-native-paper";
-import Upload from "../validation/Upload";
+import GalleryPicker from "../../screens/GalleryPicker";
 import Form from "../validation/Form";
 import prepareEdit from "../../helpers/editHelper";
 import s from "../../helpers/styleHelper";

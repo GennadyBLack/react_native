@@ -3,7 +3,7 @@ import { Button, Image, View, Platform, Text } from "react-native";
 import * as ImagePicker from "expo-image-picker";
 import useStore from "../hooks/useStore";
 
-export default function Upload({ value = null, error, onChange, title }) {
+export default function GalleryPicker({ value = null, error, onChange, title }) {
   const [image, setImage] = useState(() => (value ? value : null));
   const [tools] = useStore("tools");
 
@@ -29,13 +29,16 @@ export default function Upload({ value = null, error, onChange, title }) {
     });
 
     if (!result.cancelled) {
-      console.log(result);
+      // console.log(result);
       let photo = result.uri;
       if (Platform.OS === "android" || "ios") {
         photo = "data:image/jpg;base64," + result.base64;
       }
-      tools.uploadImage({ uri: photo });
-
+      await tools.setPreLoadImage(photo)
+      // const res = await tools.uploadImage({ uri: photo });
+      if (typeof onChange === "function") {
+        onChange(tools?.image);
+      }
       setImage(photo);
     }
   };
@@ -43,7 +46,6 @@ export default function Upload({ value = null, error, onChange, title }) {
   return (
     <View>
       <Button title={title ? title : "upload image"} onPress={pickImage} />
-      {image ? <Image source={{ uri: image }} /> : <Text></Text>}
     </View>
   );
 }

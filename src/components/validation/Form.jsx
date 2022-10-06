@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 import Input from "./Input";
 import File from "./File";
 import Select from "./Select";
-import Upload from "./Upload";
+import Upload from "./UploadValidation";
 import { View, Button, StyleSheet, Pressable, Text } from "react-native";
 import s from "../../helpers/styleHelper";
 import constants from "../../helpers/style";

@@ -45,7 +45,25 @@ const FeedMain = ({ navigation }) => {
       template={renderItem}
       onChange={getAllFeed}
       inputProps={inputProps}
-    ></GridTest>
+    >
+      <TouchableOpacity
+          icon="camera"
+          mode="contained"
+          onPress={() => {
+            navigation.navigate("feed_create");
+          }}
+          style={{
+            width: "100%",
+            height: 50,
+            backgroundColor: "purple",
+            justifyContent: "center",
+            alignItems: "center",
+            zIndex: 1,
+          }}
+      >
+        <Text>Create Post</Text>
+      </TouchableOpacity>
+    </GridTest>
   );
 };
 

@@ -9,7 +9,7 @@ import FeedEdit from "../components/feed/FeedEdit";
 import FeedMain from "../components/feed/FeedMain";
 import FeedCreate from "../components/feed/FeedCreate";
 import FeedCurrent from "../components/feed/FeedCurrent";
-import Upload from "../components/validation/Upload";
+import Upload from "../screens/GalleryPicker";
 import Cam from "../screens/Cam";
 import {getIcon} from "../helpers/iconHelper";
 

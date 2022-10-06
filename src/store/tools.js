@@ -1,7 +1,7 @@
 import { makeAutoObservable, runInAction } from "mobx";
 
 export default class Tools {
-  cameraImage = null;
+  preLoadImage = null;
   image = null;
   imageName = null;
   loading = false;
@@ -9,11 +9,9 @@ export default class Tools {
 
   uploadImage = async (file) => {
     try {
-      console.log(file.uri.slice(0, 100), "FILE");
       this.loading = true;
       this.imageName = (await this?.api?.upload(file)).data;
     } catch (error) {
-      console.log(error, "error file");
       this.root.setError(error);
       this.loading = false;
     }
@@ -30,14 +28,12 @@ export default class Tools {
     }
   };
 
-  setCameraImage = async (img) => {
+  setPreLoadImage = async (img) => {
     try {
       runInAction(() => {
         this.loading = true;
-        this.cameraImage = null;
-        this.cameraImage = img;
-        console.log(img.slice(-55, -1), "store img");
-        console.log(img.slice(0, 85), "store img 2");
+        this.preLoadImage = null;
+        this.preLoadImage = img;
         this.loading = false;
       });
     } catch (error) {

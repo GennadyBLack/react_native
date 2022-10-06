@@ -1,5 +1,5 @@
 import React from "react";
-import Upload from "./Upload";
+import Upload from "./UploadValidation";
 import { Controller } from "react-hook-form";
 import { StyleSheet, View, Text } from "react-native";
 

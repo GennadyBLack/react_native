@@ -4,7 +4,7 @@ import FeedCreate from "../components/feed/FeedCreate";
 import React from "react";
 import FeedEdit from "../components/feed/FeedEdit";
 import FeedCurrent from "../components/feed/FeedCurrent";
-import ImagePickerExample from "./Upload";
+import ImagePickerExample from "./GalleryPicker";
 import Cam from "./Cam";
 // import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 

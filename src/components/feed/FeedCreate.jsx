@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { View, Text, Button, Image } from "react-native";
 import { TextInput } from "react-native-paper";
 import useStore from "../../hooks/useStore";
-import Upload from "../../screens/Upload";
+import GalleryPicker from "../../screens/GalleryPicker";
 import Cam from "../../screens/Cam";
 import { useIsFocused } from "@react-navigation/native";
 
@@ -54,7 +54,7 @@ export default function FeedCreate({ navigation }) {
         title="Pick from Camera"
         onPress={() => navigation.navigate("cam")}
       ></Button>
-      <Upload />
+      <GalleryPicker/>
       <Button title="Create Feed" onPress={() => create()}></Button>
       <Button
         title="go Back"
