@@ -3,12 +3,11 @@ import { View, Text, Button, Image } from "react-native";
 import { TextInput } from "react-native-paper";
 import useStore from "../../hooks/useStore";
 import GalleryPicker from "../../screens/GalleryPicker";
-import Cam from "../../screens/Cam";
 import { useIsFocused } from "@react-navigation/native";
 
 export default function FeedCreate({ navigation }) {
   let [feed, tools] = useStore("feed", "tools");
-
+  let [image, setImage] = useState(null);
   let [form, setForm] = useState({ title: "", desc: "" });
 
   const isFocused = useIsFocused();
@@ -17,14 +16,32 @@ export default function FeedCreate({ navigation }) {
   };
 
   let create = async () => {
-    if (tools.cameraImage) {
-      await tools.uploadImage({ uri: tools.cameraImage });
-      await tools.setCameraImage(null);
+    if (image || tools.preLoadImage) {
+      try {
+        await tools.uploadImage({ uri: image || tools.preLoadImage });
+        if (tools.preLoadImage) {
+          await tools.setPreLoadImage(null);
+        }
+      } catch (e) {
+        console.error(e);
+      }
     }
     await feed.create(form);
     // feed.getAll();
     navigation.replace("feed");
   };
+
+  const onPhotoChosen = (img) => {
+    setImage(img);
+  };
+  useEffect(() => {
+    if (isFocused) {
+      console.log(
+        tools?.preLoadImage?.slice(0, 100) || "not ready",
+        "Preloadada"
+      );
+    }
+  }, [isFocused]);
 
   return (
     <View style={{ flex: 1 }}>
@@ -42,19 +59,15 @@ export default function FeedCreate({ navigation }) {
         mode="outlined"
         multiline
       />
-      {tools.cameraImage && isFocused && (
+      {image && isFocused && (
         <Image
-          source={{ uri: tools.cameraImage, cache: "reload" }}
+          source={{ uri: image, cache: "reload" }}
           style={{ width: "100%", height: 350 }}
           key={new Date()}
         />
       )}
 
-      <Button
-        title="Pick from Camera"
-        onPress={() => navigation.navigate("cam")}
-      ></Button>
-      <GalleryPicker/>
+      <GalleryPicker onChange={(img) => onPhotoChosen(img)} />
       <Button title="Create Feed" onPress={() => create()}></Button>
       <Button
         title="go Back"
