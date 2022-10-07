@@ -19,7 +19,9 @@ export default function FeedCreate({ navigation }) {
     if (image || tools.preLoadImage) {
       try {
         await tools.uploadImage({ uri: image || tools.preLoadImage });
-        await tools.preLoadImage(null);
+        if (tools.preLoadImage) {
+          await tools.setPreLoadImage(null);
+        }
       } catch (e) {
         console.error(e);
       }

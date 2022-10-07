@@ -13,7 +13,6 @@ export default function GalleryPicker({
 }) {
   const [image, setImage] = useState(() => (value ? value : null));
   const [tools] = useStore("tools");
-  const navigation = useNavigation();
 
   useEffect(() => {
     (async () => {
@@ -24,7 +23,6 @@ export default function GalleryPicker({
           await ImagePicker.requestCameraPermissionsAsync();
         const mediaLibraryPermission =
           await MediaLibrary.requestPermissionsAsync();
-        console.log(mediaLibraryPermission);
         if (status !== "granted") {
           alert("Sorry, we need media library permissions to make this work!");
         }
@@ -47,20 +45,7 @@ export default function GalleryPicker({
       quality: 1,
     });
 
-    if (!result.cancelled) {
-      // console.log(result);
-      let photo = result.uri;
-      if (Platform.OS === "android" || "ios") {
-        photo = "data:image/jpg;base64," + result.base64;
-      }
-
-      setImage(photo);
-      if (typeof onChange === "function") {
-        onChange(photo);
-        return;
-      }
-      await tools.setPreLoadImage(photo);
-    }
+    await onResult(result);
   };
 
   const openCamera = async () => {
@@ -70,7 +55,9 @@ export default function GalleryPicker({
       exif: false,
       allowsEditing: true,
     });
-
+    await onResult(result);
+  };
+  async function onResult(result) {
     if (!result.cancelled) {
       let photo = result.uri;
       await MediaLibrary.saveToLibraryAsync(photo);
@@ -85,8 +72,7 @@ export default function GalleryPicker({
       }
       await tools.setPreLoadImage(photo);
     }
-  };
-
+  }
   return (
     <View>
       <Button title={title ? title : "upload image"} onPress={pickImage} />

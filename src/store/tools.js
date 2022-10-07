@@ -34,7 +34,6 @@ export default class Tools {
         this.loading = true;
         this.preLoadImage = null;
         this.preLoadImage = img;
-        console.log(this.preLoadImage.slice(0, 100), "PRELOADR");
         this.loading = false;
       });
     } catch (error) {
