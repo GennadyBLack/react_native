@@ -1,8 +1,13 @@
 import { AntDesign } from "@expo/vector-icons";
 import { Entypo } from "@expo/vector-icons";
+import { FontAwesome } from "@expo/vector-icons";
 //https://icons.expo.fyi/ all icons here
 export const getIcon = (name, color = "black", size = 24) => {
   switch (name) {
+    case "book":
+      return <Entypo name="open-book" size={size} color={color} />;
+    case "send":
+      return <FontAwesome name="send" />;
     case "rightcircle":
       return <AntDesign name="rightcircle" size={size} color={color} />;
     case "leftcircle":

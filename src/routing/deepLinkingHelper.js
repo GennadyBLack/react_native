@@ -15,6 +15,7 @@ export const linking = {
       },
       // ProfileMain: "profile",
       Main: "main",
+      Comments: "comments",
       Test: "test",
       Feed: {
         path: "feed",
@@ -24,6 +25,7 @@ export const linking = {
           FeedCurrent: "feed_current",
           FeedEdit: "feed_edit",
           Upload: "feed/upload",
+          Comments: "comments",
         },
       },
       Quiz: {

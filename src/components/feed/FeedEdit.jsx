@@ -58,7 +58,11 @@ function FeedEdit({ route, navigation }) {
         toggle={() => setIsEdit(false)}
         startAt={1.2}
       >
-        <Form onSubmit={submit} defaultValues={feed?.currentFeed}>
+        <Form
+          onSubmit={submit}
+          defaultValues={feed?.currentFeed}
+          resetForm={false}
+        >
           <Form.Input
             style={{ marginTop: 20 }}
             name="title"

@@ -2,6 +2,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import FeedMain from "../components/feed/FeedMain";
 import FeedCreate from "../components/feed/FeedCreate";
 import React from "react";
+import Comments from "./Comments";
 import FeedEdit from "../components/feed/FeedEdit";
 import FeedCurrent from "../components/feed/FeedCurrent";
 import ImagePickerExample from "./GalleryPicker";
@@ -27,6 +28,11 @@ export default function Feed() {
       <Screen
         name="feed_create"
         component={FeedCreate}
+        options={{ headerShown: false }}
+      />
+      <Screen
+        name="comments"
+        component={Comments}
         options={{ headerShown: false }}
       />
       <Screen

@@ -42,7 +42,6 @@ const FeedComments = ({ comments, id }) => {
 };
 
 const CommentItem = ({ item }) => {
-  console.log(item);
   return (
     <View style={styles.comment_wrap}>
       <View style={styles.comment_author}></View>

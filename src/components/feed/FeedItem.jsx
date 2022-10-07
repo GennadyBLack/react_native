@@ -94,7 +94,7 @@ const FeedItem = ({ feed, onDelete, navigation }) => {
 
       {/*</View>*/}
       <PinchGestureHandler onGestureEvent={pinchHandler}>
-        <Animated.View style={{ flex: 1, zIndex: 1000 }}>
+        <Animated.View style={{ flex: 1, zIndex: 100 }}>
           <AnimateImage
             style={[styles.image, rCover]}
             source={{

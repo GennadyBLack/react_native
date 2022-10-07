@@ -5,6 +5,13 @@ import { getIcon } from "../../../helpers/iconHelper";
 const FeedFooterMenu = ({ id, navigation }) => {
   const menu = [
     {
+      title: "Read",
+      onPress: () => {
+        navigation.navigate("feed_current", { id });
+      },
+      icon: getIcon("book"),
+    },
+    {
       title: "Like",
       onPress: () => {},
       icon: getIcon("hearto"),
@@ -12,7 +19,7 @@ const FeedFooterMenu = ({ id, navigation }) => {
     {
       title: "Comments",
       onPress: () => {
-        navigation.navigate("feed_current", { id });
+        navigation.navigate("comments", { id });
       },
       icon: getIcon("message1"),
     },

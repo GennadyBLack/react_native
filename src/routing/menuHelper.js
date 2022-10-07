@@ -11,7 +11,8 @@ import FeedCreate from "../components/feed/FeedCreate";
 import FeedCurrent from "../components/feed/FeedCurrent";
 import Upload from "../screens/GalleryPicker";
 import Cam from "../screens/Cam";
-import {getIcon} from "../helpers/iconHelper";
+import { getIcon } from "../helpers/iconHelper";
+import Comments from "../screens/Comments";
 
 export const profileMenuList = (userMunu = []) => {
   try {
@@ -102,6 +103,13 @@ export const availableLinks = [
     options: { headerShown: false },
     required: false,
   },
+  {
+    name: "Comments",
+    component: Comments,
+    auth: true,
+    options: { headerShown: true },
+    required: false,
+  },
   // {
   //   name: "FeedEdit",
   //   component: FeedEdit,
@@ -116,6 +124,7 @@ export const availableLinks = [
     options: { headerShown: false },
     required: false,
   },
+
   {
     name: "Cam",
     component: Cam,
