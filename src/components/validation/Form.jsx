@@ -14,14 +14,12 @@ function Form({ defaultValues, children, onSubmit, resetForm = true }) {
     reset,
     handleSubmit,
     control,
-    formState: { errors },
+    formState: { errors, dirtyFields },
   } = methods;
-
-  const wrap = async () => {
-    await onSubmit();
+  const wrap = async (e) => {
+    await onSubmit(e);
     resetForm ? await reset({ defaultValues }) : null;
   };
-
   return (
     <View style={styles.form}>
       {React.Children.map(children, (child) => {
@@ -36,7 +34,7 @@ function Form({ defaultValues, children, onSubmit, resetForm = true }) {
             })
           : child;
       })}
-      <Pressable onPress={handleSubmit(wrap)} style={s.button}>
+      <Pressable onPress={handleSubmit((e) => wrap(e))} style={s.button}>
         <Text style={{ color: constants.LIGHT }}>Сохранить</Text>
       </Pressable>
     </View>

@@ -38,7 +38,13 @@ const Comments = () => {
     return (
       <View style={styles.comment_wrap} key={key}>
         <View style={styles.comment_author}></View>
-        <View style={{ justifyContent: "flex-start" }}>
+        <View
+          style={{
+            justifyContent: "flex-start",
+            alignItems: "stretch",
+            flex: 1,
+          }}
+        >
           <Text style={styles.author_name}>{item?.user?.username}</Text>
           <Text>{item?.title}</Text>
         </View>
@@ -51,7 +57,6 @@ const Comments = () => {
       <ScrollView>
         {comments?.comments?.length &&
           comments?.comments.map((item, idx) => {
-            console.log(item, "ITEM");
             return template(item, idx);
           })}
       </ScrollView>
@@ -75,6 +80,9 @@ const Comments = () => {
           onChangeText={(e) => {
             setText(e);
           }}
+          //   onKeyPress={(e) => {
+          //     e.key === "Enter" ? addComment() : null;
+          //   }}
         />
         <Pressable onPress={addComment}>
           <Text>{getIcon("send")}</Text>
@@ -87,12 +95,13 @@ const Comments = () => {
 const styles = StyleSheet.create({
   comment_wrap: {
     borderRadius: 5,
-    flex: 1,
+    padding: 10,
+    alignItems: "stretch",
+    flexShrink: 0,
     margin: 10,
     backgroundColor: "white",
     flexDirection: "row",
     minHeight: 60,
-    // justifyContent: "space-between",
   },
 
   comment_author: {

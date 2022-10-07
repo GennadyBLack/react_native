@@ -25,12 +25,9 @@ function ProfileMain({ route, navigation }) {
   const [auth] = useStore("auth");
   const [isEdit, setIsEdit] = useState(false);
   const user = auth?.user?.user;
-
+  console.log(user, "iiii");
   const submit = async (e) => {
-    console.log(e, "EEEE");
     const pre = prepareEdit(e, user);
-
-    console.log(pre, "PREE");
     await auth?.updateMe(pre);
   };
   const onMenuChange = async (e, link) => {
@@ -60,7 +57,7 @@ function ProfileMain({ route, navigation }) {
           style={{ flex: 1 }}
           scrollEventThrottle={16}
         >
-          <Form onSubmit={submit} defaultValues={user}>
+          <Form onSubmit={submit} defaultValues={user} resetForm={false}>
             <Form.Input
               name="username"
               mode="outlined"
@@ -72,7 +69,7 @@ function ProfileMain({ route, navigation }) {
                 max: { value: 3, message: "Больше 3" },
               }}
             />
-            <Form.Input
+            {/* <Form.Input
               name="email"
               mode="outlined"
               rules={{
@@ -81,7 +78,7 @@ function ProfileMain({ route, navigation }) {
                   message: "Это поле обязательно для заполнения чудик",
                 },
               }}
-            />
+            /> */}
             <Form.Input
               name="description"
               mode="outlined"
