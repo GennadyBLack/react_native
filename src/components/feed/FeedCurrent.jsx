@@ -3,13 +3,10 @@ import { View, Text, Button, Pressable, Image } from "react-native";
 import { observer } from "mobx-react-lite";
 import useStore from "../../hooks/useStore";
 import { apiUrl } from "../../api";
-import { AntDesign } from "@expo/vector-icons";
-import FeedComments from "./FeedComments";
 
 export default observer(FeedCurrent);
 import s from "../../helpers/styleHelper";
 import ScrollPageComponent from "../base/ScrollPageComponent";
-import Toggler from "../menu/Toggler";
 import { getIcon } from "../../helpers/iconHelper";
 
 function FeedCurrent({ route, navigation }) {

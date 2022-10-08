@@ -6,7 +6,6 @@ import constants from "../../helpers/style";
 
 const ProfileHeader = () => {
   const [auth] = useStore("auth");
-
   const user = auth?.user?.user;
   return (
     <View style={styles.profile_wrapper}>

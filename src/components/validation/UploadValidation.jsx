@@ -38,6 +38,7 @@ export default function UploadValidation({
     if (!result.cancelled) {
       console.log(tools.image, tools?.image);
       if (typeof onChange === "function") {
+        console.log(tools?.imageName, tools, "tools");
         onChange(tools?.imageName);
       }
 

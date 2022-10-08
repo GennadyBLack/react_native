@@ -11,7 +11,10 @@ export default function File({ name, label, control, rules, ...rest }) {
           <Upload
             error={fieldState?.error?.message}
             value={value || ""}
-            onChange={(value) => onChange(value)}
+            onChange={(value) => {
+              console.log(value);
+              onChange(value);
+            }}
             {...{
               ...fieldState,
               ...rest,

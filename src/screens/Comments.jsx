@@ -14,6 +14,7 @@ import Form from "../components/validation/Form";
 import { getIcon } from "../helpers/iconHelper";
 import { observer } from "mobx-react-lite";
 import useStore from "../hooks/useStore";
+import ProfileImg from "../components/profile/ProfileImg";
 
 const Comments = () => {
   const [comments] = useStore("comments");
@@ -37,7 +38,9 @@ const Comments = () => {
   const template = (item, key) => {
     return (
       <View style={styles.comment_wrap} key={key}>
-        <View style={styles.comment_author}></View>
+        <View style={styles.comment_author}>
+          <ProfileImg width={40} path={item?.user?.avatar} />
+        </View>
         <View
           style={{
             justifyContent: "flex-start",
@@ -66,13 +69,17 @@ const Comments = () => {
           justifyContent: "space-between",
           alignItems: "center",
           padding: 10,
+          backgroundColor: "white",
+          borderTopLeftRadius: 10,
+          borderTopRightRadius: 10,
         }}
       >
         <TextInput
           multiline
           style={{
             borderColor: "black",
-            borderWidth: 1,
+            // borderWidth: 1,
+            borderBottomWidth: 1,
             height: 40,
             width: "70vh",
           }}
@@ -84,8 +91,8 @@ const Comments = () => {
           //     e.key === "Enter" ? addComment() : null;
           //   }}
         />
-        <Pressable onPress={addComment}>
-          <Text>{getIcon("send")}</Text>
+        <Pressable onPress={addComment} style={{ marginHorizontal: 10 }}>
+          <Text>{getIcon("send", "black", 27)}</Text>
         </Pressable>
       </View>
     </SafeAreaView>
@@ -105,11 +112,8 @@ const styles = StyleSheet.create({
   },
 
   comment_author: {
-    width: 40,
-    height: 40,
     marginRight: 20,
     borderRadius: 20,
-    backgroundColor: "grey",
   },
   author_name: {
     fontSize: 20,

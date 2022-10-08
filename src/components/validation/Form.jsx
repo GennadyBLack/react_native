@@ -8,7 +8,13 @@ import { View, Button, StyleSheet, Pressable, Text } from "react-native";
 import s from "../../helpers/styleHelper";
 import constants from "../../helpers/style";
 
-function Form({ defaultValues, children, onSubmit, resetForm = true }) {
+function Form({
+  defaultValues,
+  children,
+  onSubmit,
+  resetForm = true,
+  onSuccess,
+}) {
   const methods = useForm({ defaultValues });
   const {
     reset,
@@ -16,9 +22,11 @@ function Form({ defaultValues, children, onSubmit, resetForm = true }) {
     control,
     formState: { errors, dirtyFields },
   } = methods;
+  // console.log(dirtyFields, "dirtyFields");
   const wrap = async (e) => {
     await onSubmit(e);
     resetForm ? await reset({ defaultValues }) : null;
+    onSuccess ? await onSuccess() : null;
   };
   return (
     <View style={styles.form}>

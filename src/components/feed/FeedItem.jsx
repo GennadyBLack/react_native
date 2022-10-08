@@ -11,8 +11,10 @@ import { Entypo } from "@expo/vector-icons";
 import { PinchGestureHandler } from "react-native-gesture-handler";
 import { apiUrl } from "../../api";
 import FeedFooterMenu from "./feedComponents/FeedFooterMenu";
+import ProfileImg from "../profile/ProfileImg";
 
 const AnimateImage = Animated.createAnimatedComponent(Image);
+
 const { height, width } = Dimensions.get("window");
 const SIZE = width;
 
@@ -60,7 +62,7 @@ const FeedItem = ({ feed, onDelete, navigation }) => {
       {/* header */}
       <View style={styles.feed_header}>
         <View style={styles.header_info}>
-          <View style={styles.author_img}></View>
+          <ProfileImg width={55} path={feed?.user?.avatar} />
           <View style={{ marginLeft: 10 }}>
             <View style={styles.author_name}>
               <Text>Aydar</Text>
@@ -140,10 +142,6 @@ const styles = StyleSheet.create({
   },
   author_img: {
     margin: 7,
-    height: 55,
-    width: 55,
-    borderRadius: 27,
-    backgroundColor: "grey",
   },
   header_menu: {
     justifyContent: "center",
