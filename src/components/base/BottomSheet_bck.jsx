@@ -6,13 +6,11 @@ import Animated, {
   Extrapolate,
   interpolate,
   useAnimatedStyle,
-  useDerivedValue,
   useSharedValue,
   withSpring,
 } from "react-native-reanimated";
 import useStore from "../../hooks/useStore";
 import { observer } from "mobx-react-lite";
-import PortalContext from "../../contexts/portalContext";
 
 const { height: SCREEN_HEIGHT } = Dimensions.get("window");
 

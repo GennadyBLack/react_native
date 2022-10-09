@@ -49,6 +49,7 @@ export const availableLinks = [
     },
     required: true,
     leftMenu: true,
+    icon: "user",
   },
   {
     name: "Test",
@@ -61,6 +62,7 @@ export const availableLinks = [
     },
     required: true,
     leftMenu: true,
+    icon: "list",
   },
   {
     name: "Feed",
@@ -73,6 +75,7 @@ export const availableLinks = [
     },
     required: true,
     leftMenu: true,
+    icon: "home",
   },
   {
     name: "FeedEdit",
@@ -144,6 +147,7 @@ export const availableLinks = [
     },
     required: false,
     leftMenu: true,
+    icon: "question",
   },
   {
     name: "Login",

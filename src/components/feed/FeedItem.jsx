@@ -6,6 +6,7 @@ import Animated, {
   useSharedValue,
   withTiming,
 } from "react-native-reanimated";
+import moment from "moment/moment";
 import MenuToggler from "../menu/MenuToggler";
 import { Entypo } from "@expo/vector-icons";
 import { PinchGestureHandler } from "react-native-gesture-handler";
@@ -65,10 +66,12 @@ const FeedItem = ({ feed, onDelete, navigation }) => {
           <ProfileImg width={55} path={feed?.user?.avatar} />
           <View style={{ marginLeft: 10 }}>
             <View style={styles.author_name}>
-              <Text>Aydar</Text>
+              <Text>{feed?.user?.username}</Text>
             </View>
             <View style={styles.feed_created_at}>
-              <Text>12.02.2022</Text>
+              <Text>
+                {moment(feed?.createdAt).startOf("minutes").fromNow()}{" "}
+              </Text>
             </View>
           </View>
         </View>
