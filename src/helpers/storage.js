@@ -1,5 +1,6 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import * as SecureStore from "expo-secure-store";
+import {Platform} from "react-native";
 
 export const setToken = async (value) => {
   try {
@@ -33,8 +34,12 @@ export const getFromStorage = async (key) => {
 
 export const getToken = async () => {
   try {
-    // const value = await AsyncStorage.getItem("token");
-    const value = await SecureStore?.getItemAsync("token");
+    let value;
+    if(Platform.OS === 'web') {
+      value = await AsyncStorage.getItem("token")
+    } else {
+      value = await SecureStore?.getItemAsync("token");
+    }
     if (value !== null || value !== "null") {
       return value;
     }
@@ -46,7 +51,11 @@ export const getToken = async () => {
 
 export const removeToken = async () => {
   try {
-    await AsyncStorage.removeItem("token");
+    if(Platform.OS === 'web') {
+      await AsyncStorage.removeItem("token");
+    } else {
+      await SecureStore?.deleteItemAsync("token");
+    }
   } catch (e) {
     console.log(e, "token");
   }

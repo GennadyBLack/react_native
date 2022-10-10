@@ -7,6 +7,7 @@ import {
 } from "../helpers/storage";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import * as SecureStore from "expo-secure-store";
+import {Platform} from "react-native";
 
 export default class Auth {
   user = null;
@@ -44,7 +45,11 @@ export default class Auth {
           if (res?.data?.token) {
             if (data.rememberMe) {
               console.log("setting pass");
-              await SecureStore.setItemAsync("token", res?.data?.token);
+              if(Platform.OS === 'web') {
+                await setToken(res?.data?.token);
+              } else {
+                await SecureStore?.setItemAsync("token", res?.data?.token);
+              }
             }
             await setToken(res?.data?.token);
             await setInStorage("last_login", `${new Date()}`);

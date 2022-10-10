@@ -131,6 +131,7 @@ const styles = StyleSheet.create({
     height: SIZE * 1.3,
     marginBottom: 10,
     backgroundColor: "white",
+    zIndex: 1,
   },
   header_info: {
     alignItems: "center",
