@@ -7,6 +7,7 @@ import {
   StatusBar,
   Dimensions,
   Pressable,
+  Switch,
 } from "react-native";
 import constants from "../helpers/style";
 import s from "../helpers/styleHelper";
@@ -16,12 +17,17 @@ import { TextInput } from "react-native-paper";
 import Animated from "react-native-reanimated";
 const { height, width } = Dimensions.get("window");
 import useFingerPrint from "../hooks/useFingerPring";
+import { CheckBox } from "react-native-web";
 
 export default observer(Login);
 
 function Login({ navigation }) {
   let [auth] = useStore("auth");
-  let [form, setForm] = useState({ password: "", email: "" });
+  let [form, setForm] = useState({
+    password: "",
+    email: "",
+    rememberMe: false,
+  });
   const [content] = useFingerPrint();
 
   const regisrer = () => {
@@ -55,10 +61,15 @@ function Login({ navigation }) {
           value={form?.password}
           onChangeText={(text) => setText(text, "password")}
         />
+        <Switch
+          value={form?.rememberMe}
+          onValueChange={(value) => setText(value, "rememberMe")}
+        />
+        <Text>Remember Me</Text>
         <Pressable
           onPress={() => {
-            console.log('touched')
-            login()
+            console.log("touched");
+            login();
           }}
           style={[s.button, { marginTop: 20 }]}
         >

@@ -14,6 +14,7 @@ import "react-native-gesture-handler";
 import * as SplashScreen from "expo-splash-screen";
 import { io } from "socket.io-client";
 import { baseURL } from "./src/api";
+import * as Keychain from "react-native-keychain";
 
 SplashScreen.preventAutoHideAsync();
 function App() {
@@ -32,25 +33,26 @@ function App() {
           let res = rootStore.auth.fetchMe();
           resolve(res, "SuperRes");
         });
-        const iniOptions = {
-          reconnection: true,
-          auth: {
-            token: await getToken(),
-          },
-        };
-
-        const socket = io(baseURL, iniOptions);
-        console.log("iniOptions", socket);
-        socket.emit("ping");
-        socket.on("ping", () => {
-          console.log("ping");
-        });
-        socket.on("pong", () => {
-          console.log("pong");
-        });
-        socket.on("connection", () => {
-          console.log("socket was connected succesfull");
-        });
+        // console.log(await getToken());
+        // const iniOptions = {
+        //   reconnection: true,
+        //   auth: {
+        //     token: await getToken(),
+        //   },
+        // };
+        //
+        // const socket = io(baseURL, iniOptions);
+        // console.log("iniOptions", socket);
+        // socket.emit("ping");
+        // socket.on("ping", () => {
+        //   console.log("ping");
+        // });
+        // socket.on("pong", () => {
+        //   console.log("pong");
+        // });
+        // socket.on("connection", () => {
+        //   console.log("socket was connected succesfull");
+        // });
       } catch (e) {
         console.error(e);
       } finally {

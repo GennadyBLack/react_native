@@ -1,4 +1,5 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import * as SecureStore from "expo-secure-store";
 
 export const setToken = async (value) => {
   try {
@@ -32,7 +33,8 @@ export const getFromStorage = async (key) => {
 
 export const getToken = async () => {
   try {
-    const value = await AsyncStorage.getItem("token");
+    // const value = await AsyncStorage.getItem("token");
+    const value = await SecureStore?.getItemAsync("token");
     if (value !== null || value !== "null") {
       return value;
     }

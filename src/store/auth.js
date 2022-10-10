@@ -6,6 +6,7 @@ import {
   setInStorage,
 } from "../helpers/storage";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import * as SecureStore from "expo-secure-store";
 
 export default class Auth {
   user = null;
@@ -36,10 +37,15 @@ export default class Auth {
 
   login = async (data) => {
     try {
+      console.log(data, "DATA");
       this.loading = true;
       await this.root.api.auth.login(data).then(async (res) =>
         runInAction(async () => {
           if (res?.data?.token) {
+            if (data.rememberMe) {
+              console.log("setting pass");
+              await SecureStore.setItemAsync("token", res?.data?.token);
+            }
             await setToken(res?.data?.token);
             await setInStorage("last_login", `${new Date()}`);
             await this.fetchMe();
