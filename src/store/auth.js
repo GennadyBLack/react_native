@@ -4,10 +4,11 @@ import {
   getToken,
   removeToken,
   setInStorage,
+  removeFromStorage,
 } from "../helpers/storage";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import * as SecureStore from "expo-secure-store";
-import {Platform} from "react-native";
+import { Platform } from "react-native";
 
 export default class Auth {
   user = null;
@@ -43,9 +44,11 @@ export default class Auth {
       await this.root.api.auth.login(data).then(async (res) =>
         runInAction(async () => {
           if (res?.data?.token) {
+            await setInStorage("rememberMe", false);
             if (data.rememberMe) {
+              await setInStorage("rememberMe", true);
               console.log("setting pass");
-              if(Platform.OS === 'web') {
+              if (Platform.OS === "web") {
                 await setToken(res?.data?.token);
               } else {
                 await SecureStore?.setItemAsync("token", res?.data?.token);
@@ -106,14 +109,16 @@ export default class Auth {
     return this.logged;
   }
 
-  logout() {
+  async logout() {
     try {
       this.user = null;
       this.logged = false;
-      removeToken();
+      await removeToken();
+      await removeFromStorage("rememberMe");
     } catch (error) {
       this.user = null;
-      removeToken();
+      await removeToken();
+      await removeFromStorage("rememberMe");
       console.log(error, " error - auth logout");
     }
   }

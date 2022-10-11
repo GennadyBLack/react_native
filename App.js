@@ -1,7 +1,13 @@
-import { StyleSheet, Text, View, StatusBar } from "react-native";
+import { StyleSheet, Text, View, StatusBar, Platform } from "react-native";
 import {} from "react-native";
 import React, { useCallback, useEffect, useState } from "react";
-import { getToken } from "./src/helpers/storage";
+import {
+  getFromStorage,
+  getToken,
+  removeFromStorage,
+  removeToken,
+  setInStorage,
+} from "./src/helpers/storage";
 
 // import AppLoading from "expo-app-loading";
 import * as Network from "expo-network";
@@ -15,10 +21,18 @@ import * as SplashScreen from "expo-splash-screen";
 import { io } from "socket.io-client";
 import { baseURL } from "./src/api";
 import * as Keychain from "react-native-keychain";
+import { useAppState } from "./src/hooks/useStatus";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 SplashScreen.preventAutoHideAsync();
 function App() {
   let [isReady, setReady] = useState(false);
+  const appState = AsyncStorage.getItem("appState");
+
+  if (Platform.OS !== "web") {
+    useAppState();
+    console.log(appState);
+  }
 
   useEffect(() => {
     const initialApp = async () => {
@@ -29,6 +43,9 @@ function App() {
             message: "Отсутствует подключение к интернету дружочек",
           });
         });
+        const remember = await getFromStorage("rememberMe");
+
+        if (!remember) await removeToken();
         await new Promise((resolve) => {
           let res = rootStore.auth.fetchMe();
           resolve(res, "SuperRes");
