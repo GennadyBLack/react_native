@@ -1,7 +1,7 @@
 import Axios from "axios";
 import { getToken } from "../helpers/storage";
 
-const prod = false;
+const prod = true;
 const baseURL = prod ? "http://62.217.178.124:8081" : "http://localhost:8081";
 const apiUrl = `${baseURL}/api`;
 

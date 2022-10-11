@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, StatusBar, Platform } from "react-native";
+import {StyleSheet, Text, View, StatusBar, Platform, AppState} from "react-native";
 import {} from "react-native";
 import React, { useCallback, useEffect, useState } from "react";
 import {
@@ -20,19 +20,12 @@ import "react-native-gesture-handler";
 import * as SplashScreen from "expo-splash-screen";
 import { io } from "socket.io-client";
 import { baseURL } from "./src/api";
-import * as Keychain from "react-native-keychain";
 import { useAppState } from "./src/hooks/useStatus";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+
 
 SplashScreen.preventAutoHideAsync();
 function App() {
   let [isReady, setReady] = useState(false);
-  const appState = AsyncStorage.getItem("appState");
-
-  if (Platform.OS !== "web") {
-    useAppState();
-    console.log(appState);
-  }
 
   useEffect(() => {
     const initialApp = async () => {
@@ -44,8 +37,10 @@ function App() {
           });
         });
         const remember = await getFromStorage("rememberMe");
+        // await setInStorage("rememberMe", null)
+        // await removeToken();
+        if (!remember || remember == "false") await removeToken();
 
-        if (!remember) await removeToken();
         await new Promise((resolve) => {
           let res = rootStore.auth.fetchMe();
           resolve(res, "SuperRes");
@@ -59,7 +54,7 @@ function App() {
         };
 
         const socket = io(baseURL, iniOptions);
-        console.log("iniOptions", socket);
+        // console.log("iniOptions", socket);
         socket.emit("ping");
         socket.on("ping", () => {
           console.log("ping");
@@ -79,6 +74,9 @@ function App() {
     };
     initialApp();
   }, []);
+  if (Platform.OS !== "web") {
+    useAppState();
+  }
   const onLayoutRootView = useCallback(async () => {
     if (isReady) {
       // This tells the splash screen to hide immediately! If we call this after

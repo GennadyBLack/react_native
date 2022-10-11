@@ -40,21 +40,21 @@ export default class Auth {
   login = async (data) => {
     try {
       console.log(data, "DATA");
+      console.log(data?.rememberMe, "data?.rememberMe");
       this.loading = true;
       await this.root.api.auth.login(data).then(async (res) =>
         runInAction(async () => {
           if (res?.data?.token) {
-            await setInStorage("rememberMe", false);
-            if (data.rememberMe) {
-              await setInStorage("rememberMe", true);
+            await setInStorage("rememberMe", "false");
+            if (data?.rememberMe) {
+              await setInStorage("rememberMe", "true");
               console.log("setting pass");
-              if (Platform.OS === "web") {
-                await setToken(res?.data?.token);
-              } else {
-                await SecureStore?.setItemAsync("token", res?.data?.token);
-              }
             }
-            await setToken(res?.data?.token);
+            if (Platform.OS === "web") {
+              await setToken(res?.data?.token);
+            } else {
+              await SecureStore?.setItemAsync("token", res?.data?.token);
+            }
             await setInStorage("last_login", `${new Date()}`);
             await this.fetchMe();
           }

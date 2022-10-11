@@ -1,21 +1,19 @@
 import { useEffect, useState } from "react";
 import { AppState, AppStateStatus } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import {getFromStorage, setInStorage} from "../helpers/storage";
 
 export function useAppState() {
   const currentState = AppState.currentState;
   const [appState, setAppState] = useState(currentState);
 
   useEffect(() => {
-    function onChange(newState) {
-      AsyncStorage.setItem("appState", "active");
+    async function onChange(newState) {
       setAppState(newState);
     }
-
     const subscription = AppState.addEventListener("change", onChange);
 
     return () => {
-      AsyncStorage.setItem("appState", "closed");
       if (typeof subscription?.remove === "function") {
         subscription.remove();
       } else {

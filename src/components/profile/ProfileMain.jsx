@@ -18,7 +18,7 @@ function ProfileMain({ route, navigation }) {
   const [auth] = useStore("auth");
   const [isEdit, setIsEdit] = useState(false);
   const user = auth?.user?.user;
-  console.log(user, "iiii");
+  // console.log(user, "iiii");
   const submit = async (e) => {
     const pre = prepareEdit(e, user);
     await auth?.updateMe(pre);
