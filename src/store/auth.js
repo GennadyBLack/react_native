@@ -4,7 +4,7 @@ import {
   getToken,
   removeToken,
   setInStorage,
-  removeFromStorage,
+  removeFromStorage, getFromStorage,
 } from "../helpers/storage";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import * as SecureStore from "expo-secure-store";
@@ -15,6 +15,8 @@ export default class Auth {
   logged = false;
   loading = false;
   error = null;
+  location = null;
+  device = null;
 
   fetchMe = async () => {
     try {
@@ -24,8 +26,19 @@ export default class Auth {
       }
       this.loading = true;
       await this?.root?.api?.me?.me({}).then((res) => {
-        runInAction(() => {
+        runInAction(async () => {
           this.user = res?.data?.data;
+          console.log(this.location)
+          console.log(this.device)
+          if(this.location && this.device ) {
+            let visits = await getFromStorage("visits")
+            if(!visits) visits = "[]"
+            visits = JSON.parse(visits)
+            if(visits.length > 5) visits.shift();
+            visits.push({time: new Date(), location: this.location, device: this.device})
+            await setInStorage("visits", JSON.stringify(visits));
+          }
+
           this.logged = true;
           this.loading = false;
         });

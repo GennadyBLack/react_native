@@ -1,7 +1,5 @@
 import { useEffect, useState } from "react";
 import { AppState, AppStateStatus } from "react-native";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import {getFromStorage, setInStorage} from "../helpers/storage";
 
 export function useAppState() {
   const currentState = AppState.currentState;
@@ -26,4 +24,4 @@ export function useAppState() {
   return appState;
 }
 
-export { AppStateStatus };
+// export { AppStateStatus };

@@ -20,13 +20,16 @@ import "react-native-gesture-handler";
 import * as SplashScreen from "expo-splash-screen";
 import { io } from "socket.io-client";
 import { baseURL } from "./src/api";
-import { useAppState } from "./src/hooks/useStatus";
+// import { useAppState } from "./src/hooks/useStatus";
+import useLocation from "./src/hooks/useLocation";
+import * as Device from "expo-device"
 
 
 SplashScreen.preventAutoHideAsync();
 function App() {
   let [isReady, setReady] = useState(false);
-
+  const location =  useLocation();
+  console.log(location, "LOCATION")
   useEffect(() => {
     const initialApp = async () => {
       try {
@@ -41,8 +44,15 @@ function App() {
         // await removeToken();
         if (!remember || remember == "false") await removeToken();
 
+        rootStore.auth.location = location
+        rootStore.auth.device =`${Device.brand} ${Device.modelName} - ${Device.osName}:${Device.osVersion}`
+        if (Platform.OS === "web") {
+          rootStore.auth.device =`${Device.osName} - ${Device.manufacturer} ${Device.modelName}`
+        }
+
+
         await new Promise((resolve) => {
-          let res = rootStore.auth.fetchMe();
+          let res = rootStore.auth.fetchMe(location);
           resolve(res, "SuperRes");
         });
 
@@ -74,9 +84,9 @@ function App() {
     };
     initialApp();
   }, []);
-  if (Platform.OS !== "web") {
-    useAppState();
-  }
+  // if (Platform.OS !== "web") {
+  //   useAppState();
+  // }
   const onLayoutRootView = useCallback(async () => {
     if (isReady) {
       // This tells the splash screen to hide immediately! If we call this after

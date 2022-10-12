@@ -3,7 +3,7 @@ import { Entypo } from "@expo/vector-icons";
 import { FontAwesome } from "@expo/vector-icons";
 //https://icons.expo.fyi/ all icons here
 export const getIcon = (name, color = "black", size = 24) => {
-  console.log(name);
+  // console.log(name);
   switch (name) {
     case "edit":
       return <FontAwesome name="edit" size={size} color={color} />;
