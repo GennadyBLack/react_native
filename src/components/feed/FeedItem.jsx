@@ -41,14 +41,17 @@ const FeedItem = ({ feed, onDelete, navigation }) => {
 
   const scale = useSharedValue(1);
   const cardHeight = useSharedValue(height / 1.5);
+  const zIndex = useSharedValue(1);
   const pinchHandler = useAnimatedGestureHandler({
     onActive: (event) => {
       scale.value = event.scale;
+      zIndex.value = 1000000;
       cardHeight.value = height * event.scale;
     },
     onEnd: (event) => {
       scale.value = withTiming(1);
       cardHeight.value = height / 1.5;
+      zIndex.value = 1;
     },
   });
 
@@ -57,9 +60,17 @@ const FeedItem = ({ feed, onDelete, navigation }) => {
       transform: [{ scale: scale.value }],
     };
   });
+  const rWrap = useAnimatedStyle(() => {
+    return {
+      zIndex: zIndex.value,
+    };
+  });
 
   return feed ? (
-    <Animated.View style={styles.feed_wrapper}>
+    <Animated.View
+      style={[styles.feed_wrapper, rWrap]}
+      nativeID={"FEED-WRAPPER"}
+    >
       {/* header */}
       <View style={styles.feed_header}>
         <View style={styles.header_info}>
@@ -131,7 +142,6 @@ const styles = StyleSheet.create({
     height: SIZE * 1.3,
     marginBottom: 10,
     backgroundColor: "white",
-    zIndex: 1,
   },
   header_info: {
     alignItems: "center",
