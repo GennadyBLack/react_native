@@ -18,8 +18,11 @@ import ModalSheet from "../base/ModalSheet";
 import s from "../../helpers/styleHelper";
 import { apiUrl } from "../../api";
 import { getIcon } from "../../helpers/iconHelper";
+import ProfileEditForm from "./ProfileEditForm";
 
 export default observer(ProfileMain);
+
+
 
 function ProfileMain({ route, navigation }) {
   const [auth] = useStore("auth");
@@ -49,23 +52,24 @@ function ProfileMain({ route, navigation }) {
     }
     await auth?.updateMe({ menu: userLinks });
   };
+
   return (
     <ScrollPageComponent
-      header_image={
+      headerImage={
         <Image
-          style={styles.image}
-          source={{
-            uri: `${apiUrl}/files/${user?.avatar || "placeholder.png"}`,
-          }}
+            style={styles.image}
+            source={{
+              uri: `${apiUrl}/files/${user?.avatar || "placeholder.png"}`,
+            }}
         />
       }
-      footer_menu={
+      footerMenu={
         <View>
-          <Pressable onPress={_onPress("isEditForm")}>
+          <Pressable onPress={() => _onPress("isEditForm")}>
             {getIcon("edit")}
           </Pressable>
 
-          <Pressable onPress={_onPress("showLogs")}>
+          <Pressable onPress={_onPress.bind(null,"showLogs")}>
             <Text>Show last login</Text>
           </Pressable>
         </View>
@@ -83,7 +87,8 @@ function ProfileMain({ route, navigation }) {
             setShowModal(!showModal);
           }}
         >
-          <ProfileEditForm />
+          {modalContent === 'isEditForm' && <ProfileEditForm submit={submit} user={user}/>}
+
         </ModalSheet>
       </View>
     </ScrollPageComponent>

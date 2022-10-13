@@ -11,11 +11,11 @@ import Animated, {
 } from "react-native-reanimated";
 
 const ScrollPageComponent = ({
-  footer_menu,
+  footerMenu,
   data,
   children,
-  header_image,
-  header_menu,
+  headerImage,
+  headerMenu,
   HEADER_MAX = 250,
   HEADER_MIN = 0,
 }) => {
@@ -37,7 +37,7 @@ const ScrollPageComponent = ({
   return (
     <SafeAreaView>
       <Animated.View style={[rHeaderStyle, styles.header]}>
-        {header_image ? header_image : <Text>Hi</Text>}
+        {headerImage ? headerImage : <Text>Hi</Text>}
         <View
           style={{
             width: "100%",
@@ -46,7 +46,7 @@ const ScrollPageComponent = ({
             bottom: 20,
           }}
         >
-          {header_menu ? header_menu : <Text></Text>}
+          {headerMenu ? headerMenu : <Text></Text>}
         </View>
       </Animated.View>
       <Animated.ScrollView
@@ -55,7 +55,7 @@ const ScrollPageComponent = ({
         onScroll={scrollHandler}
       >
         {children}
-        {footer_menu ? footer_menu : <Text></Text>}
+        {footerMenu ? footerMenu : <Text></Text>}
       </Animated.ScrollView>
     </SafeAreaView>
   );
