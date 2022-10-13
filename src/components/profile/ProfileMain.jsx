@@ -1,6 +1,13 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import ScrollPageComponent from "../base/ScrollPageComponent";
-import { View, Image, StyleSheet, ScrollView, Pressable } from "react-native";
+import {
+  View,
+  Image,
+  StyleSheet,
+  ScrollView,
+  Pressable,
+  Text,
+} from "react-native";
 import { observer } from "mobx-react-lite";
 import useStore from "../../hooks/useStore";
 import { Title, Paragraph } from "react-native-paper";
@@ -16,13 +23,23 @@ export default observer(ProfileMain);
 
 function ProfileMain({ route, navigation }) {
   const [auth] = useStore("auth");
-  const [isEdit, setIsEdit] = useState(false);
+  const [showModal, setShowModal] = useState(false);
+  const [modalContent, setModalContent] = useState(false);
   const user = auth?.user?.user;
   // console.log(user, "iiii");
   const submit = async (e) => {
     const pre = prepareEdit(e, user);
     await auth?.updateMe(pre);
   };
+
+  const _onPress = useCallback(
+    (arg) => {
+      setShowModal(!showModal);
+      setModalContent(arg);
+    },
+    [showModal]
+  );
+
   const onMenuChange = async (e, link) => {
     let userLinks = [...user.menu];
     if (e) {
@@ -43,9 +60,15 @@ function ProfileMain({ route, navigation }) {
         />
       }
       footer_menu={
-        <Pressable onPress={setIsEdit.bind(null, !isEdit)}>
-          {getIcon("edit")}
-        </Pressable>
+        <View>
+          <Pressable onPress={_onPress("isEditForm")}>
+            {getIcon("edit")}
+          </Pressable>
+
+          <Pressable onPress={_onPress("showLogs")}>
+            <Text>Show last login</Text>
+          </Pressable>
+        </View>
       }
     >
       <View style={styles.wrap} nativID={"super-wrap"}>
@@ -55,43 +78,12 @@ function ProfileMain({ route, navigation }) {
         </View>
         <ModalSheet
           startAt={1.3}
-          visible={isEdit}
+          visible={showModal}
           toggle={() => {
-            setIsEdit(false);
+            setShowModal(!showModal);
           }}
         >
-          <ScrollView
-            nativeID={"spisok-pipisok"}
-            style={{ flex: 1 }}
-            scrollEventThrottle={16}
-          >
-            <Form onSubmit={submit} defaultValues={user} resetForm={false}>
-              <Form.Input
-                name="username"
-                mode="outlined"
-                rules={{
-                  required: {
-                    value: true,
-                    message: "Это поле обязательно для заполнения чудик",
-                  },
-                  max: { value: 3, message: "Больше 3" },
-                }}
-              />
-              <Form.Input
-                name="description"
-                mode="outlined"
-                multiline
-                rules={{
-                  required: {
-                    value: true,
-                    message: "Это поле обязательно для заполнения чудик",
-                  },
-                }}
-              />
-              <Form.File name="avatar" title="Загрузить фото профиля" />
-              <Switch />
-            </Form>
-          </ScrollView>
+          <ProfileEditForm />
         </ModalSheet>
       </View>
     </ScrollPageComponent>

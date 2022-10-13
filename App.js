@@ -1,4 +1,11 @@
-import {StyleSheet, Text, View, StatusBar, Platform, AppState} from "react-native";
+import {
+  StyleSheet,
+  Text,
+  View,
+  StatusBar,
+  Platform,
+  AppState,
+} from "react-native";
 import {} from "react-native";
 import React, { useCallback, useEffect, useState } from "react";
 import {
@@ -22,17 +29,20 @@ import { io } from "socket.io-client";
 import { baseURL } from "./src/api";
 // import { useAppState } from "./src/hooks/useStatus";
 import useLocation from "./src/hooks/useLocation";
-import * as Device from "expo-device"
-
+import * as Device from "expo-device";
 
 SplashScreen.preventAutoHideAsync();
 function App() {
   let [isReady, setReady] = useState(false);
-  const location =  useLocation();
-  console.log(location, "LOCATION")
+  const location = useLocation();
+  console.log(location, "LOCATION");
   useEffect(() => {
     const initialApp = async () => {
       try {
+        if (!location) {
+          console.error("Не удалось определить ваше местоположение");
+          return;
+        }
         await Network.getNetworkStateAsync().then((res) => {
           rootStore.setInternetConnection(res.isInternetReachable);
           rootStore.setError({
@@ -44,12 +54,13 @@ function App() {
         // await removeToken();
         if (!remember || remember == "false") await removeToken();
 
-        rootStore.auth.location = location
-        rootStore.auth.device =`${Device.brand} ${Device.modelName} - ${Device.osName}:${Device.osVersion}`
+        rootStore.auth.location = location;
+        rootStore.auth.device = `${Device.brand} ${Device.modelName} - ${Device.osName}:${Device.osVersion}`;
         if (Platform.OS === "web") {
-          rootStore.auth.device =`${Device.osName} - ${Device.manufacturer} ${Device.modelName}`
+          rootStore.auth.device = `${Device.osName} ${
+            Device.manufacturer || ""
+          } ${Device.modelName || ""}`;
         }
-
 
         await new Promise((resolve) => {
           let res = rootStore.auth.fetchMe(location);
@@ -83,7 +94,7 @@ function App() {
       }
     };
     initialApp();
-  }, []);
+  }, [location]);
   // if (Platform.OS !== "web") {
   //   useAppState();
   // }
