@@ -34,15 +34,15 @@ import * as Device from "expo-device";
 SplashScreen.preventAutoHideAsync();
 function App() {
   let [isReady, setReady] = useState(false);
-  const location = useLocation();
-  console.log(location, "LOCATION");
+  // const location = useLocation();
+  // console.log(location, "LOCATION");
   useEffect(() => {
     const initialApp = async () => {
       try {
-        if (!location) {
-          console.error("Не удалось определить ваше местоположение");
-          return;
-        }
+        // if (!location) {
+        //   console.error("Не удалось определить ваше местоположение");
+        //   return;
+        // }
         await Network.getNetworkStateAsync().then((res) => {
           rootStore.setInternetConnection(res.isInternetReachable);
           rootStore.setError({
@@ -54,7 +54,7 @@ function App() {
         // await removeToken();
         if (!remember || remember == "false") await removeToken();
 
-        rootStore.auth.location = location;
+        // rootStore.auth.location = location;
         rootStore.auth.device = `${Device.brand} ${Device.modelName} - ${Device.osName}:${Device.osVersion}`;
         if (Platform.OS === "web") {
           rootStore.auth.device = `${Device.osName} ${

@@ -9,6 +9,8 @@ import {
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import * as SecureStore from "expo-secure-store";
 import { Platform } from "react-native";
+import * as Network from "expo-network";
+import api from "../api";
 
 export default class Auth {
   user = null;
@@ -30,12 +32,14 @@ export default class Auth {
           this.user = res?.data?.data;
           console.log(this.location)
           console.log(this.device)
-          if(this.location && this.device ) {
+          const ip = await api.get('https://ipapi.co/json/')
+          console.log(ip)
+          if(this.location || this.device ) {
             let visits = await getFromStorage("visits")
             if(!visits) visits = "[]"
             visits = JSON.parse(visits)
             if(visits.length > 5) visits.shift();
-            visits.push({time: new Date(), location: this.location, device: this.device})
+            visits.push({time: new Date(), location: this.location, device: this.device, ip})
             await setInStorage("visits", JSON.stringify(visits));
           }
 

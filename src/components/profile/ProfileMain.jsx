@@ -19,6 +19,7 @@ import s from "../../helpers/styleHelper";
 import { apiUrl } from "../../api";
 import { getIcon } from "../../helpers/iconHelper";
 import ProfileEditForm from "./ProfileEditForm";
+import ProfileLogs from "./ProfileLogs";
 
 export default observer(ProfileMain);
 
@@ -88,6 +89,7 @@ function ProfileMain({ route, navigation }) {
           }}
         >
           {modalContent === 'isEditForm' && <ProfileEditForm submit={submit} user={user}/>}
+          {modalContent === 'showLogs' && <ProfileLogs/>}
 
         </ModalSheet>
       </View>
