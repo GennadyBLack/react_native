@@ -59,7 +59,7 @@ export default class Auth {
       const preData = JSON.parse(JSON.stringify(data))
       const ip = await api.get('https://ipapi.co/json/')
       if(ip || this.device ) {
-        preData.visits = {time: new Date(), location: ip, device: this.device}
+        preData.visits = {time: new Date(), location: ip?.data, device: this.device}
 
       }
 
