@@ -30,18 +30,15 @@ export default class Auth {
       await this?.root?.api?.me?.me({}).then((res) => {
         runInAction(async () => {
           this.user = res?.data?.data;
-          console.log(this.location)
-          console.log(this.device)
-          const ip = await api.get('https://ipapi.co/json/')
-          console.log(ip)
-          if(this.location || this.device ) {
-            let visits = await getFromStorage("visits")
-            if(!visits) visits = "[]"
-            visits = JSON.parse(visits)
-            if(visits.length > 5) visits.shift();
-            visits.push({time: new Date(), location: this.location, device: this.device, ip})
-            await setInStorage("visits", JSON.stringify(visits));
-          }
+
+          // if(this.location || this.device ) {
+          //   let visits = await getFromStorage("visits")
+          //   if(!visits) visits = "[]"
+          //   visits = JSON.parse(visits)
+          //   if(visits.length > 5) visits.shift();
+          //   visits.push({time: new Date(), location: this.location, device: this.device, ip})
+          //   await setInStorage("visits", JSON.stringify(visits));
+          // }
 
           this.logged = true;
           this.loading = false;
@@ -59,7 +56,14 @@ export default class Auth {
       console.log(data, "DATA");
       console.log(data?.rememberMe, "data?.rememberMe");
       this.loading = true;
-      await this.root.api.auth.login(data).then(async (res) =>
+      const preData = JSON.parse(JSON.stringify(data))
+      const ip = await api.get('https://ipapi.co/json/')
+      if(ip || this.device ) {
+        preData.visits = {time: new Date(), location: ip, device: this.device}
+
+      }
+
+      await this.root.api.auth.login(preData).then(async (res) =>
         runInAction(async () => {
           if (res?.data?.token) {
             await setInStorage("rememberMe", "false");
