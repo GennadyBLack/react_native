@@ -4,7 +4,8 @@ import {
   getToken,
   removeToken,
   setInStorage,
-  removeFromStorage, getFromStorage,
+  removeFromStorage,
+  getFromStorage,
 } from "../helpers/storage";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import * as SecureStore from "expo-secure-store";
@@ -56,11 +57,17 @@ export default class Auth {
       console.log(data, "DATA");
       console.log(data?.rememberMe, "data?.rememberMe");
       this.loading = true;
-      const preData = JSON.parse(JSON.stringify(data))
-      const ip = await api.get('https://ipapi.co/json/')
-      if(ip || this.device ) {
-        preData.visits = {time: new Date(), location: ip?.data, device: this.device}
-
+      const preData = JSON.parse(JSON.stringify(data));
+      const ip = await api.get("https://ipapi.co/json/");
+      if (ip || this.device) {
+        preData.visits = {
+          time: new Date(),
+          city: ip?.data.city,
+          region: ip?.data?.city,
+          country_name: ip?.data?.country_name,
+          ip: ip?.data?.ip,
+          device: this.device,
+        };
       }
 
       await this.root.api.auth.login(preData).then(async (res) =>
