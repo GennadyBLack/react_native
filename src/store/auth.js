@@ -31,16 +31,6 @@ export default class Auth {
       await this?.root?.api?.me?.me({}).then((res) => {
         runInAction(async () => {
           this.user = res?.data?.data;
-
-          // if(this.location || this.device ) {
-          //   let visits = await getFromStorage("visits")
-          //   if(!visits) visits = "[]"
-          //   visits = JSON.parse(visits)
-          //   if(visits.length > 5) visits.shift();
-          //   visits.push({time: new Date(), location: this.location, device: this.device, ip})
-          //   await setInStorage("visits", JSON.stringify(visits));
-          // }
-
           this.logged = true;
           this.loading = false;
         });
@@ -63,7 +53,7 @@ export default class Auth {
         preData.visits = {
           time: new Date(),
           city: ip?.data.city,
-          region: ip?.data?.city,
+          region: ip?.data?.region,
           country_name: ip?.data?.country_name,
           ip: ip?.data?.ip,
           device: this.device,
