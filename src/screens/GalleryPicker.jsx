@@ -55,13 +55,15 @@ export default function GalleryPicker({
       exif: false,
       allowsEditing: true,
     });
-    await onResult(result);
+    await onResult(result, true);
   };
-  async function onResult(result) {
+  async function onResult(result, camera=false) {
     if (!result.cancelled) {
       let photo = result.uri;
-      await MediaLibrary.saveToLibraryAsync(photo);
       if (Platform.OS === "android" || "ios") {
+        if(camera) {
+          await MediaLibrary.saveToLibraryAsync(photo);
+        }
         photo = "data:image/jpg;base64," + result.base64;
       }
 
