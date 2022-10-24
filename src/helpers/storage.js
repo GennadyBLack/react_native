@@ -62,6 +62,7 @@ export const removeToken = async () => {
     if (Platform.OS === "web") {
       await AsyncStorage.removeItem("token");
     } else {
+      console.log("deleting token")
       await SecureStore?.deleteItemAsync("token");
     }
   } catch (e) {

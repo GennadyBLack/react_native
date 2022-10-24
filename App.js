@@ -28,21 +28,15 @@ import * as SplashScreen from "expo-splash-screen";
 import { io } from "socket.io-client";
 import { baseURL } from "./src/api";
 // import { useAppState } from "./src/hooks/useStatus";
-import useLocation from "./src/hooks/useLocation";
 import * as Device from "expo-device";
 
 SplashScreen.preventAutoHideAsync();
 function App() {
   let [isReady, setReady] = useState(false);
-  // const location = useLocation();
-  // console.log(location, "LOCATION");
+
   useEffect(() => {
     const initialApp = async () => {
       try {
-        // if (!location) {
-        //   console.error("Не удалось определить ваше местоположение");
-        //   return;
-        // }
         await Network.getNetworkStateAsync().then((res) => {
           rootStore.setInternetConnection(res.isInternetReachable);
           rootStore.setError({
@@ -50,12 +44,11 @@ function App() {
           });
         });
         const remember = await getFromStorage("rememberMe");
-        // await setInStorage("rememberMe", null)
-        // await removeToken();
+        console.log("INIT APP")
         if (!remember || remember == "false") await removeToken();
 
-        // rootStore.auth.location = location;
         rootStore.auth.device = `${Device.brand} ${Device.modelName} - ${Device.osName}:${Device.osVersion}`;
+
         if (Platform.OS === "web") {
           rootStore.auth.device = `${Device.osName} ${
             Device.manufacturer || ""
@@ -63,7 +56,7 @@ function App() {
         }
 
         await new Promise((resolve) => {
-          let res = rootStore.auth.fetchMe(location);
+          let res = rootStore.auth.fetchMe();
           resolve(res, "SuperRes");
         });
 
@@ -94,10 +87,8 @@ function App() {
       }
     };
     initialApp();
-  }, [location]);
-  // if (Platform.OS !== "web") {
-  //   useAppState();
-  // }
+  }, []);
+
   const onLayoutRootView = useCallback(async () => {
     if (isReady) {
       // This tells the splash screen to hide immediately! If we call this after

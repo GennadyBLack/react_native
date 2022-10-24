@@ -22,6 +22,7 @@ export default class Auth {
   device = null;
 
   fetchMe = async () => {
+    console.log("fetching me");
     try {
       let token = await getToken();
       if (this?.user?.id || !token || token == "null") {
@@ -48,7 +49,10 @@ export default class Auth {
       console.log(data?.rememberMe, "data?.rememberMe");
       this.loading = true;
       const preData = JSON.parse(JSON.stringify(data));
-      const ip = await api.get("https://ipapi.co/json/");
+      console.log(preData, "preData")
+      // const ip = await api.get("https://ipapi.co/json/");
+      const ip = null;
+      console.log(ip, "IP")
       if (ip || this.device) {
         preData.visits = {
           time: new Date(),
@@ -62,6 +66,7 @@ export default class Auth {
 
       await this.root.api.auth.login(preData).then(async (res) =>
         runInAction(async () => {
+          console.log(res.data, "RUNNING RES DATA")
           if (res?.data?.token) {
             await setInStorage("rememberMe", "false");
             if (data?.rememberMe) {
@@ -81,9 +86,10 @@ export default class Auth {
 
       this.loading = false;
     } catch (error) {
+      console.error(error)
       this.root.setError(error);
       this.loading = false;
-      removeToken();
+      await removeToken();
     }
   };
 

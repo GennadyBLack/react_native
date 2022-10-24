@@ -1,9 +1,17 @@
 import Axios from "axios";
 import { getToken } from "../helpers/storage";
 // import usePort from "../hooks/usePort";
+import Constants from 'expo-constants';
+const { manifest } = Constants;
 
-const prod = false;
-const baseURL = prod ? "http://62.217.178.124:8081" : "http://localhost:8081";
+const localUri = manifest.debuggerHost
+    .split(`:`)
+    .shift()
+    .concat(`:8081`)
+
+console.log(localUri)
+const prod = true;
+const baseURL = prod ? "http://62.217.178.124:8081" : `http://${localUri}`;
 const apiUrl = `${baseURL}/api`;
 
 let token = null;
