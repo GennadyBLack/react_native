@@ -89,7 +89,7 @@ function Login({ navigation }) {
                 password: "tester",
                 email: "tester@mail.ru",
               });
-              setTimeout(() => login(), 200);
+              // setTimeout(() => login(), 600);
             }}
           >
             <Text style={{ color: constants.GREEN }}>Заполнить</Text>

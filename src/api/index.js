@@ -1,17 +1,23 @@
 import Axios from "axios";
 import { getToken } from "../helpers/storage";
 // import usePort from "../hooks/usePort";
-import Constants from 'expo-constants';
+import Constants from "expo-constants";
+import { Platform } from "react-native";
 const { manifest } = Constants;
 
-const localUri = manifest.debuggerHost
-    .split(`:`)
+let localUri;
+if (Platform.OS === "web") {
+  localUri = `http://localhost:8081`;
+} else {
+  localUri = `http://${manifest?.debuggerHost
+    ?.split(`:`)
     .shift()
-    .concat(`:8081`)
+    .concat(`:8081`)}`;
+}
 
-console.log(localUri)
-const prod = true;
-const baseURL = prod ? "http://62.217.178.124:8081" : `http://${localUri}`;
+console.log(localUri);
+const prod = false;
+const baseURL = prod ? "http://62.217.178.124:8081" : localUri;
 const apiUrl = `${baseURL}/api`;
 
 let token = null;

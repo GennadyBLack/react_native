@@ -37,6 +37,7 @@ export default class Auth {
         });
       });
     } catch (error) {
+      console.error(error);
       await removeToken();
       this.root.setError(error, "auth fetch me");
       this.loading = false;
@@ -45,28 +46,24 @@ export default class Auth {
 
   login = async (data) => {
     try {
-      console.log(data, "DATA");
+      // console.log(data, "DATA");
       console.log(data?.rememberMe, "data?.rememberMe");
       this.loading = true;
       const preData = JSON.parse(JSON.stringify(data));
-      console.log(preData, "preData")
-      // const ip = await api.get("https://ipapi.co/json/");
-      const ip = null;
-      console.log(ip, "IP")
-      if (ip || this.device) {
-        preData.visits = {
-          time: new Date(),
-          city: ip?.data.city,
-          region: ip?.data?.region,
-          country_name: ip?.data?.country_name,
-          ip: ip?.data?.ip,
-          device: this.device,
-        };
-      }
-
+      const ip = await api.get("https://ipapi.co/json/");
+      console.log(ip, "IP");
+      preData.visits = {
+        time: new Date(),
+        city: ip?.data.city || "Default City",
+        region: ip?.data?.region || "Default Region",
+        country_name: ip?.data?.country_name || "Default Country",
+        ip: ip?.data?.ip || "Default IP",
+        device: this.device,
+      };
+      console.log(preData, "preData");
       await this.root.api.auth.login(preData).then(async (res) =>
         runInAction(async () => {
-          console.log(res.data, "RUNNING RES DATA")
+          console.log(res.data, "RUNNING RES DATA");
           if (res?.data?.token) {
             await setInStorage("rememberMe", "false");
             if (data?.rememberMe) {
@@ -86,7 +83,7 @@ export default class Auth {
 
       this.loading = false;
     } catch (error) {
-      console.error(error)
+      console.error(error);
       this.root.setError(error);
       this.loading = false;
       await removeToken();
