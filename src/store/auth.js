@@ -50,17 +50,17 @@ export default class Auth {
       console.log(data?.rememberMe, "data?.rememberMe");
       this.loading = true;
       const preData = JSON.parse(JSON.stringify(data));
-      const ip = await api.get("https://ipapi.co/json/");
+      console.log(preData, "PREDATA");
+      const ip = await api.get("http://ip-api.com/json");
       console.log(ip, "IP");
       preData.visits = {
         time: new Date(),
-        city: ip?.data.city || "Default City",
-        region: ip?.data?.region || "Default Region",
-        country_name: ip?.data?.country_name || "Default Country",
-        ip: ip?.data?.ip || "Default IP",
+        city: ip?.data?.city || "Default City",
+        region: ip?.data?.regionName || "Default Region",
+        country_name: ip?.data?.country || "Default Country",
+        ip: ip?.data?.query || "Default IP",
         device: this.device,
       };
-      console.log(preData, "preData");
       await this.root.api.auth.login(preData).then(async (res) =>
         runInAction(async () => {
           console.log(res.data, "RUNNING RES DATA");

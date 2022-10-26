@@ -38,8 +38,8 @@ function Login({ navigation }) {
     setForm({ ...form, [field]: e });
   };
 
-  let login = () => {
-    auth.login(form);
+  let login = async () => {
+    await auth.login(form);
   };
   return (
     <Animated.View style={[styles.login_wrapper]}>
@@ -67,10 +67,7 @@ function Login({ navigation }) {
         />
         <Text>Remember Me</Text>
         <Pressable
-          onPress={() => {
-            console.log("touched");
-            login();
-          }}
+          onPress={login}
           style={[s.button, { marginTop: 20 }]}
         >
           <Text style={[{ color: "white", fontSize: 15 }]}>Войти</Text>
