@@ -104,7 +104,7 @@ function App() {
     return null;
   }
   return (
-    <View style={styles.app_wrapper} onLayout={onLayoutRootView}>
+    <View style={styles.app_wrapper} onLayout={onLayoutRootView} nativeID={"app-wrapper"}>
       <StoreContext.Provider value={rootStore}>
         <ErrorPopupList className="errors" />
         <Routes />

@@ -109,7 +109,7 @@ function Routes() {
           </Navigator>
         )}
         {!auth?.isAuth && (
-          <Stack.Navigator activeColor="#fff">{routes}</Stack.Navigator>
+          <Stack.Navigator activeColor="#fff"></Stack.Navigator>
         )}
       </ModalWrapper>
     </NavigationContainer>
@@ -117,6 +117,7 @@ function Routes() {
 }
 
 const styles = StyleSheet.create({
-  wrap: {},
+  wrap: {
+  },
 });
 export default observer(Routes);
